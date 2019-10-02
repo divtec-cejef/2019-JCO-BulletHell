@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework: Game Framework</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Game Framework </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><dl class="section author"><dt>Auteur</dt><dd>JCO </dd></dl>
+<h1><a class="anchor" id="intro_sec"></a>
+Introduction</h1>
+<p>Ce projet est une architecture de base en vue de la création d'un jeu simple en 2D. Il est plutôt orienté jeu d'action.</p>
+<p>Il prend en charge l'organisation des classes nécessaires à l'affichage d'une surface de jeu en deux dimensions.</p>
+<p>En plus de fournir l'architecture de base, ce projet démontre quelques fonctionnalités rudimentaires :</p>
+<ul>
+<li>Déplacement d'un sprite animé (un marcheur) en modifiant sa position x grâce à <a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpropertyanimation.html">QPropertyAnimation</a> (voir <a class="el" href="class_game_core.html#walking_man">L'homme qui marche</a>).</li>
+<li>Déplacement d'un sprite animé (un marcheur) sur la base d'une cadence (voir <a class="el" href="class_game_core.html#walking_man">L'homme qui marche</a>).</li>
+<li>Déplacement d'un sprite (une balle) avec les touches du clavier (voir <a class="el" href="class_game_core.html#blue_orb">La sphère bleue</a>).</li>
+<li>Recherche d'un sprite en fonction de son type exact et changement de son opacité (QGameCore::reduceWalkingManOpacity()).</li>
+<li>Destruction d'un sprite (<a class="el" href="class_game_core.html#a1633136eccfea0c76585712fb19c64fd" title="Détruit la balle et affiche un texte qui indique que cela a été fait. ">GameCore::removeBall()</a>).</li>
+<li>Détection de collisions (voir par exemple <a class="el" href="class_bouncing_sprite_handler.html">BouncingSpriteHandler</a> et <a class="el" href="class_manual_walking_handler.html" title="Gestionnaire de déplacement manuel. ">ManualWalkingHandler</a>).</li>
+<li>Utilisation de plusieurs scènes (surfaces de jeu), au moyen de <a class="el" href="class_game_canvas.html#ab207f2189a7a28a7024f8c05e6254451">GameCanvas::createScene()</a> et <a class="el" href="class_game_canvas.html#a326898c390ed700b827c33cf08e25009" title="Change la scène de jeu actuellement affichée. ">GameCanvas::setCurrentScene()</a>.</li>
+</ul>
+<p>Ces différentes fonctionnalités sont décrites dans <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a>.</p>
+<p>Ce projet devra être complètement renommé avec un nom adapté au projet final développé par l'apprenant.</p>
+<h1><a class="anchor" id="architecture_sec"></a>
+Architecture</h1>
+<p>La classe <a class="el" href="class_main_frm.html" title="Fenêtre principale. ">MainFrm</a> se charge d'afficher la fenêtre de l'application. Elle utilise le fichier <code>mainfrm.ui</code> pour construire l'interface utilisateur. Par défaut, cette interface utilisateur intègre un élément de type <a class="el" href="class_game_view.html" title="Classe de visualisation d&#39;un espace 2D de jeu. ">GameView</a> qui se charge d'afficher la scene graphique (qui elle est de type <a class="el" href="class_game_scene.html" title="Représente l&#39;espace 2D du jeu. ">GameScene</a>).</p>
+<p>Au moment de la construction (<a class="el" href="class_main_frm.html" title="Fenêtre principale. ">MainFrm()</a>) d'une instance <a class="el" href="class_main_frm.html" title="Fenêtre principale. ">MainFrm</a>, un cadre de jeu (<a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a>) est créé. Ce cadre de jeu gère la cadence du jeu (le tick) et délègue toute la logique du jeu à un objet de type <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a>, qu'il crée, et qui doit être codé par l'apprenant.</p>
+<p>Voici un diagramme de séquence qui montre la séquence de démarrage du jeu et la création des instances principales chargées de mettre en place les éléments de ce jeu.</p>
+<div class="image">
+<img src="UML_sequence.png" alt="UML_sequence.png"/>
+<div class="caption">
+Diagramme de séquence</div></div>
+<p> <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a> est en charge de créer un objet de type <a class="el" href="class_game_scene.html" title="Représente l&#39;espace 2D du jeu. ">GameScene</a>, qui représente la surface du jeu, avec la méthode <a class="el" href="class_game_canvas.html#ab207f2189a7a28a7024f8c05e6254451">GameCanvas::createScene()</a> et de l'afficher en appelant la méthode <a class="el" href="class_game_canvas.html#a326898c390ed700b827c33cf08e25009" title="Change la scène de jeu actuellement affichée. ">GameCanvas::setCurrentScene()</a> de <a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a>.</p>
+<p>Il est possible de créer plusieurs scènes et de spécifier à <a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a> d'en afficher une plutôt qu'une autre.</p>
+<p>La plupart des jeux d'action ont besoin d'un timing régulier, permettant de déplacer les sprites, détecter les collisions et analyser l'état du jeu. C'est la cadence du jeu.</p>
+<p>La classe <a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a> est capable de générer un tel timing, appelé tick. Chaque fois qu'un tick survient, la méthode <a class="el" href="class_game_core.html#a659d0aa5273eff1cbbd846b70b37d149">GameCore::tick()</a> est automatiquement appelée par <a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a>. Ensuite, ce tick est propagé aux différents sprites de la scène, afin qu'ils puissent y réagir.</p>
+<p>Par défaut, le tick survient toutes les 20 ms (environ). L'intégralité du code qui est exécuté à chaque tick ne devrait donc pas durer plus de 20 ms. Avec une cadence de 20 ms, on obtient 50 images par secondes.</p>
+<p>Les méthodes suivantes permettent de manipuler ce tick :</p><ul>
+<li><a class="el" href="class_game_canvas.html#a102153a6332fa9af8cc956c126f6740c">GameCanvas::startTick()</a> : Cette fonction démarre le timing, ce qui a pour effet d'appeler la fonction <a class="el" href="class_game_core.html#a659d0aa5273eff1cbbd846b70b37d149">GameCore::tick()</a> de façon régulière.</li>
+<li><a class="el" href="class_game_canvas.html#aa484cf048075d69f85995e0816209087">GameCanvas::stopTick()</a> : Cette fonction interrompt le timing. La fonction <a class="el" href="class_game_core.html#a659d0aa5273eff1cbbd846b70b37d149">GameCore::tick()</a> n'est plus appelée.</li>
+</ul>
+<p>Voici un diagramme de classes simplifié qui offre une vue globale des classes qui compose de projet. </p><div class="image">
+<img src="UML_classes.png" alt="UML_classes.png"/>
+<div class="caption">
+Diagramme de classe simplifié</div></div>
+ <h1><a class="anchor" id="afaire_sec"></a>
+Travail à réaliser</h1>
+<p>Pour repartir de ce projet afin de réaliser un jeu, il convient tout d'abord de le renommer et de lui donner un nom adapté.</p>
+<p>Ensuite, développer le jeu au sein de la classe <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a> et en spécialisant la classe <a class="el" href="class_sprite.html" title="Classe qui représente un élément d&#39;animation graphique 2D. ">Sprite</a>.</p>
+<p>Les initialisations peuvent être faites dans le constructeur de <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a> : <a class="el" href="class_game_core.html#a2b255aa441e1bc57ee7666a5c56307b0">GameCore::GameCore()</a>.</p>
+<p>Si l'initialisation du jeu implique de nombreuses instructions, ajouter à <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a> des fonctions privées d'initialisation qui seront appelées depuis le constructeur.</p>
+<p>Au sein de la classe <a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a>, la variable membre m_pCanvas permet d'accéder aux fonctions de la classe <a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a>.</p>
+<p>La classe <a class="el" href="class_game_scene.html" title="Représente l&#39;espace 2D du jeu. ">GameScene</a>, qui représente un espace de jeu en deux dimensions, met à disposition plusieurs fonctions utiles pour le jeu :</p>
+<ul>
+<li><a class="el" href="class_game_scene.html#a0744adccf2c7434c8feb0b5a8b49f9e5">GameScene::setWidth()</a> : Permet de déterminer la largeur, en pixels, de la surface de jeu. La fonction <a class="el" href="class_game_scene.html#a7d317eafae0edcd80c6be3339a7161e8">GameScene::width()</a> permet de la relire.</li>
+<li><a class="el" href="class_game_scene.html#a8e95ad54d19f490cb1a1b3252828524a">GameScene::setHeight()</a> : Permet de déterminer la hauteur, en pixels, de la surface de jeu. La fonction <a class="el" href="class_game_scene.html#a1cfafa7568d4216ef527888c660722e9">GameScene::height()</a> permet de la relire.</li>
+<li><a class="el" href="class_game_scene.html#a0a63f65536de7e4d07be813b48f8997c">GameScene::addSpriteToScene()</a> : Cette fonction intègre le sprite donné à la scène. La scène en prend la propriété et se chargera donc de le détruire lorsque l'application se termine.</li>
+<li><a class="el" href="class_game_scene.html#a1afbea38eb709b51019dcb1214446dc8">GameScene::collidingSprites()</a> : Cette fonction permet d'obtenir une liste de sprites en collision avec un sprite donné.</li>
+<li><a class="el" href="class_game_scene.html#a6eb9e237cfa9dc35179b4afc151a45ba">GameScene::spriteAt()</a> : Cette fonction permet de récupérer le sprite se trouvant à la position donnée.</li>
+<li><a class="el" href="class_game_scene.html#ae454327f278da29222a78a20e2c16571">GameScene::createText()</a> : Cette fonction ajoute à la scène un texte et retourne un pointeur permettant de manipuler ce texte.</li>
+</ul>
+<p>La classe <a class="el" href="class_game_canvas.html" title="Classe de gestion des scènes du jeu et de sa cadence. ">GameCanvas</a> intercepte les événements produits par le clavier (appui et relâche d'une touche, voir <a class="el" href="index.html#input_keyboard">Clavier</a>) et la souris (voir <a class="el" href="index.html#input_mouse">Souris</a>).</p>
+<h1><a class="anchor" id="sprite_sec"></a>
+Les objets animés</h1>
+<p>Un jeu est essentiellement constitué d'élément graphiques animés qui se déplacent sur la surface de jeu. <a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qt.html">Qt</a> met à disposition plusieurs classes et fonctionnalités permettant de gérer de nombreux éléments graphiques. Ces éléments graphiques sont de type <a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qgraphicsitem.html">QGraphicsItem</a>.</p>
+<p>Pour simplifier le développement, la classe <a class="el" href="class_sprite.html" title="Classe qui représente un élément d&#39;animation graphique 2D. ">Sprite</a> spécialise <a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qgraphicsitem.html">QGraphicsItem</a> et met à disposition quelques fonctionnalités de base telles que des méthodes de détection de collision (<a class="el" href="class_sprite.html#aaf606dfaaf05fba692b467ade8db69c9">Sprite::collidingSprites()</a>) ou d'animation (<a class="el" href="class_sprite.html#ad382222eee275aa4bf98bdbeb6b0fc66">Sprite::addAnimationFrame()</a>, <a class="el" href="class_sprite.html#ac7d053af8f5cf1221d3cf016a4c65874">Sprite::startAnimation()</a> et <a class="el" href="class_sprite.html#a7fc484c57aa07b95311eacf27d789a0c" title="Arrête l&#39;animation. ">Sprite::stopAnimation()</a>).</p>
+<h1><a class="anchor" id="input"></a>
+Evénements du clavier et de la souris</h1>
+<h2><a class="anchor" id="input_keyboard"></a>
+Clavier</h2>
+<p>Lorsqu'une touche du clavier est appuyée, la méthode <a class="el" href="class_game_core.html#af7d1e03d52e81d846e5733d970120655">GameCore::keyPressed()</a> est automatiquement appelée. Si la touche reste appuyée, cette méthode n'est pas appelée continuellement (ce comportement peut être modifié dans <a class="el" href="class_game_canvas.html#a6397ae2f5e23b0b2a9c721bb150e5092">GameCanvas::keyPressed()</a> et <a class="el" href="class_game_canvas.html#a74f0e5f0df216b7c5069dc9117c330f9" title="Gère le relâchement d&#39;une touche du clavier. ">GameCanvas::keyReleased()</a>).</p>
+<p>Lorsque la touche du clavier est relâchée, la méthode <a class="el" href="class_game_core.html#a3e03c88acaf04467fc3213e09c58a441">GameCore::keyReleased()</a> est automatiquement appelée.</p>
+<p>Ces deux méthodes reçoivent le paramètre <code>Key</code> qui représente le code numérique de la touche appuyée.</p>
+<p><a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a> se charge d'émettre le signal <code>notifyKeyPressed()</code> lorsqu'une touche est appuyée et le signal <code>notifyKeyReleased()</code> lorsqu'une touche est relâchée, ce qui permet d'y connecter les objets intéressés par cette information.</p>
+<h2><a class="anchor" id="input_mouse"></a>
+Souris</h2>
+<p>Lorsqu'un bouton de la souris est appuyé, la méthode <a class="el" href="class_game_core.html#a1433068a5dcf2e4f7ddb7aee8475043b">GameCore::mouseButtonPressed()</a> est automatiquement appelée. La méthode reçoit alors la position de la souris en paramètre et la liste des boutons appuyés.</p>
+<p>Lorsqu'un bouton de la souris est relâché, la méthode <a class="el" href="class_game_core.html#a95621dec286dce595fd65418fbcee04a" title="Traite le relâchement d&#39;un bouton de la souris. ">GameCore::mouseButtonReleased()</a> est automatiquement appelée. La méthode reçoit alors la position de la souris en paramètre et la liste des boutons appuyés.</p>
+<p>Par défaut, les événements de déplacement de la souris ne sont pas détectés, pour des raisons de performance. Pour les détecter, il faut enclencher le suivi de la souris avec la méthode <a class="el" href="class_game_canvas.html#a7736798ad6218b4329bf4b29064f7d6a" title="Enclenche le suivi du déplacement de la souris. ">GameCanvas::startMouseTracking()</a>. Le suivi peut être stoppé avec la méthode <a class="el" href="class_game_canvas.html#ae345211fcf3ad4e35b154c52ed963357" title="Déclenche le suivi du déplacement de la souris. ">GameCanvas::stopMouseTracking()</a>.</p>
+<p>Lorsque le suivi de la souris est enclenché, la méthode <a class="el" href="class_game_core.html#acb7e3ffb6923257ae234c274b2a2a2fc">GameCore::mouseMoved()</a> est appelée chaque fois que la souris est déplacée.</p>
+<p><a class="el" href="class_game_core.html" title="Classe qui gère la logique du jeu. ">GameCore</a> se charge d'émettre les signaux <code>notifyMouseButtonPressed()</code>, <code>notifyMouseButtonReleased()</code> et <code>notifyMouseMoved()</code>, ce qui permet d'y connecter les objets intéressés par les informations concernant la souris.</p>
+<h1><a class="anchor" id="res_sec"></a>
+Ressources</h1>
+<p>Pour fonctionner correctement, le jeu a besoin d'un certain nombre de ressources, telles que des images, des sons, des fichiers de configuration, etc. Ces ressources sont placées dans un répertoire <code>res</code>.</p>
+<p>Le fichier <a class="el" href="resources_8h.html" title="Méthodes utilitaires permettant d&#39;accéder aux ressources. ">resources.h</a> met à disposition des fonctions utilitaires (dans l'espace de nommage <a class="el" href="namespace_game_framework.html">GameFramework</a>) permettant d'accéder à ce répertoire <code>res</code>.</p>
+<p>Toutefois, si une de ces ressources venait à être introuvable, il est important que le programme ne plante pas lamentablement et que l'erreur soit gérée de la façon la plus propre possible.</p>
+<h1><a class="anchor" id="images_sec"></a>
+Les images</h1>
+<p><a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qt.html">Qt</a> met différentes classes à disposition pour manipuler des images.</p>
+<p>Pour ce projet, ce sont des images bitmap qui seront utilisées. La classe <a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtgui.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpixmap.html">QPixmap</a> permet de les manipuler facilement.</p>
+<p>Il est très facile de créer un objet <a class="elRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtgui.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpixmap.html">QPixmap</a> à partir d'un fichier (png ou jpeg) : il suffit de passer le chemin du fichier au constructeur : </p><pre class="fragment">QPixmap monImage("chemin_du_fichier/image.png");
+</pre><p>Il est également possible d'instancier une image sur le tas : </p><pre class="fragment">QPixmap* pMonImage = new QPixmap("chemin_du_fichier/image.png");
+</pre><h1><a class="anchor" id="screen_mode"></a>
+Les modes d'affichage</h1>
+<p>Par défaut, la zone de jeu est affichée au sein d'une fenêtre classique Windows et peut cohabiter avec des composants graphiques classiques comme des boutons, des champs de texte et autres.</p>
+<p>Il est possible de faire en sorte que le jeu s'affiche en plein écran, selon différents modes :</p>
+<ul>
+<li>Mode plein écran fenêtré : la fenêtre de jeu prend toute la surface de l'écran, mais garde sa bordure. L'utilisateur peut modifier sa taille. Pour obtenir ce mode, dans la fonction <a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main ">main()</a>, choisir le ligne de code <code>w.showMaximized()</code> et commenter les autres.</li>
+<li>Mode plein écran total : la fenêtre de jeu prend toute la surface de l'écran, ses bordures et sa barre de titre disparaissent. Pour obtenir ce mode, dans la fonction <a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main ">main()</a>, choisir la ligne de code <code>w.showFullScreen()</code> et commenter les autres.</li>
+<li>Mode fenêtré : c'est le mode par défaut : le jeu s'affiche dans une fenêtre classique de windows. Pour obtenir ce mode, dans la fonction <a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main ">main()</a>, choisir la ligne de code <code>w.show()</code> et commenter les autres.</li>
+</ul>
+<p>Indépendamment de ces modes, deux réglages peuvent également être faits :</p>
+<ul>
+<li>Faire que la surface de jeu affichée se dimensionne automatiquement en fonction de la taille de l'écran (la taille de le scène n'est pas modifiée). Pour cela, ajouter dans <a class="el" href="class_main_frm.html#a2554d892285ba0f95c33a7f6b0089297" title="Construit la fenêtre principale. ">MainFrm::MainFrm()</a> la ligne de code <code>ui-&gt;grvGame-&gt;setFitToScreenEnabled(true);</code>.</li>
+<li>Supprimer les marges de l'affichage de la surface de jeu. Pour cela, ajouter dans <a class="el" href="class_main_frm.html#a2554d892285ba0f95c33a7f6b0089297" title="Construit la fenêtre principale. ">MainFrm::MainFrm()</a> la ligne de code <code>ui-&gt;verticalLayout-&gt;setContentsMargins(QMargins(0,0,0,0));</code>.</li>
+</ul>
+<h1><a class="anchor" id="utilities"></a>
+Les fonctions utilitaires</h1>
+<p>En plus des fonctions utilitaires liées aux resources (<a class="el" href="index.html#res_sec">Ressources</a>), le fichier <a class="el" href="utilities_8h.html" title="Méthodes utilitaires diverses. ">utilities.h</a> met à disposition des fonctions utiliaires diverses, en particulier des fonctions permettant de connaître les dimensions de l'écran et le rapport largeur/hauteur.</p>
+<p>Les fonctions <a class="el" href="namespace_game_framework.html#aa9d3b3bf5f16a48a45b31e98b731b2f4">GameFramework::hideMouseCursor()</a> et <a class="el" href="namespace_game_framework.html#a9cb2d5b685acea208af9d856e0fe1bf4">GameFramework::showMouseCursor()</a> permettent de cacher, respectivement afficher le curseur de la souris. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:19 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework:  Fichier source de resources.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">resources.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="resources_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="resources_8h.html">resources.h</a>&quot;</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QCoreApplication&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;QDir&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="namespace_game_framework.html">   14</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_game_framework.html">GameFramework</a> {</div><div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="namespace_game_framework.html#a0c59d547af7a5c977f8879c1514c4351">   74</a></span>&#160;    <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qstring.html">QString</a> <a class="code" href="namespace_game_framework.html#a0c59d547af7a5c977f8879c1514c4351">resourcesPath</a>() {</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html">QDir</a> resourceDir = <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html">QDir</a>(qApp-&gt;applicationDirPath());</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">    #ifndef DEPLOY</span></div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">        #ifndef Q_OS_LINUX</span></div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            resourceDir.<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#cdUp">cdUp</a>(); <span class="comment">// Quitte &#39;debug&#39; ou &#39;release&#39;</span></div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">        #endif</span></div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            resourceDir.<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#cdUp">cdUp</a>(); <span class="comment">// Quitte &#39;build...&#39;</span></div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">    #endif</span></div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        resourceDir.<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#cd">cd</a>(<span class="stringliteral">&quot;res&quot;</span>);</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="comment">//qDebug() &lt;&lt; ResourceDir.absolutePath();</span></div><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> resourceDir.<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#absolutePath">absolutePath</a>() + <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#separator">QDir::separator</a>();</div><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div><div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="namespace_game_framework.html#ad9258f3ab92cd03e443344a86166140a">   91</a></span>&#160;    <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qstring.html">QString</a> <a class="code" href="namespace_game_framework.html#ad9258f3ab92cd03e443344a86166140a">imagesPath</a>() {</div><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespace_game_framework.html#a0c59d547af7a5c977f8879c1514c4351">resourcesPath</a>() + <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#separator">QDir::separator</a>() + <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qstring.html">QString</a>(<span class="stringliteral">&quot;images&quot;</span>) + <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qdir.html#separator">QDir::separator</a>();</div><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div><div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div><div class="ttc" id="resources_8h_html"><div class="ttname"><a href="resources_8h.html">resources.h</a></div><div class="ttdoc">Méthodes utilitaires permettant d&amp;#39;accéder aux ressources. </div></div>
+<div class="ttc" id="qdir_html_separator"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qdir.html#separator">QDir::separator</a></div><div class="ttdeci">QChar separator()</div></div>
+<div class="ttc" id="namespace_game_framework_html_ad9258f3ab92cd03e443344a86166140a"><div class="ttname"><a href="namespace_game_framework.html#ad9258f3ab92cd03e443344a86166140a">GameFramework::imagesPath</a></div><div class="ttdeci">QString imagesPath()</div><div class="ttdef"><b>Definition:</b> <a href="resources_8cpp_source.html#l00091">resources.cpp:91</a></div></div>
+<div class="ttc" id="qdir_html_cd"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qdir.html#cd">QDir::cd</a></div><div class="ttdeci">bool cd(const QString &amp;dirName)</div></div>
+<div class="ttc" id="qstring_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qstring.html">QString</a></div></div>
+<div class="ttc" id="qdir_html_cdUp"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qdir.html#cdUp">QDir::cdUp</a></div><div class="ttdeci">bool cdUp()</div></div>
+<div class="ttc" id="namespace_game_framework_html"><div class="ttname"><a href="namespace_game_framework.html">GameFramework</a></div><div class="ttdef"><b>Definition:</b> <a href="resources_8cpp_source.html#l00014">resources.cpp:14</a></div></div>
+<div class="ttc" id="qdir_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qdir.html">QDir</a></div></div>
+<div class="ttc" id="qdir_html_absolutePath"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qdir.html#absolutePath">QDir::absolutePath</a></div><div class="ttdeci">QString absolutePath() const</div></div>
+<div class="ttc" id="namespace_game_framework_html_a0c59d547af7a5c977f8879c1514c4351"><div class="ttname"><a href="namespace_game_framework.html#a0c59d547af7a5c977f8879c1514c4351">GameFramework::resourcesPath</a></div><div class="ttdeci">QString resourcesPath()</div><div class="ttdef"><b>Definition:</b> <a href="resources_8cpp_source.html#l00074">resources.cpp:74</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:17 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework:  Fichier source de bouncingspritehandler.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">bouncingspritehandler.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="bouncingspritehandler_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef BOUNCINGSPRITEHANDLER_H</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define BOUNCINGSPRITEHANDLER_H</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QPointF&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="spritetickhandler_8h.html">spritetickhandler.h</a>&quot;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_bouncing_sprite_handler.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_bouncing_sprite_handler.html">BouncingSpriteHandler</a> : <span class="keyword">public</span> <a class="code" href="class_sprite_tick_handler.html">SpriteTickHandler</a></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="class_bouncing_sprite_handler.html#a43ef90f814328060e09cbf410b487a04">BouncingSpriteHandler</a>(<a class="code" href="class_sprite.html">Sprite</a>* pParentSprite = <span class="keyword">nullptr</span>);</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_bouncing_sprite_handler.html#ab9d043fe74e915cef7025f5ed41c2629">tick</a>(<span class="keywordtype">int</span> elapsedTimeInMilliseconds);</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="class_bouncing_sprite_handler.html#af559b78c85b35995121bdcb4e040c790">   22</a></span>&#160;    <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpointf.html">QPointF</a> <a class="code" href="class_bouncing_sprite_handler.html#af559b78c85b35995121bdcb4e040c790">m_ballVelocity</a>;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif // BOUNCINGSPRITEHANDLER_H</span></div><div class="ttc" id="class_bouncing_sprite_handler_html_ab9d043fe74e915cef7025f5ed41c2629"><div class="ttname"><a href="class_bouncing_sprite_handler.html#ab9d043fe74e915cef7025f5ed41c2629">BouncingSpriteHandler::tick</a></div><div class="ttdeci">void tick(int elapsedTimeInMilliseconds)</div><div class="ttdef"><b>Definition:</b> <a href="bouncingspritehandler_8cpp_source.html#l00024">bouncingspritehandler.cpp:24</a></div></div>
+<div class="ttc" id="class_bouncing_sprite_handler_html_af559b78c85b35995121bdcb4e040c790"><div class="ttname"><a href="class_bouncing_sprite_handler.html#af559b78c85b35995121bdcb4e040c790">BouncingSpriteHandler::m_ballVelocity</a></div><div class="ttdeci">QPointF m_ballVelocity</div><div class="ttdef"><b>Definition:</b> <a href="bouncingspritehandler_8h_source.html#l00022">bouncingspritehandler.h:22</a></div></div>
+<div class="ttc" id="class_bouncing_sprite_handler_html_a43ef90f814328060e09cbf410b487a04"><div class="ttname"><a href="class_bouncing_sprite_handler.html#a43ef90f814328060e09cbf410b487a04">BouncingSpriteHandler::BouncingSpriteHandler</a></div><div class="ttdeci">BouncingSpriteHandler(Sprite *pParentSprite=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="bouncingspritehandler_8cpp_source.html#l00018">bouncingspritehandler.cpp:18</a></div></div>
+<div class="ttc" id="qpointf_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qpointf.html">QPointF</a></div></div>
+<div class="ttc" id="class_sprite_html"><div class="ttname"><a href="class_sprite.html">Sprite</a></div><div class="ttdoc">Classe qui représente un élément d&amp;#39;animation graphique 2D. </div><div class="ttdef"><b>Definition:</b> <a href="sprite_8h_source.html#l00085">sprite.h:85</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html"><div class="ttname"><a href="class_sprite_tick_handler.html">SpriteTickHandler</a></div><div class="ttdoc">Classe abstraite qui représente un gestionnaire de tick pour un sprite. </div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8h_source.html#l00024">spritetickhandler.h:24</a></div></div>
+<div class="ttc" id="class_bouncing_sprite_handler_html"><div class="ttname"><a href="class_bouncing_sprite_handler.html">BouncingSpriteHandler</a></div><div class="ttdef"><b>Definition:</b> <a href="bouncingspritehandler_8h_source.html#l00014">bouncingspritehandler.h:14</a></div></div>
+<div class="ttc" id="spritetickhandler_8h_html"><div class="ttname"><a href="spritetickhandler_8h.html">spritetickhandler.h</a></div><div class="ttdoc">Déclaration de la classe SpriteTickHandler. </div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:17 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

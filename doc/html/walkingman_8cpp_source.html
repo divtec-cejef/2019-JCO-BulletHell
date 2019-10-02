@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework:  Fichier source de walkingman.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">walkingman.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="walkingman_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="walkingman_8h.html">walkingman.h</a>&quot;</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="resources_8h.html">resources.h</a>&quot;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_walking_man.html#a3350e10b90e9e5c5a26eb62f0eef79fa">   13</a></span>&#160;<a class="code" href="class_walking_man.html#a3350e10b90e9e5c5a26eb62f0eef79fa">WalkingMan::WalkingMan</a>(<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qgraphicsitem.html">QGraphicsItem</a>* pParent) : <a class="code" href="class_sprite.html">Sprite</a>(pParent) {</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_walking_man.html#aa1a1f9dff026741fa95a94b73d83561c">configureAnimation</a>();</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_walking_man.html#aa1a1f9dff026741fa95a94b73d83561c">   19</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_walking_man.html#aa1a1f9dff026741fa95a94b73d83561c">WalkingMan::configureAnimation</a>() {</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> FrameNumber = 1; FrameNumber &lt;= 8; ++FrameNumber)  {</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        this-&gt;<a class="code" href="class_sprite.html#ad382222eee275aa4bf98bdbeb6b0fc66">addAnimationFrame</a>(<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qstring.html">QString</a>(<a class="code" href="namespace_game_framework.html#ad9258f3ab92cd03e443344a86166140a">GameFramework::imagesPath</a>() + <span class="stringliteral">&quot;marche%1.png&quot;</span>).arg(FrameNumber));</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    this-&gt;<a class="code" href="class_sprite.html#aa27e28e0a1ed0153f4fcc9a9a3402e0f">setAnimationSpeed</a>(100);  <span class="comment">// Passe à la prochaine image de la marche toutes les 100 ms</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    this-&gt;<a class="code" href="class_sprite.html#ac7d053af8f5cf1221d3cf016a4c65874">startAnimation</a>();</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="ttc" id="class_sprite_html_ad382222eee275aa4bf98bdbeb6b0fc66"><div class="ttname"><a href="class_sprite.html#ad382222eee275aa4bf98bdbeb6b0fc66">Sprite::addAnimationFrame</a></div><div class="ttdeci">void addAnimationFrame(const QPixmap &amp;rPixmap)</div><div class="ttdef"><b>Definition:</b> <a href="sprite_8cpp_source.html#l00046">sprite.cpp:46</a></div></div>
+<div class="ttc" id="resources_8h_html"><div class="ttname"><a href="resources_8h.html">resources.h</a></div><div class="ttdoc">Méthodes utilitaires permettant d&amp;#39;accéder aux ressources. </div></div>
+<div class="ttc" id="class_sprite_html_ac7d053af8f5cf1221d3cf016a4c65874"><div class="ttname"><a href="class_sprite.html#ac7d053af8f5cf1221d3cf016a4c65874">Sprite::startAnimation</a></div><div class="ttdeci">void startAnimation()</div><div class="ttdef"><b>Definition:</b> <a href="sprite_8cpp_source.html#l00102">sprite.cpp:102</a></div></div>
+<div class="ttc" id="class_walking_man_html_aa1a1f9dff026741fa95a94b73d83561c"><div class="ttname"><a href="class_walking_man.html#aa1a1f9dff026741fa95a94b73d83561c">WalkingMan::configureAnimation</a></div><div class="ttdeci">void configureAnimation()</div><div class="ttdef"><b>Definition:</b> <a href="walkingman_8cpp_source.html#l00019">walkingman.cpp:19</a></div></div>
+<div class="ttc" id="class_sprite_html_aa27e28e0a1ed0153f4fcc9a9a3402e0f"><div class="ttname"><a href="class_sprite.html#aa27e28e0a1ed0153f4fcc9a9a3402e0f">Sprite::setAnimationSpeed</a></div><div class="ttdeci">void setAnimationSpeed(int frameDuration)</div><div class="ttdef"><b>Definition:</b> <a href="sprite_8cpp_source.html#l00085">sprite.cpp:85</a></div></div>
+<div class="ttc" id="qgraphicsitem_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qgraphicsitem.html">QGraphicsItem</a></div></div>
+<div class="ttc" id="walkingman_8h_html"><div class="ttname"><a href="walkingman_8h.html">walkingman.h</a></div><div class="ttdoc">Déclaration de la classe WalkingMan. </div></div>
+<div class="ttc" id="namespace_game_framework_html_ad9258f3ab92cd03e443344a86166140a"><div class="ttname"><a href="namespace_game_framework.html#ad9258f3ab92cd03e443344a86166140a">GameFramework::imagesPath</a></div><div class="ttdeci">QString imagesPath()</div><div class="ttdef"><b>Definition:</b> <a href="resources_8cpp_source.html#l00091">resources.cpp:91</a></div></div>
+<div class="ttc" id="class_sprite_html"><div class="ttname"><a href="class_sprite.html">Sprite</a></div><div class="ttdoc">Classe qui représente un élément d&amp;#39;animation graphique 2D. </div><div class="ttdef"><b>Definition:</b> <a href="sprite_8h_source.html#l00085">sprite.h:85</a></div></div>
+<div class="ttc" id="qstring_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qstring.html">QString</a></div></div>
+<div class="ttc" id="class_walking_man_html_a3350e10b90e9e5c5a26eb62f0eef79fa"><div class="ttname"><a href="class_walking_man.html#a3350e10b90e9e5c5a26eb62f0eef79fa">WalkingMan::WalkingMan</a></div><div class="ttdeci">WalkingMan(QGraphicsItem *pParent=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="walkingman_8cpp_source.html#l00013">walkingman.cpp:13</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:18 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

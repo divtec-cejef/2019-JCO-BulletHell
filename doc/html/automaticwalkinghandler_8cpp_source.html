@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework:  Fichier source de automaticwalkinghandler.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">automaticwalkinghandler.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="automaticwalkinghandler_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="automaticwalkinghandler_8h.html">automaticwalkinghandler.h</a>&quot;</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QParallelAnimationGroup&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QPropertyAnimation&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sprite_8h.html">sprite.h</a>&quot;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="automaticwalkinghandler_8cpp.html#a85319577a88f41e3aba588b35bad5c32">   14</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="automaticwalkinghandler_8cpp.html#a85319577a88f41e3aba588b35bad5c32">DISTANCE_TO_WALK</a> = 800;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div><div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_automatic_walking_handler.html#a9dcd6227868a26551c7f5248096c4bb3">   18</a></span>&#160;<a class="code" href="class_automatic_walking_handler.html#a9dcd6227868a26551c7f5248096c4bb3">AutomaticWalkingHandler::AutomaticWalkingHandler</a>(<a class="code" href="class_sprite.html">Sprite</a>* pParentSprite) : <a class="code" href="class_sprite_tick_handler.html">SpriteTickHandler</a> (pParentSprite) {</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="class_automatic_walking_handler.html#a1dfaf1467e9f136835d8b22b2f01eb09">   24</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_automatic_walking_handler.html#a1dfaf1467e9f136835d8b22b2f01eb09">AutomaticWalkingHandler::init</a>() {</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpropertyanimation.html">QPropertyAnimation</a>* pAnimation = <span class="keyword">new</span> <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpropertyanimation.html">QPropertyAnimation</a>(<a class="code" href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">m_pParentSprite</a>, <span class="stringliteral">&quot;x&quot;</span>); <span class="comment">// La propriété à animer est x (la position x)</span></div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    pAnimation-&gt;<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qvariantanimation.html#duration-prop">setDuration</a>(7000); <span class="comment">// L&#39;animation doit durer 7 secondes</span></div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    pAnimation-&gt;<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qvariantanimation.html#startValue-prop">setStartValue</a>(<a class="code" href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">m_pParentSprite</a>-&gt;<a class="code" href="class_sprite.html#a310ef946cb04bfaf2074da2e91afd082">pos</a>().<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpointf.html#x">x</a>());</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    pAnimation-&gt;<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qvariantanimation.html#endValue-prop">setEndValue</a>(<a class="code" href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">m_pParentSprite</a>-&gt;<a class="code" href="class_sprite.html#a310ef946cb04bfaf2074da2e91afd082">pos</a>().<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpointf.html#x">x</a>() + <a class="code" href="automaticwalkinghandler_8cpp.html#a85319577a88f41e3aba588b35bad5c32">DISTANCE_TO_WALK</a>);</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">// Lorsque l&#39;animation sera terminée, notre slot onWalkFinished() sera automatiquement appelé.</span></div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qobject.html#connect">connect</a>(pAnimation, &amp;<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qabstractanimation.html#finished">QPropertyAnimation::finished</a>, <span class="keyword">this</span>, &amp;<a class="code" href="class_automatic_walking_handler.html#ae4692b9f20d2aad494bb1fa0b38dc412">AutomaticWalkingHandler::onWalkFinished</a>);</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="comment">// Démarrage de l&#39;animation : la propriété x va varier de StartValue à EndValue en 7 secondes.</span></div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">// Lorsque cette animation est terminée, l&#39;objet pointé par pAnimation est automatiquement effacé.</span></div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    pAnimation-&gt;<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qabstractanimation.html#start">start</a>(QAbstractAnimation::DeleteWhenStopped);</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_automatic_walking_handler.html#ad464c41177769f4265aa338adb8f9e5c">   39</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_automatic_walking_handler.html#ad464c41177769f4265aa338adb8f9e5c">AutomaticWalkingHandler::tick</a>(<span class="keywordtype">int</span> elapsedTime) {</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    Q_UNUSED(elapsedTime);</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div><div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_automatic_walking_handler.html#ae4692b9f20d2aad494bb1fa0b38dc412">   45</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_automatic_walking_handler.html#ae4692b9f20d2aad494bb1fa0b38dc412">AutomaticWalkingHandler::onWalkFinished</a>()  {</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">m_pParentSprite</a>-&gt;<a class="code" href="class_sprite.html#a7fc484c57aa07b95311eacf27d789a0c">stopAnimation</a>();</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div><div class="ttc" id="automaticwalkinghandler_8h_html"><div class="ttname"><a href="automaticwalkinghandler_8h.html">automaticwalkinghandler.h</a></div><div class="ttdoc">Déclaration de la classe AutomaticWalkingHandler. </div></div>
+<div class="ttc" id="qabstractanimation_html_finished"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qabstractanimation.html#finished">QAbstractAnimation::finished</a></div><div class="ttdeci">void finished()</div></div>
+<div class="ttc" id="class_automatic_walking_handler_html_ad464c41177769f4265aa338adb8f9e5c"><div class="ttname"><a href="class_automatic_walking_handler.html#ad464c41177769f4265aa338adb8f9e5c">AutomaticWalkingHandler::tick</a></div><div class="ttdeci">void tick(int elapsedTimeInMilliseconds)</div><div class="ttdoc">Cadence : inutilisée. </div><div class="ttdef"><b>Definition:</b> <a href="automaticwalkinghandler_8cpp_source.html#l00039">automaticwalkinghandler.cpp:39</a></div></div>
+<div class="ttc" id="class_sprite_html_a310ef946cb04bfaf2074da2e91afd082"><div class="ttname"><a href="class_sprite.html#a310ef946cb04bfaf2074da2e91afd082">Sprite::pos</a></div><div class="ttdeci">QPointF pos</div><div class="ttdef"><b>Definition:</b> <a href="sprite_8h_source.html#l00091">sprite.h:91</a></div></div>
+<div class="ttc" id="class_sprite_html_a7fc484c57aa07b95311eacf27d789a0c"><div class="ttname"><a href="class_sprite.html#a7fc484c57aa07b95311eacf27d789a0c">Sprite::stopAnimation</a></div><div class="ttdeci">void stopAnimation()</div><div class="ttdoc">Arrête l&amp;#39;animation. </div><div class="ttdef"><b>Definition:</b> <a href="sprite_8cpp_source.html#l00095">sprite.cpp:95</a></div></div>
+<div class="ttc" id="qvariantanimation_html_startValue-prop"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qvariantanimation.html#startValue-prop">QVariantAnimation::setStartValue</a></div><div class="ttdeci">void setStartValue(const QVariant &amp;value)</div></div>
+<div class="ttc" id="class_automatic_walking_handler_html_ae4692b9f20d2aad494bb1fa0b38dc412"><div class="ttname"><a href="class_automatic_walking_handler.html#ae4692b9f20d2aad494bb1fa0b38dc412">AutomaticWalkingHandler::onWalkFinished</a></div><div class="ttdeci">void onWalkFinished()</div><div class="ttdef"><b>Definition:</b> <a href="automaticwalkinghandler_8cpp_source.html#l00045">automaticwalkinghandler.cpp:45</a></div></div>
+<div class="ttc" id="qpointf_html_x"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qpointf.html#x">QPointF::x</a></div><div class="ttdeci">qreal x() const</div></div>
+<div class="ttc" id="qpropertyanimation_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qpropertyanimation.html">QPropertyAnimation</a></div></div>
+<div class="ttc" id="class_sprite_html"><div class="ttname"><a href="class_sprite.html">Sprite</a></div><div class="ttdoc">Classe qui représente un élément d&amp;#39;animation graphique 2D. </div><div class="ttdef"><b>Definition:</b> <a href="sprite_8h_source.html#l00085">sprite.h:85</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html"><div class="ttname"><a href="class_sprite_tick_handler.html">SpriteTickHandler</a></div><div class="ttdoc">Classe abstraite qui représente un gestionnaire de tick pour un sprite. </div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8h_source.html#l00024">spritetickhandler.h:24</a></div></div>
+<div class="ttc" id="class_automatic_walking_handler_html_a1dfaf1467e9f136835d8b22b2f01eb09"><div class="ttname"><a href="class_automatic_walking_handler.html#a1dfaf1467e9f136835d8b22b2f01eb09">AutomaticWalkingHandler::init</a></div><div class="ttdeci">virtual void init()</div><div class="ttdef"><b>Definition:</b> <a href="automaticwalkinghandler_8cpp_source.html#l00024">automaticwalkinghandler.cpp:24</a></div></div>
+<div class="ttc" id="sprite_8h_html"><div class="ttname"><a href="sprite_8h.html">sprite.h</a></div><div class="ttdoc">Déclaration de la classe Sprite. </div></div>
+<div class="ttc" id="qvariantanimation_html_endValue-prop"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qvariantanimation.html#endValue-prop">QVariantAnimation::setEndValue</a></div><div class="ttdeci">void setEndValue(const QVariant &amp;value)</div></div>
+<div class="ttc" id="qvariantanimation_html_duration-prop"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qvariantanimation.html#duration-prop">QVariantAnimation::setDuration</a></div><div class="ttdeci">void setDuration(int msecs)</div></div>
+<div class="ttc" id="class_sprite_tick_handler_html_a4d7b77faf3fc09ca63767f5cb1afcc90"><div class="ttname"><a href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">SpriteTickHandler::m_pParentSprite</a></div><div class="ttdeci">Sprite * m_pParentSprite</div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8h_source.html#l00037">spritetickhandler.h:37</a></div></div>
+<div class="ttc" id="qabstractanimation_html_start"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qabstractanimation.html#start">QAbstractAnimation::start</a></div><div class="ttdeci">void start(QAbstractAnimation::DeletionPolicy policy)</div></div>
+<div class="ttc" id="class_automatic_walking_handler_html_a9dcd6227868a26551c7f5248096c4bb3"><div class="ttname"><a href="class_automatic_walking_handler.html#a9dcd6227868a26551c7f5248096c4bb3">AutomaticWalkingHandler::AutomaticWalkingHandler</a></div><div class="ttdeci">AutomaticWalkingHandler(Sprite *pParentSprite=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="automaticwalkinghandler_8cpp_source.html#l00018">automaticwalkinghandler.cpp:18</a></div></div>
+<div class="ttc" id="qobject_html_connect"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qobject.html#connect">QObject::connect</a></div><div class="ttdeci">QMetaObject::Connection connect(const QObject *sender, const char *signal, const QObject *receiver, const char *method, Qt::ConnectionType type)</div></div>
+<div class="ttc" id="automaticwalkinghandler_8cpp_html_a85319577a88f41e3aba588b35bad5c32"><div class="ttname"><a href="automaticwalkinghandler_8cpp.html#a85319577a88f41e3aba588b35bad5c32">DISTANCE_TO_WALK</a></div><div class="ttdeci">const int DISTANCE_TO_WALK</div><div class="ttdef"><b>Definition:</b> <a href="automaticwalkinghandler_8cpp_source.html#l00014">automaticwalkinghandler.cpp:14</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:17 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

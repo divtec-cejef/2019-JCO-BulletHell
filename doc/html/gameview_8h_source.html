@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework:  Fichier source de gameview.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">gameview.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="gameview_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef GAMEVIEW_H</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define GAMEVIEW_H</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QGraphicsView&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="class_game_view.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_game_view.html">GameView</a> : <span class="keyword">public</span> <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qgraphicsview.html">QGraphicsView</a></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_game_view.html#aabca3ac6b068f51fa32fd73a6481854a">GameView</a>(<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qwidget.html">QWidget</a>* pParent = <span class="keyword">nullptr</span>);</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_game_view.html#aabca3ac6b068f51fa32fd73a6481854a">GameView</a>(<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qgraphicsscene.html">QGraphicsScene</a>* pScene, <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtwidgets.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qwidget.html">QWidget</a>* pParent = <span class="keyword">nullptr</span>);</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_view.html#a01d0a42238c426df5f22245946251d18">setFitToScreenEnabled</a>(<span class="keywordtype">bool</span> fitToScreenEnabled);</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_view.html#af6118debe09ef55369b51dae6561a061">isFitToScreenEnabled</a>() <span class="keyword">const</span>;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_view.html#a4518b2fb02072cae4a9012ce7ee4b3e0">setClipSceneEnabled</a>(<span class="keywordtype">bool</span> clipSceneEnabled);</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_view.html#abde8077a47bc84a48e7fd95337d41a33">isClipSceneEnabled</a>() <span class="keyword">const</span>;</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">protected</span>:</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_view.html#a0927a1a8a2a2afc53a0858d54cf88570">resizeEvent</a>(<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtgui.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qresizeevent.html">QResizeEvent</a>* pEvent);</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_view.html#a8bfcf485874824351c9fa70bdbf23a49">drawForeground</a>(<a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtgui.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qpainter.html">QPainter</a>* pPainter, <span class="keyword">const</span> <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qrectf.html">QRectF</a>&amp; rRect);</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_view.html#aad3fedb73b58a2623d73292aaf6f8f20">init</a>();</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_game_view.html#a83ac585df52f57f750b46e7a03824fdb">   42</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_view.html#a83ac585df52f57f750b46e7a03824fdb">m_fitToScreen</a>;</div><div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_game_view.html#aae10b832204bbf30a0ff34bb6590d082">   43</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_view.html#aae10b832204bbf30a0ff34bb6590d082">m_clipScene</a>;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div><div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_game_view.html#ad4ac343b433a2503a7990383949697b5">   45</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_view.html#ad4ac343b433a2503a7990383949697b5">m_clippingRectUpToDate</a>;</div><div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_game_view.html#a515dd1f2824e900009cadcc2f6853e01">   46</a></span>&#160;    <a class="codeRef" doxygen="C:/Users/conujer.DIVTEC/Documents/work/2018-JCO-GameFramework/src/qtcore.tags:http://qt-project.org/doc/qt-5/" href="http://qt-project.org/doc/qt-5/qrectf.html">QRectF</a> <a class="code" href="class_game_view.html#a515dd1f2824e900009cadcc2f6853e01">m_clippingRect</a>[4];</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif // GAMEVIEW_H</span></div><div class="ttc" id="qresizeevent_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qresizeevent.html">QResizeEvent</a></div></div>
+<div class="ttc" id="qwidget_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qwidget.html">QWidget</a></div></div>
+<div class="ttc" id="qgraphicsscene_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qgraphicsscene.html">QGraphicsScene</a></div></div>
+<div class="ttc" id="class_game_view_html_a0927a1a8a2a2afc53a0858d54cf88570"><div class="ttname"><a href="class_game_view.html#a0927a1a8a2a2afc53a0858d54cf88570">GameView::resizeEvent</a></div><div class="ttdeci">virtual void resizeEvent(QResizeEvent *pEvent)</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00053">gameview.cpp:53</a></div></div>
+<div class="ttc" id="class_game_view_html"><div class="ttname"><a href="class_game_view.html">GameView</a></div><div class="ttdoc">Classe de visualisation d&amp;#39;un espace 2D de jeu. </div><div class="ttdef"><b>Definition:</b> <a href="gameview_8h_source.html#l00023">gameview.h:23</a></div></div>
+<div class="ttc" id="class_game_view_html_a4518b2fb02072cae4a9012ce7ee4b3e0"><div class="ttname"><a href="class_game_view.html#a4518b2fb02072cae4a9012ce7ee4b3e0">GameView::setClipSceneEnabled</a></div><div class="ttdeci">void setClipSceneEnabled(bool clipSceneEnabled)</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00042">gameview.cpp:42</a></div></div>
+<div class="ttc" id="class_game_view_html_a83ac585df52f57f750b46e7a03824fdb"><div class="ttname"><a href="class_game_view.html#a83ac585df52f57f750b46e7a03824fdb">GameView::m_fitToScreen</a></div><div class="ttdeci">bool m_fitToScreen</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8h_source.html#l00042">gameview.h:42</a></div></div>
+<div class="ttc" id="class_game_view_html_a01d0a42238c426df5f22245946251d18"><div class="ttname"><a href="class_game_view.html#a01d0a42238c426df5f22245946251d18">GameView::setFitToScreenEnabled</a></div><div class="ttdeci">void setFitToScreenEnabled(bool fitToScreenEnabled)</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00029">gameview.cpp:29</a></div></div>
+<div class="ttc" id="class_game_view_html_abde8077a47bc84a48e7fd95337d41a33"><div class="ttname"><a href="class_game_view.html#abde8077a47bc84a48e7fd95337d41a33">GameView::isClipSceneEnabled</a></div><div class="ttdeci">bool isClipSceneEnabled() const</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00047">gameview.cpp:47</a></div></div>
+<div class="ttc" id="class_game_view_html_ad4ac343b433a2503a7990383949697b5"><div class="ttname"><a href="class_game_view.html#ad4ac343b433a2503a7990383949697b5">GameView::m_clippingRectUpToDate</a></div><div class="ttdeci">bool m_clippingRectUpToDate</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8h_source.html#l00045">gameview.h:45</a></div></div>
+<div class="ttc" id="qpainter_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qpainter.html">QPainter</a></div></div>
+<div class="ttc" id="class_game_view_html_aad3fedb73b58a2623d73292aaf6f8f20"><div class="ttname"><a href="class_game_view.html#aad3fedb73b58a2623d73292aaf6f8f20">GameView::init</a></div><div class="ttdeci">void init()</div><div class="ttdoc">Initialise cette affichage. </div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00084">gameview.cpp:84</a></div></div>
+<div class="ttc" id="class_game_view_html_af6118debe09ef55369b51dae6561a061"><div class="ttname"><a href="class_game_view.html#af6118debe09ef55369b51dae6561a061">GameView::isFitToScreenEnabled</a></div><div class="ttdeci">bool isFitToScreenEnabled() const</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00035">gameview.cpp:35</a></div></div>
+<div class="ttc" id="class_game_view_html_aabca3ac6b068f51fa32fd73a6481854a"><div class="ttname"><a href="class_game_view.html#aabca3ac6b068f51fa32fd73a6481854a">GameView::GameView</a></div><div class="ttdeci">GameView(QWidget *pParent=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00014">gameview.cpp:14</a></div></div>
+<div class="ttc" id="qrectf_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qrectf.html">QRectF</a></div></div>
+<div class="ttc" id="class_game_view_html_aae10b832204bbf30a0ff34bb6590d082"><div class="ttname"><a href="class_game_view.html#aae10b832204bbf30a0ff34bb6590d082">GameView::m_clipScene</a></div><div class="ttdeci">bool m_clipScene</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8h_source.html#l00043">gameview.h:43</a></div></div>
+<div class="ttc" id="class_game_view_html_a8bfcf485874824351c9fa70bdbf23a49"><div class="ttname"><a href="class_game_view.html#a8bfcf485874824351c9fa70bdbf23a49">GameView::drawForeground</a></div><div class="ttdeci">virtual void drawForeground(QPainter *pPainter, const QRectF &amp;rRect)</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8cpp_source.html#l00067">gameview.cpp:67</a></div></div>
+<div class="ttc" id="qgraphicsview_html"><div class="ttname"><a href="http://qt-project.org/doc/qt-5/qgraphicsview.html">QGraphicsView</a></div></div>
+<div class="ttc" id="class_game_view_html_a515dd1f2824e900009cadcc2f6853e01"><div class="ttname"><a href="class_game_view.html#a515dd1f2824e900009cadcc2f6853e01">GameView::m_clippingRect</a></div><div class="ttdeci">QRectF m_clippingRect[4]</div><div class="ttdef"><b>Definition:</b> <a href="gameview_8h_source.html#l00046">gameview.h:46</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:17 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GameFramework:  Fichier source de spritetickhandler.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GameFramework
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">GameFramework</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">spritetickhandler.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="spritetickhandler_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef SPRITETICKHANDLER_H</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define SPRITETICKHANDLER_H</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">class </span><a class="code" href="class_sprite.html">Sprite</a>;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="class_sprite_tick_handler.html">   24</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_sprite_tick_handler.html">SpriteTickHandler</a></div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_sprite_tick_handler.html#acda6cf250e925007d63ea5d0431e7c5c">SpriteTickHandler</a>(<a class="code" href="class_sprite.html">Sprite</a>* pParentSprite = <span class="keyword">nullptr</span>);</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_sprite_tick_handler.html#a1cb7fb2faf22b20c4c029e3c7ab08bda">~SpriteTickHandler</a>();</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_sprite_tick_handler.html#a107a84168474e213cc06cdc77e4d7b86">setParentSprite</a>(<a class="code" href="class_sprite.html">Sprite</a>* pParentSprite);</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_sprite_tick_handler.html#a2c1c5399a6d61d6489d926acf6349622">   33</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_sprite_tick_handler.html#a2c1c5399a6d61d6489d926acf6349622">init</a>() {}</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_sprite_tick_handler.html#ad47c2532ae4090295ed757971fc3008d">tick</a>(<span class="keywordtype">int</span> elapsedTimeInMilliseconds) = 0;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">protected</span>:</div><div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">   37</a></span>&#160;    <a class="code" href="class_sprite.html">Sprite</a>* <a class="code" href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">m_pParentSprite</a>;</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;};</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif // SPRITETICKHANDLER_H</span></div><div class="ttc" id="class_sprite_tick_handler_html_acda6cf250e925007d63ea5d0431e7c5c"><div class="ttname"><a href="class_sprite_tick_handler.html#acda6cf250e925007d63ea5d0431e7c5c">SpriteTickHandler::SpriteTickHandler</a></div><div class="ttdeci">SpriteTickHandler(Sprite *pParentSprite=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8cpp_source.html#l00013">spritetickhandler.cpp:13</a></div></div>
+<div class="ttc" id="class_sprite_html"><div class="ttname"><a href="class_sprite.html">Sprite</a></div><div class="ttdoc">Classe qui représente un élément d&amp;#39;animation graphique 2D. </div><div class="ttdef"><b>Definition:</b> <a href="sprite_8h_source.html#l00085">sprite.h:85</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html"><div class="ttname"><a href="class_sprite_tick_handler.html">SpriteTickHandler</a></div><div class="ttdoc">Classe abstraite qui représente un gestionnaire de tick pour un sprite. </div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8h_source.html#l00024">spritetickhandler.h:24</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html_ad47c2532ae4090295ed757971fc3008d"><div class="ttname"><a href="class_sprite_tick_handler.html#ad47c2532ae4090295ed757971fc3008d">SpriteTickHandler::tick</a></div><div class="ttdeci">virtual void tick(int elapsedTimeInMilliseconds)=0</div></div>
+<div class="ttc" id="class_sprite_tick_handler_html_a107a84168474e213cc06cdc77e4d7b86"><div class="ttname"><a href="class_sprite_tick_handler.html#a107a84168474e213cc06cdc77e4d7b86">SpriteTickHandler::setParentSprite</a></div><div class="ttdeci">void setParentSprite(Sprite *pParentSprite)</div><div class="ttdoc">Indique quel sprite sera géré par ce gestionnaire. </div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8cpp_source.html#l00023">spritetickhandler.cpp:23</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html_a1cb7fb2faf22b20c4c029e3c7ab08bda"><div class="ttname"><a href="class_sprite_tick_handler.html#a1cb7fb2faf22b20c4c029e3c7ab08bda">SpriteTickHandler::~SpriteTickHandler</a></div><div class="ttdeci">virtual ~SpriteTickHandler()</div><div class="ttdoc">Destructeur. </div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8cpp_source.html#l00018">spritetickhandler.cpp:18</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html_a4d7b77faf3fc09ca63767f5cb1afcc90"><div class="ttname"><a href="class_sprite_tick_handler.html#a4d7b77faf3fc09ca63767f5cb1afcc90">SpriteTickHandler::m_pParentSprite</a></div><div class="ttdeci">Sprite * m_pParentSprite</div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8h_source.html#l00037">spritetickhandler.h:37</a></div></div>
+<div class="ttc" id="class_sprite_tick_handler_html_a2c1c5399a6d61d6489d926acf6349622"><div class="ttname"><a href="class_sprite_tick_handler.html#a2c1c5399a6d61d6489d926acf6349622">SpriteTickHandler::init</a></div><div class="ttdeci">virtual void init()</div><div class="ttdef"><b>Definition:</b> <a href="spritetickhandler_8h_source.html#l00033">spritetickhandler.h:33</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 13 Septembre 2019 14:52:18 pour GameFramework par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>
