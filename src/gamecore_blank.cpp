@@ -9,6 +9,12 @@
 #include <cmath>
 
 #include <QDebug>
+#include <QGraphicsBlurEffect>
+#include <QGraphicsScale>
+#include <QGraphicsSvgItem>
+#include <QParallelAnimationGroup>
+#include <QPropertyAnimation>
+#include <QSequentialAnimationGroup>
 #include <QSettings>
 
 #include "gamescene.h"
@@ -17,7 +23,8 @@
 #include "sprite.h"
 #include "utilities.h"
 
-const int SCENE_WIDTH = 1280;
+const int SCENE_WIDTH = 460;
+const int SCENE_HEIGHT = 800
 
 //! Initialise le contrôleur de jeu.
 //! \param pGameCanvas  GameCanvas pour lequel cet objet travaille.

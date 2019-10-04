@@ -20,7 +20,7 @@ MainFrm::MainFrm(QWidget *pParent) : QWidget(pParent), ui(new Ui::MainFrm) {
     ui->grvGame->setFitToScreenEnabled(true);
 
     // Pour supprimer les marges de la zone de jeu
-    // ui->verticalLayout->setContentsMargins(QMargins(0,0,0,0));
+    ui->verticalLayout->setContentsMargins(QMargins(0,0,0,0));
 }
 
 //! Détruit la fenêtre principale.

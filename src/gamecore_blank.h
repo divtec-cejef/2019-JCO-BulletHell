@@ -7,6 +7,7 @@
 #ifndef GAMECORE_H
 #define GAMECORE_H
 
+#include <QList>
 #include <QObject>
 #include <QPointF>
 
