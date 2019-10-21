@@ -23,6 +23,8 @@
 #include "sprite.h"
 #include "utilities.h"
 #include "blueball.h"
+#include "livingentity.h"
+#include "player.h"
 
 const int SCENE_WIDTH = 700;
 const int SCENE_HEIGHT = 880;
@@ -35,8 +37,9 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Mémorise l'accès au canvas (qui gère le tick et l'affichage d'une scène)
     m_pGameCanvas = pGameCanvas;
 
-    // Initialise la blue ball
-    m_pBall = nullptr;
+    // Initialise le joueur
+    //m_pBall = nullptr;
+    m_pPlayer = nullptr;
 
     // Créé la scène de base et indique au canvas qu'il faut l'afficher.
     m_pScene = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT /*/ GameFramework::screenRatio()*/);
@@ -45,8 +48,9 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Trace un rectangle blanc tout autour des limites de la scène.
     m_pScene->addRect(m_pScene->sceneRect(), QPen(Qt::white));
 
-    // Création de la balle
-    setupBlueBall();
+    // Création du joueur
+    //setupBlueBall();
+    setupPlayer();
 
     // Affichage d'un texte
     QGraphicsSimpleTextItem* pText = m_pScene->createText(QPointF(0,0), "BulletHell", 70);
@@ -78,14 +82,14 @@ GameCore::~GameCore() {
 //!
 void GameCore::keyPressed(int key) {
     emit notifyKeyPressed(key);
-
+    //BlueBall::onKeyPressed(key);
 }
 
 //! Traite le relâchement d'une touche.
 //! \param key Numéro de la touche (voir les constantes Qt)
 void GameCore::keyReleased(int key) {
     emit notifyKeyReleased(key);
-
+    //BlueBall::onKeyReleased(key);
 }
 
 //! Cadence.
@@ -121,4 +125,15 @@ void GameCore::setupBlueBall() {
     connect(this, &GameCore::notifyKeyPressed, pBall, &BlueBall::onKeyPressed);
     connect(this, &GameCore::notifyKeyReleased, pBall, &BlueBall::onKeyReleased);
     m_pBall = pBall;
+}
+
+//! Met en place la démo de la balle bleue.
+void GameCore::setupPlayer() {
+    Player* pPlayer = new Player;
+    pPlayer->setPos(350, 470);
+    pPlayer->setZValue(1);          // Passe devant tous les autres sprites
+    m_pScene->addSpriteToScene(pPlayer);
+    connect(this, &GameCore::notifyKeyPressed, pPlayer, &Player::onKeyPressed);
+    connect(this, &GameCore::notifyKeyReleased, pPlayer, &Player::onKeyReleased);
+    m_pPlayer = pPlayer;
 }

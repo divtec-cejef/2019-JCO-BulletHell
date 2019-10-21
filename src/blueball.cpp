@@ -60,7 +60,6 @@ void BlueBall::onKeyReleased(int key) {
     case Qt::Key_D: m_keyRightPressed = false;  updateBallVelocity(); break;
     case Qt::Key_A:  m_keyLeftPressed  = false;  updateBallVelocity(); break;
     }
-
 }
 
 //! Met à jour le vecteur de vitesse de la balle en fonction des touches appuyées.

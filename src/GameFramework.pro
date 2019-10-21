@@ -30,7 +30,10 @@ SOURCES += main.cpp\
     spritetickhandler.cpp \
     bouncingspritehandler.cpp \
     manualwalkinghandler.cpp \
-    automaticwalkinghandler.cpp
+    automaticwalkinghandler.cpp \
+    livingentity.cpp \
+    player.cpp \
+    enemy.cpp
 
 HEADERS  += mainfrm.h \
     gamescene.h \
@@ -46,6 +49,9 @@ HEADERS  += mainfrm.h \
     spritetickhandler.h \
     bouncingspritehandler.h \
     manualwalkinghandler.h \
-    automaticwalkinghandler.h
+    automaticwalkinghandler.h \
+    livingentity.h \
+    player.h \
+    enemy.h
 
 FORMS    += mainfrm.ui
