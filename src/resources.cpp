@@ -87,7 +87,7 @@ que la compilation se fasse en mode *Release* et que le pseudo-constante `DEPLOY
             resourceDir.cdUp(); // Quitte 'build...'
         #endif
         resourceDir.cd("res");
-//        qDebug() << resourceDir.absolutePath();
+        //qDebug() << resourceDir.absolutePath();
         return resourceDir.absolutePath() + QDir::separator();
     }
 

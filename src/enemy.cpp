@@ -14,7 +14,7 @@ const int ENEMY_VELOCITY = 400; // pixels par seconde
 
 //! Construit et initialise un enemy.
 //! \param pParent  Objet propiétaire de cet objet.
-Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::imagesPath() + "earth.png", pParent) {
+Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::imagesPath() + "Eye_Enemy.png", pParent) {
     m_enemyVelocity = QPointF(0,0);
     m_enemyCollidePlayer = true;
 

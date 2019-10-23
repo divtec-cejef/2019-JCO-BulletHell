@@ -11,7 +11,7 @@ const int PLAYER_VELOCITY = 400; // pixels par seconde
 
 //! Construit et initialise une balle bleue.
 //! \param pParent  Objet propiétaire de cet objet.
-Player::Player(QGraphicsItem* pParent) : LivingEntity(GameFramework::imagesPath() + "brique_small.png", pParent) {
+Player::Player(QGraphicsItem* pParent) : LivingEntity(GameFramework::imagesPath() + "player.png", pParent) {
     m_keyUpPressed    = false;
     m_keyDownPressed  = false;
     m_keyLeftPressed  = false;

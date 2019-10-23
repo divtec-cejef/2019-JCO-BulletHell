@@ -25,6 +25,7 @@
 #include "blueball.h"
 #include "livingentity.h"
 #include "player.h"
+#include "enemy.h"
 
 const int SCENE_WIDTH = 700;
 const int SCENE_HEIGHT = 880;
@@ -40,6 +41,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Initialise le joueur
     //m_pBall = nullptr;
     m_pPlayer = nullptr;
+    m_pEnemy = nullptr;
 
     // Créé la scène de base et indique au canvas qu'il faut l'afficher.
     m_pScene = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT /*/ GameFramework::screenRatio()*/);
@@ -51,6 +53,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Création du joueur
     //setupBlueBall();
     setupPlayer();
+    setupEnemy();
 
     // Affichage d'un texte
     QGraphicsSimpleTextItem* pText = m_pScene->createText(QPointF(0,0), "BulletHell", 70);
@@ -136,4 +139,13 @@ void GameCore::setupPlayer() {
     connect(this, &GameCore::notifyKeyPressed, pPlayer, &Player::onKeyPressed);
     connect(this, &GameCore::notifyKeyReleased, pPlayer, &Player::onKeyReleased);
     m_pPlayer = pPlayer;
+}
+
+//! Met en place la démo de la balle bleue.
+void GameCore::setupEnemy() {
+    Enemy* pEnemy = new Enemy;
+    pEnemy->setPos(350, 100);
+    pEnemy->setZValue(1);          // Passe devant tous les autres sprites
+    m_pScene->addSpriteToScene(pEnemy);
+    m_pEnemy = pEnemy;
 }
