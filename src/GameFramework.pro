@@ -24,11 +24,8 @@ SOURCES += main.cpp\
     gameview.cpp \
     utilities.cpp \
     gamecanvas.cpp \
-    walkingman.cpp \
     blueball.cpp \
-    spinningpinwheel.cpp \
     spritetickhandler.cpp \
-    bouncingspritehandler.cpp \
     manualwalkinghandler.cpp \
     automaticwalkinghandler.cpp \
     livingentity.cpp \
@@ -43,11 +40,8 @@ HEADERS  += mainfrm.h \
     gameview.h \
     utilities.h \
     gamecanvas.h \
-    walkingman.h \
     blueball.h \
-    spinningpinwheel.h \
     spritetickhandler.h \
-    bouncingspritehandler.h \
     manualwalkinghandler.h \
     automaticwalkinghandler.h \
     livingentity.h \

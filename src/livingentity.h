@@ -16,7 +16,10 @@ class LivingEntity : public Sprite
     Q_OBJECT
 public:
     LivingEntity(const QPixmap& rPixmap, QGraphicsItem* pParent = nullptr);
+    LivingEntity(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
+protected:
+    virtual void configureAnimation() = 0;
 
 private:
     QPointF m_livingEntityVelocity;

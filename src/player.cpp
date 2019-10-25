@@ -8,16 +8,21 @@
 #include "resources.h"
 
 const int PLAYER_VELOCITY = 400; // pixels par seconde
+const int FRAME_WIDTH = 63;
+const int FRAME_HEIGHT = 56;
+const int FRAME_COUNT = 5;
+const int COLUMN_COUNT = 5;
+const float SCALE_RATIO = 1.5F;
 
 //! Construit et initialise une balle bleue.
 //! \param pParent  Objet propiétaire de cet objet.
-Player::Player(QGraphicsItem* pParent) : LivingEntity(GameFramework::imagesPath() + "player.png", pParent) {
+Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(GameFramework::imagesPath() + "player.png", pParent)*/ {
     m_keyUpPressed    = false;
     m_keyDownPressed  = false;
     m_keyLeftPressed  = false;
     m_keyRightPressed = false;
     m_playerVelocity = QPointF(0,0);
-
+    configureAnimation();
 }
 
 //! Cadence.
@@ -35,6 +40,41 @@ void Player::tick(int elapsedTimeInMilliseconds) {
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + playerDistance);
     }
+}
+
+//! Découpe la spritesheet pour en extraire les étapes d'animation et
+//! les ajouter au sprite.
+void Player::configureAnimation() {
+
+    // Chargement de la spritesheet
+    QImage spriteSheet(GameFramework::imagesPath() + "player-flight.png");
+
+    // Découpage de la spritesheet
+    for (int frameIndex = 0; frameIndex < FRAME_COUNT; frameIndex++) {
+        QImage sprite = spriteSheet.copy((frameIndex % COLUMN_COUNT) * FRAME_WIDTH,
+                                         (frameIndex / COLUMN_COUNT) * FRAME_HEIGHT,
+                                         FRAME_WIDTH, FRAME_HEIGHT);
+
+        this->addAnimationFrame(QPixmap::fromImage(sprite.scaled(FRAME_WIDTH * SCALE_RATIO,
+                                                                 FRAME_HEIGHT * SCALE_RATIO,
+                                                                 Qt::IgnoreAspectRatio,
+                                                                 Qt::SmoothTransformation)));
+    }
+
+    this->setAnimationSpeed(100);
+    updateAnimationState();
+
+}
+
+//! Active ou désactive l'animation selon si la roue est visible ou non.
+void Player::updateAnimationState() {
+
+    if (this->isVisible()) {
+        this->startAnimation();
+    } else {
+        this->stopAnimation();
+    }
+
 }
 
 //! Une touche a été appuyée.

@@ -21,6 +21,8 @@ public slots:
 
 private:
     void updatePlayerVelocity();
+    virtual void configureAnimation();
+    void updateAnimationState();
 
     QPointF m_playerVelocity;
     bool m_keyUpPressed;

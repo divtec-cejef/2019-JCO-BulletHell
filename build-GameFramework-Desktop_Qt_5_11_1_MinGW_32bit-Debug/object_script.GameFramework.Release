@@ -8,11 +8,8 @@ INPUT(
 ./release\gameview.o
 ./release\utilities.o
 ./release\gamecanvas.o
-./release\walkingman.o
 ./release\blueball.o
-./release\spinningpinwheel.o
 ./release\spritetickhandler.o
-./release\bouncingspritehandler.o
 ./release\manualwalkinghandler.o
 ./release\automaticwalkinghandler.o
 ./release\livingentity.o
@@ -23,9 +20,7 @@ INPUT(
 ./release\moc_sprite.o
 ./release\moc_gamecore.o
 ./release\moc_gamecanvas.o
-./release\moc_walkingman.o
 ./release\moc_blueball.o
-./release\moc_spinningpinwheel.o
 ./release\moc_automaticwalkinghandler.o
 ./release\moc_livingentity.o
 ./release\moc_enemy.o

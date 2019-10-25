@@ -11,7 +11,7 @@
 #include "gamescene.h"
 #include "sprite.h"
 
-const int DEFAULT_WALKING_SPEED = 115; // pixels par seconde
+const int DEFAULT_WALKING_SPEED = 100; // pixels par seconde
 
 //! Constructeur.
 //! \param pParentSprite Sprite dont le déplacement doit être géré.

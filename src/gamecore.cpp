@@ -22,7 +22,7 @@
 #include "resources.h"
 #include "sprite.h"
 #include "utilities.h"
-#include "blueball.h"
+#include "manualwalkinghandler.h"
 #include "livingentity.h"
 #include "player.h"
 #include "enemy.h"
@@ -39,8 +39,8 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_pGameCanvas = pGameCanvas;
 
     // Initialise le joueur
-    //m_pBall = nullptr;
     m_pPlayer = nullptr;
+    // Initialise l'ennemi
     m_pEnemy = nullptr;
 
     // Créé la scène de base et indique au canvas qu'il faut l'afficher.
@@ -51,8 +51,8 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_pScene->addRect(m_pScene->sceneRect(), QPen(Qt::white));
 
     // Création du joueur
-    //setupBlueBall();
     setupPlayer();
+    // Création de l'ennemi
     setupEnemy();
 
     // Affichage d'un texte
@@ -119,18 +119,7 @@ void GameCore::mouseButtonReleased(QPointF mousePosition, Qt::MouseButtons butto
     emit notifyMouseButtonReleased(mousePosition, buttons);
 }
 
-//! Met en place la démo de la balle bleue.
-void GameCore::setupBlueBall() {
-    BlueBall* pBall = new BlueBall;
-    pBall->setPos(0, 470);
-    pBall->setZValue(1);          // Passe devant tous les autres sprites
-    m_pScene->addSpriteToScene(pBall);
-    connect(this, &GameCore::notifyKeyPressed, pBall, &BlueBall::onKeyPressed);
-    connect(this, &GameCore::notifyKeyReleased, pBall, &BlueBall::onKeyReleased);
-    m_pBall = pBall;
-}
-
-//! Met en place la démo de la balle bleue.
+//! Met en place le joueur
 void GameCore::setupPlayer() {
     Player* pPlayer = new Player;
     pPlayer->setPos(350, 470);
@@ -141,11 +130,13 @@ void GameCore::setupPlayer() {
     m_pPlayer = pPlayer;
 }
 
-//! Met en place la démo de la balle bleue.
+//! Met en place l'ennemi
 void GameCore::setupEnemy() {
     Enemy* pEnemy = new Enemy;
     pEnemy->setPos(350, 100);
     pEnemy->setZValue(1);          // Passe devant tous les autres sprites
     m_pScene->addSpriteToScene(pEnemy);
+    //Ajoute le déplacement manuel tirer du walkingman
+    pEnemy->setTickHandler(new ManualWalkingHandler);
     m_pEnemy = pEnemy;
 }

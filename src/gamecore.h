@@ -47,14 +47,12 @@ signals:
 
 private:
 
-    void setupBlueBall();
     void setupPlayer();
     void setupEnemy();
 
     GameCanvas* m_pGameCanvas;
     GameScene* m_pScene;
 
-    Sprite* m_pBall;
     Sprite* m_pPlayer;
     Sprite* m_pEnemy;
 

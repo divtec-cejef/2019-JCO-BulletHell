@@ -14,6 +14,10 @@ LivingEntity::LivingEntity(const QPixmap& rPixmap, QGraphicsItem* pParent) : Spr
 
 }
 
+LivingEntity::LivingEntity(QGraphicsItem* pParent) : Sprite(pParent){
+
+}
+
 //! Cadence.
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le dernier appel.
 void LivingEntity::tick(int elapsedTimeInMilliseconds){
