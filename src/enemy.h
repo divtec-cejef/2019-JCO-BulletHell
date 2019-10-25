@@ -37,9 +37,11 @@ public slots:
 private:
     void updateEnemyVelocity();
     virtual void configureAnimation();
+    virtual void updateVelocity();
 
     QPointF m_enemyVelocity;
     bool m_enemyCollidePlayer;
+    int health;
 
 };
 

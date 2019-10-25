@@ -10,6 +10,8 @@
 
 #include "gamescene.h"
 #include "sprite.h"
+#include "enemy.h"
+
 
 const int DEFAULT_WALKING_SPEED = 100; // pixels par seconde
 
@@ -40,7 +42,8 @@ void ManualWalkingHandler::tick(int elapsedTime) {
     m_pParentSprite->setPos(currentPos);
 
     // Le sprite touche-t-il un mur ?
-    if (! (static_cast<GameScene*>(m_pParentSprite->scene())->collidingSprites(m_pParentSprite).isEmpty())) {
+    if (!(static_cast<GameScene*>(m_pParentSprite->scene())->collidingSprites(m_pParentSprite).isEmpty()) ||
+        !(m_pParentSprite->parentScene()->isInsideScene(m_pParentSprite->globalBoundingBox()))) {
         if (m_walkingDirection == WALKING_RIGHT)  {
             // Il se déplaçait à droite : on le fait tourner à gauche
             m_pParentSprite->setTransformations(m_transformsForFlip); // Flip horizontal
@@ -50,7 +53,23 @@ void ManualWalkingHandler::tick(int elapsedTime) {
         }
         changeWalkingDirection();
     }
+    /*
+    Sprite::tick(elapsedTimeInMilliseconds);
+
+    // Calcul de la distance parcourue par la balle, selon sa vitesse et le temps écoulé.
+    QPointF enemyDistance = elapsedTimeInMilliseconds * m_enemyVelocity / 1000.;
+
+    // Positionne la bounding box de la balle à sa prochaine position.
+    QRectF nextRect = this->globalBoundingBox().translated(enemyDistance);
+
+    // Si la prochaine position reste dans les limites de la scène, l'ennemi
+    // y est positionnée. Sinon, elle reste sur place.
+    if (isInsideScene(nextRect)) {
+        this->setPos(this->pos() + enemyDistance);
+    }
+    */
 }
+
 
 //! Change la vitesse de marche.
 //! \param walkingSpeed     Nouvelle vitesse de déplacement.

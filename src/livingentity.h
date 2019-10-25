@@ -20,6 +20,7 @@ public:
     virtual void tick(int elapsedTimeInMilliseconds);
 protected:
     virtual void configureAnimation() = 0;
+    virtual void updateVelocity() = 0;
 
 private:
     QPointF m_livingEntityVelocity;

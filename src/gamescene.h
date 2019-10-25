@@ -61,6 +61,9 @@ public:
 
     virtual void tick(int elapsedTimeInMilliseconds);
 
+    bool isInsideScene(const QPointF& rPosition) const;
+    bool isInsideScene(const QRectF& rRect) const;
+
 protected:
     virtual void drawBackground(QPainter* pPainter, const QRectF& rRect);
 

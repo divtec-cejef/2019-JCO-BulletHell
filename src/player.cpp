@@ -47,7 +47,7 @@ void Player::tick(int elapsedTimeInMilliseconds) {
 void Player::configureAnimation() {
 
     // Chargement de la spritesheet
-    QImage spriteSheet(GameFramework::imagesPath() + "player-flight.png");
+    QImage spriteSheet(GameFramework::playerImagesPath() + "player-flight.png");
 
     // Découpage de la spritesheet
     for (int frameIndex = 0; frameIndex < FRAME_COUNT; frameIndex++) {
@@ -81,10 +81,10 @@ void Player::updateAnimationState() {
 //! \param key Code de la touche appuyée.
 void Player::onKeyPressed(int key) {
     switch (key)  {
-    case Qt::Key_W:    m_keyUpPressed    = true;  updatePlayerVelocity(); break;
-    case Qt::Key_S:  m_keyDownPressed  = true;  updatePlayerVelocity(); break;
-    case Qt::Key_D: m_keyRightPressed = true;  updatePlayerVelocity(); break;
-    case Qt::Key_A:  m_keyLeftPressed  = true;  updatePlayerVelocity(); break;
+    case Qt::Key_W:    m_keyUpPressed    = true;  updateVelocity(); break;
+    case Qt::Key_S:  m_keyDownPressed  = true;  updateVelocity(); break;
+    case Qt::Key_D: m_keyRightPressed = true;  updateVelocity(); break;
+    case Qt::Key_A:  m_keyLeftPressed  = true;  updateVelocity(); break;
     }
 }
 
@@ -92,15 +92,15 @@ void Player::onKeyPressed(int key) {
 //! \param key Code de la touche relâchée.
 void Player::onKeyReleased(int key) {
     switch (key)  {
-    case Qt::Key_W:    m_keyUpPressed    = false;  updatePlayerVelocity(); break;
-    case Qt::Key_S:  m_keyDownPressed  = false;  updatePlayerVelocity(); break;
-    case Qt::Key_D: m_keyRightPressed = false;  updatePlayerVelocity(); break;
-    case Qt::Key_A:  m_keyLeftPressed  = false;  updatePlayerVelocity(); break;
+    case Qt::Key_W:    m_keyUpPressed    = false;  updateVelocity(); break;
+    case Qt::Key_S:  m_keyDownPressed  = false;  updateVelocity(); break;
+    case Qt::Key_D: m_keyRightPressed = false;  updateVelocity(); break;
+    case Qt::Key_A:  m_keyLeftPressed  = false;  updateVelocity(); break;
     }
 }
 
 //! Met à jour le vecteur de vitesse de la balle en fonction des touches appuyées.
-void Player::updatePlayerVelocity()  {
+void Player::updateVelocity()  {
     int XVelocity = 0;
     int YVelocity = 0;
     if (m_keyUpPressed)    YVelocity = -PLAYER_VELOCITY;

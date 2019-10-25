@@ -22,6 +22,7 @@ public slots:
 private:
     void updatePlayerVelocity();
     virtual void configureAnimation();
+    virtual void updateVelocity();
     void updateAnimationState();
 
     QPointF m_playerVelocity;

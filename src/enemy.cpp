@@ -14,7 +14,7 @@ const int ENEMY_VELOCITY = 400; // pixels par seconde
 
 //! Construit et initialise un enemy.
 //! \param pParent  Objet propiétaire de cet objet.
-Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::imagesPath() + "Eye_Enemy1.png", pParent) {
+Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::enemyImagesPath() + "Eye_Enemy1.png", pParent) {
     m_enemyVelocity = QPointF(0,0);
     m_enemyCollidePlayer = true;
     configureAnimation();
@@ -32,25 +32,26 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
     // Positionne la bounding box de la balle à sa prochaine position.
     QRectF nextRect = this->globalBoundingBox().translated(enemyDistance);
 
-    // Si la prochaine position reste dans les limites de la scène, la balle
+    // Si la prochaine position reste dans les limites de la scène, l'ennemi
     // y est positionnée. Sinon, elle reste sur place.
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + enemyDistance);
     }
+
 }
 
 //! Charge les différentes images qui composent l'animation de l'ennemi et
 //! les ajoute à ce sprite.
 void Enemy::configureAnimation() {
     for (int FrameNumber = 1; FrameNumber <= 2; ++FrameNumber)  {
-        this->addAnimationFrame(QString(GameFramework::imagesPath() + "Eye_Enemy%1.png").arg(FrameNumber));
+        this->addAnimationFrame(QString(GameFramework::enemyImagesPath() + "Eye_Enemy%1.png").arg(FrameNumber));
     }
     this->setAnimationSpeed(100);  // Passe à la prochaine image de la marche toutes les 100 ms
     this->startAnimation();
 }
 
 //! Met à jour le vecteur de vitesse de l'ennemi en fonction des touches appuyées.
-void Enemy::updateEnemyVelocity()  {
+void Enemy::updateVelocity()  {
     int XVelocity = 0;
     int YVelocity = 0;
     /*

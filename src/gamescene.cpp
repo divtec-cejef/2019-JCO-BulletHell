@@ -172,6 +172,25 @@ void GameScene::setHeight(int sceneHeight)  {
     setSceneRect(0,0, width(), sceneHeight);
 }
 
+//! Vérifie si la position donnée fait partie de la scène.
+//! \param rPosition Position à vérifier.
+//! \return un booléen à vrai si la position fait partie de la scène, sinon
+//! faux.
+bool GameScene::isInsideScene(const QPointF &rPosition) const
+{
+    return sceneRect().contains(rPosition);;
+
+}
+
+//! Vérifie si le rectangle donné fait complètement partie de la scène.
+//! \param rRect Rectangle à vérifier
+//! \return un booléen à vrai si le rectangle fait partie de la scène, sinon
+//! faux.
+bool GameScene::isInsideScene(const QRectF &rRect) const
+{
+    return sceneRect().contains(rRect);
+}
+
 //! Cadence.
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le tick précédent.
 void GameScene::tick(int elapsedTimeInMilliseconds) {

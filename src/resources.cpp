@@ -97,4 +97,16 @@ que la compilation se fasse en mode *Release* et que le pseudo-constante `DEPLOY
     QString imagesPath() {
         return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
     }
+    QString playerImagesPath() {
+        return imagesPath() + QString("Entity") + QDir::separator() + QString("Player") + QDir::separator();
+        //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator() + QString("Entity") + QDir::separator() + QString("Player");
+    }
+    QString enemyImagesPath() {
+        return imagesPath() + QString("Entity") + QDir::separator() + QString("Enemy") + QDir::separator();
+        //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
+    }
+    QString itemsImagesPath() {
+        return imagesPath() + QString("Entity") + QDir::separator() + QString("Items") + QDir::separator();
+        //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
+    }
 }
