@@ -125,7 +125,7 @@ public:
     int right() const { return static_cast<int>(globalBoundingBox().right()); }
     int bottom() const { return static_cast<int>(globalBoundingBox().bottom()); }
 
-    void setParentScene(const GameScene* pScene);
+    void setParentScene(GameScene *pScene);
 
     enum { SpriteItemType = UserType + 1 };
     virtual int type() const { return SpriteItemType; }
@@ -136,7 +136,7 @@ public:
     SpriteTickHandler* tickHandler() const;
     void removeTickHandler();
 
-    const GameScene* parentScene() const;
+    GameScene *parentScene() const;
 
 #if defined(DEBUG_BBOX) || defined(DEBUG_SHAPE)
     virtual void paint(QPainter* pPainter, const QStyleOptionGraphicsItem* pOption, QWidget* pWidget = 0);
@@ -159,7 +159,7 @@ protected:
     QList<Sprite*> collidingSprites(const QPainterPath& rShape) const;
     bool isInsideScene(const QPointF& rPosition) const;
     bool isInsideScene(const QRectF& rRect) const;
-    const GameScene* m_pParentScene;
+    GameScene* m_pParentScene;
 
 private:
     static int s_spriteCount;

@@ -105,7 +105,7 @@ que la compilation se fasse en mode *Release* et que le pseudo-constante `DEPLOY
         return imagesPath() + QString("Entity") + QDir::separator() + QString("Enemy") + QDir::separator();
         //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
     }
-    QString itemsImagesPath() {
+    QString itemImagesPath() {
         return imagesPath() + QString("Entity") + QDir::separator() + QString("Items") + QDir::separator();
         //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
     }

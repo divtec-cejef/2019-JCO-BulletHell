@@ -21,6 +21,7 @@ public:
 protected:
     virtual void configureAnimation() = 0;
     virtual void updateVelocity() = 0;
+    virtual void tirer() = 0;
 
 private:
     QPointF m_livingEntityVelocity;

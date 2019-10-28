@@ -38,6 +38,10 @@ public:
 
     void tick(int elapsedTimeInMilliseconds);
 
+    // La scene est en public pour que le joueur puisse ajouter ses
+    // balles dans la scene
+    GameScene* m_pScene;
+
 signals:
     void notifyMouseMoved(QPointF newMousePosition);
     void notifyMouseButtonPressed(QPointF mousePosition, Qt::MouseButtons buttons);
@@ -51,10 +55,12 @@ private:
     void setupEnemy();
 
     GameCanvas* m_pGameCanvas;
-    GameScene* m_pScene;
+
 
     Sprite* m_pPlayer;
     Sprite* m_pEnemy;
+
+    bool m_keySpacePressed;
 
 private slots:
 

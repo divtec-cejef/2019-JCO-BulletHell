@@ -26,6 +26,8 @@
 #include "livingentity.h"
 #include "player.h"
 #include "enemy.h"
+#include "item.h"
+#include "bullet.h"
 
 const int SCENE_WIDTH = 700;
 const int SCENE_HEIGHT = 880;
@@ -45,6 +47,8 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
 
     // Créé la scène de base et indique au canvas qu'il faut l'afficher.
     m_pScene = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT /*/ GameFramework::screenRatio()*/);
+    QImage img(GameFramework::imagesPath() + "background.png");
+    m_pScene->setBackgroundImage(img);
     pGameCanvas->setCurrentScene(m_pScene);
 
     // Trace un rectangle blanc tout autour des limites de la scène.
@@ -64,8 +68,9 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
                     "s : Se déplacer en bas\n"
                     "d : Se déplacer à droite\n"
                     "a : Se déplacer à gauche\n"
+                    "space : Tirer\n"
                     "ctrl+shift+i : affiche des informations sur la cadence.";
-    m_pScene->createText(QPointF(10,780), texte, 15);
+    m_pScene->createText(QPointF(10,750), texte, 15);
 
     // Démarre le tick pour que les animations qui en dépendent fonctionnent correctement.
     // Attention : il est important que l'enclenchement du tick soit fait vers la fin de cette fonction,
@@ -99,6 +104,7 @@ void GameCore::keyReleased(int key) {
 //! Gère le déplacement de la Terre qui tourne en cercle.
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le dernier appel.
 void GameCore::tick(int elapsedTimeInMilliseconds) {
+
 }
 
 //! La souris a été déplacée.
@@ -118,6 +124,7 @@ void GameCore::mouseButtonPressed(QPointF mousePosition, Qt::MouseButtons button
 void GameCore::mouseButtonReleased(QPointF mousePosition, Qt::MouseButtons buttons) {
     emit notifyMouseButtonReleased(mousePosition, buttons);
 }
+
 
 //! Met en place le joueur
 void GameCore::setupPlayer() {

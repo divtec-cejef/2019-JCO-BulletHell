@@ -6,6 +6,9 @@
 */
 #include "player.h"
 #include "resources.h"
+#include "bullet.h"
+#include "gamecore.h"
+#include "gamescene.h"
 
 const int PLAYER_VELOCITY = 400; // pixels par seconde
 const int FRAME_WIDTH = 63;
@@ -21,6 +24,7 @@ Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(Gam
     m_keyDownPressed  = false;
     m_keyLeftPressed  = false;
     m_keyRightPressed = false;
+    m_keySpacePressed = false;
     m_playerVelocity = QPointF(0,0);
     configureAnimation();
 }
@@ -85,6 +89,7 @@ void Player::onKeyPressed(int key) {
     case Qt::Key_S:  m_keyDownPressed  = true;  updateVelocity(); break;
     case Qt::Key_D: m_keyRightPressed = true;  updateVelocity(); break;
     case Qt::Key_A:  m_keyLeftPressed  = true;  updateVelocity(); break;
+    case Qt::Key_Space: m_keySpacePressed = true; tirer(); break;
     }
 }
 
@@ -96,6 +101,7 @@ void Player::onKeyReleased(int key) {
     case Qt::Key_S:  m_keyDownPressed  = false;  updateVelocity(); break;
     case Qt::Key_D: m_keyRightPressed = false;  updateVelocity(); break;
     case Qt::Key_A:  m_keyLeftPressed  = false;  updateVelocity(); break;
+    case Qt::Key_Space: m_keySpacePressed = false; tirer(); break;
     }
 }
 
@@ -109,5 +115,17 @@ void Player::updateVelocity()  {
     if (m_keyLeftPressed)  XVelocity = -PLAYER_VELOCITY;
 
     m_playerVelocity = QPoint(XVelocity, YVelocity);
+}
+
+void Player::tirer(){
+    if(m_keySpacePressed){
+        Bullet* pBullet = new Bullet;
+        pBullet->setPos(this->pos());
+        pBullet->setZValue(1);          // Passe devant tous les autres sprites
+        this->parentScene()->addSpriteToScene(pBullet);
+
+        pBullet->updateVelocity(0,-800);
+
+    }
 }
 

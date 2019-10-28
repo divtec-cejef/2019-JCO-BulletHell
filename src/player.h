@@ -14,7 +14,6 @@ class Player : public LivingEntity
 public:
     Player(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
-
 public slots:
     void onKeyPressed(int key);
     void onKeyReleased(int key);
@@ -23,6 +22,7 @@ private:
     void updatePlayerVelocity();
     virtual void configureAnimation();
     virtual void updateVelocity();
+    virtual void tirer();
     void updateAnimationState();
 
     QPointF m_playerVelocity;
@@ -30,6 +30,7 @@ private:
     bool m_keyDownPressed;
     bool m_keyLeftPressed;
     bool m_keyRightPressed;
+    bool m_keySpacePressed;
 };
 
 #endif // PLAYER_H

@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     automaticwalkinghandler.cpp \
     livingentity.cpp \
     player.cpp \
-    enemy.cpp
+    enemy.cpp \
+    bullet.cpp \
+    item.cpp
 
 HEADERS  += mainfrm.h \
     gamescene.h \
@@ -46,6 +48,8 @@ HEADERS  += mainfrm.h \
     automaticwalkinghandler.h \
     livingentity.h \
     player.h \
-    enemy.h
+    enemy.h \
+    bullet.h \
+    item.h
 
 FORMS    += mainfrm.ui

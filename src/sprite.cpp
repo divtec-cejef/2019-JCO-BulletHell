@@ -133,7 +133,7 @@ bool Sprite::isEmitSignalEndOfAnimationEnabled() const {
 
 //! Mémorise la scène à laquelle appartient ce sprite.
 //! \param pScene  Scène à laquelle appartient ce sprite.
-void Sprite::setParentScene(const GameScene* pScene) {
+void Sprite::setParentScene(GameScene* pScene) {
     m_pParentScene = pScene;
 }
 
@@ -185,7 +185,7 @@ void Sprite::removeTickHandler() {
 }
 
 //! \return un pointeur sur la scène à laquelle appartient ce sprite.
-const GameScene* Sprite::parentScene() const {
+GameScene* Sprite::parentScene() const {
     return m_pParentScene;
 }
 
