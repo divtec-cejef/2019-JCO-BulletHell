@@ -9,8 +9,13 @@
 #include "resources.h"
 
 #include <QDebug>
+#include <bullet.h>
+#include "gamecore.h"
+#include "gamescene.h"
 
 const int ENEMY_VELOCITY = 400; // pixels par seconde
+const int TIME_BEFORE_SHOOT = 100; // temps à attendre avant de shoot
+int compteurMilliseconds = 0;
 
 //! Construit et initialise un ennemi.
 //! \param pParent  Objet propiétaire de cet objet.
@@ -37,6 +42,13 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
         this->setPos(this->pos() + enemyDistance);
     }
 
+    qDebug() << "elapsedTimeInMilliseconds" << elapsedTimeInMilliseconds;
+    qDebug() << "compteur milliseconds" << compteurMilliseconds;
+    if(compteurMilliseconds == TIME_BEFORE_SHOOT){
+        shoot();
+        compteurMilliseconds = 0;
+    }
+    compteurMilliseconds++;
 }
 
 //! Charge les différentes images qui composent l'animation de l'ennemi et
@@ -64,6 +76,18 @@ void Enemy::updateVelocity()  {
     m_enemyVelocity = QPoint(XVelocity, YVelocity);
 }
 
-void Enemy::tirer(){
+//! Créer un objet de type Bullet et l'envoi dans une direction
+void Enemy::shoot(){
+    Bullet* pBullet = new Bullet;
+    pBullet->m_emitter = Bullet::BulletEmitter::ENEMY;
+    pBullet->setPos(QPointF(this->x()+(this->width()/2),this->bottom()));
+    pBullet->setZValue(1);          // Passe devant tous les autres sprites
+    this->parentScene()->addSpriteToScene(pBullet);
+    pBullet->updateVelocity(0,800);
+}
 
+//! Gère la mort de l'ennemi
+void Enemy::death(){
+
+    delete this;
 }

@@ -43,7 +43,6 @@ public:
     ~GameScene();
 
     void addSpriteToScene(Sprite* pSprite);
-
     QList<Sprite*> collidingSprites(const Sprite* pSprite) const;
     QList<Sprite*> collidingSprites(const QRectF& rRect) const;
     QList<Sprite*> collidingSprites(const QPainterPath& rShape) const;

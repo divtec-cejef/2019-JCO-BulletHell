@@ -44,7 +44,8 @@ class Enemy : public LivingEntity
         void updateEnemyVelocity();
         virtual void configureAnimation();
         virtual void updateVelocity();
-        virtual void tirer();
+        virtual void shoot();
+        virtual void death();
 
         QPointF m_enemyVelocity;
         bool m_enemyCollidePlayer;

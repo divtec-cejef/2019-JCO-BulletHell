@@ -42,16 +42,16 @@ void ManualWalkingHandler::tick(int elapsedTime) {
     m_pParentSprite->setPos(currentPos);
 
     // Le sprite touche-t-il un mur ?
-    if (!(static_cast<GameScene*>(m_pParentSprite->scene())->collidingSprites(m_pParentSprite).isEmpty()) ||
+    if (/*!(static_cast<GameScene*>(m_pParentSprite->scene())->collidingSprites(m_pParentSprite).isEmpty()) ||*/
         !(m_pParentSprite->parentScene()->isInsideScene(m_pParentSprite->globalBoundingBox()))) {
-        if (m_walkingDirection == WALKING_RIGHT)  {
-            // Il se déplaçait à droite : on le fait tourner à gauche
-            m_pParentSprite->setTransformations(m_transformsForFlip); // Flip horizontal
-        } else {
-            // Il se déplaçait à gauche : on le fait tourner à droite
-            m_pParentSprite->setTransformations(QList<QGraphicsTransform*>());
-        }
-        changeWalkingDirection();
+            if (m_walkingDirection == WALKING_RIGHT)  {
+                // Il se déplaçait à droite : on le fait tourner à gauche
+                m_pParentSprite->setTransformations(m_transformsForFlip); // Flip horizontal
+            } else {
+                // Il se déplaçait à gauche : on le fait tourner à droite
+                m_pParentSprite->setTransformations(QList<QGraphicsTransform*>());
+            }
+            changeWalkingDirection();
     }
 }
 

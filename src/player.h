@@ -22,7 +22,8 @@ private:
     void updatePlayerVelocity();
     virtual void configureAnimation();
     virtual void updateVelocity();
-    virtual void tirer();
+    virtual void shoot();
+    virtual void death();
     void updateAnimationState();
 
     QPointF m_playerVelocity;

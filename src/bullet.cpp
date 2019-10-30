@@ -16,6 +16,7 @@ const int BULLET_VELOCITY = 600; // pixels par seconde
 //! \param pParent  Objet propiétaire de cet objet.
 Bullet::Bullet(QGraphicsItem* pParent) : Item(GameFramework::itemImagesPath() + "bullet.png", pParent)
 {
+    m_emitter = PLAYER;
     m_bulletVelocity = QPointF(0,0);
 }
 
@@ -35,6 +36,8 @@ void Bullet::tick(int elapsedTimeInMilliseconds) {
     // y est positionnée. Sinon, elle reste sur place.
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + bulletDistance);
+    }else{
+        delete this;
     }
 
 }

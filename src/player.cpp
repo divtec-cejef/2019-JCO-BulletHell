@@ -89,7 +89,7 @@ void Player::onKeyPressed(int key) {
     case Qt::Key_S:  m_keyDownPressed  = true;  updateVelocity(); break;
     case Qt::Key_D: m_keyRightPressed = true;  updateVelocity(); break;
     case Qt::Key_A:  m_keyLeftPressed  = true;  updateVelocity(); break;
-    case Qt::Key_Space: m_keySpacePressed = true; tirer(); break;
+    case Qt::Key_Space: m_keySpacePressed = true; shoot(); break;
     }
 }
 
@@ -101,7 +101,7 @@ void Player::onKeyReleased(int key) {
     case Qt::Key_S:  m_keyDownPressed  = false;  updateVelocity(); break;
     case Qt::Key_D: m_keyRightPressed = false;  updateVelocity(); break;
     case Qt::Key_A:  m_keyLeftPressed  = false;  updateVelocity(); break;
-    case Qt::Key_Space: m_keySpacePressed = false; tirer(); break;
+    case Qt::Key_Space: m_keySpacePressed = false; shoot(); break;
     }
 }
 
@@ -117,15 +117,19 @@ void Player::updateVelocity()  {
     m_playerVelocity = QPoint(XVelocity, YVelocity);
 }
 
-void Player::tirer(){
+//! Créer un objet de type Bullet et l'envoi dans une direction
+void Player::shoot(){
     if(m_keySpacePressed){
         Bullet* pBullet = new Bullet;
-        pBullet->setPos(this->pos());
+        pBullet->m_emitter = Bullet::BulletEmitter::PLAYER;
+        pBullet->setPos(QPointF(this->x()+40,this->y()+15));
         pBullet->setZValue(1);          // Passe devant tous les autres sprites
         this->parentScene()->addSpriteToScene(pBullet);
-
         pBullet->updateVelocity(0,-800);
-
     }
+}
+
+void Player::death(){
+
 }
 
