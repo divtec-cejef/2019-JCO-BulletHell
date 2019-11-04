@@ -46,6 +46,16 @@ void Player::tick(int elapsedTimeInMilliseconds) {
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + playerDistance);
     }
+
+    if(!this->collidingSprites().isEmpty()){
+        this->collidingSprites().removeAll(this);
+        if(!this->collidingSprites().isEmpty()){
+            if(this->collidingSprites().first()->getType() == Sprite::SpriteType::ST_BULLET
+                && this->collidingSprites().first()->getEmitter() == Sprite::Emitter::EM_ENEMY){
+                death();
+            }
+        }
+    }
 }
 
 //! Découpe la spritesheet pour en extraire les étapes d'animation et
