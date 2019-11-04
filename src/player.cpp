@@ -9,6 +9,7 @@
 #include "bullet.h"
 #include "gamecore.h"
 #include "gamescene.h"
+#include "sprite.h"
 
 const int PLAYER_VELOCITY = 400; // pixels par seconde
 const int FRAME_WIDTH = 63;
@@ -27,6 +28,7 @@ Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(Gam
     m_keySpacePressed = false;
     m_playerVelocity = QPointF(0,0);
     configureAnimation();
+    spriteType = Sprite::SpriteType::ST_PLAYER;
 }
 
 //! Cadence.
@@ -67,6 +69,9 @@ void Player::configureAnimation() {
 
     this->setAnimationSpeed(100);
     updateAnimationState();
+    if(m_keySpacePressed){
+        shoot();
+    }
 
 }
 
@@ -121,7 +126,7 @@ void Player::updateVelocity()  {
 void Player::shoot(){
     if(m_keySpacePressed){
         Bullet* pBullet = new Bullet;
-        pBullet->m_emitter = Bullet::BulletEmitter::PLAYER;
+        pBullet->setEmitter(Sprite::Emitter::EM_PLAYER);
         pBullet->setPos(QPointF(this->x()+40,this->y()+15));
         pBullet->setZValue(1);          // Passe devant tous les autres sprites
         this->parentScene()->addSpriteToScene(pBullet);
@@ -130,6 +135,6 @@ void Player::shoot(){
 }
 
 void Player::death(){
-
+    delete this;
 }
 

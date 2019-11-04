@@ -98,6 +98,19 @@ class Sprite : public QObject, public QGraphicsPixmapItem
     Q_PROPERTY(int currentAnimationFrame READ currentAnimationFrame WRITE setCurrentAnimationFrame)
 
 public:
+    enum SpriteType {
+        ST_PLAYER,
+        ST_ENEMY,
+        ST_BULLET
+    };
+    enum Emitter {
+        EM_PLAYER,
+        EM_ENEMY,
+        EM_NONE
+    };
+    void setEmitter(Sprite::Emitter emitter);
+    Emitter getEmitter();
+    SpriteType getType();
     Sprite(QGraphicsItem* pParent = nullptr);
     Sprite(const QPixmap& rPixmap, QGraphicsItem* pParent = nullptr);
     virtual ~Sprite();
@@ -137,6 +150,7 @@ public:
     void removeTickHandler();
 
     GameScene *parentScene() const;
+    QList<Sprite*> collidingSprites() const;
 
 #if defined(DEBUG_BBOX) || defined(DEBUG_SHAPE)
     virtual void paint(QPainter* pPainter, const QStyleOptionGraphicsItem* pOption, QWidget* pWidget = 0);
@@ -154,12 +168,14 @@ signals:
     void scaleChanged();
 
 protected:
-    QList<Sprite*> collidingSprites() const;
+    //QList<Sprite*> collidingSprites() const;
     QList<Sprite*> collidingSprites(const QRectF& rRect) const;
     QList<Sprite*> collidingSprites(const QPainterPath& rShape) const;
     bool isInsideScene(const QPointF& rPosition) const;
     bool isInsideScene(const QRectF& rRect) const;
     GameScene* m_pParentScene;
+    SpriteType spriteType;
+    Emitter emitter;
 
 private:
     static int s_spriteCount;

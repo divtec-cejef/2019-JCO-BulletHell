@@ -18,11 +18,11 @@ public:
     LivingEntity(const QPixmap& rPixmap, QGraphicsItem* pParent = nullptr);
     LivingEntity(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
+    virtual void death() = 0;
 protected:
     virtual void configureAnimation() = 0;
     virtual void updateVelocity() = 0;
     virtual void shoot() = 0;
-    virtual void death() = 0;
 
 private:
     QPointF m_livingEntityVelocity;

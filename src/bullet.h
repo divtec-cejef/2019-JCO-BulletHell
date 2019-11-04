@@ -34,15 +34,9 @@ class Bullet : public Item
     Q_OBJECT
 
     public:
-        enum BulletEmitter {
-            PLAYER,
-            ENEMY
-        };
-        BulletEmitter m_emitter;
         Bullet(QGraphicsItem* pParent = nullptr);
         virtual void tick(int elapsedTimeInMilliseconds);
         virtual void updateVelocity(int x, int y);
-
 
     protected:
         virtual void configureAnimation();

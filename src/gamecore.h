@@ -17,7 +17,8 @@ class QGraphicsTransform;
 class GameCanvas;
 class GameScene;
 class Sprite;
-
+class Enemy;
+class Player;
 //! \brief Classe qui gère la logique du jeu.
 //!
 //! Dans son état actuel, cette classe crée une scène vide, délimite
@@ -56,10 +57,10 @@ private:
 
     GameCanvas* m_pGameCanvas;
 
-
+    Player* pPlayer;
     Sprite* m_pPlayer;
     Sprite* m_pEnemy;
-
+    Enemy* pEnemy;
     bool m_keySpacePressed;
 
 private slots:

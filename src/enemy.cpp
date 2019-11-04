@@ -12,6 +12,7 @@
 #include <bullet.h>
 #include "gamecore.h"
 #include "gamescene.h"
+#include "sprite.h"
 
 const int ENEMY_VELOCITY = 400; // pixels par seconde
 const int TIME_BEFORE_SHOOT = 100; // temps à attendre avant de shoot
@@ -21,6 +22,7 @@ int compteurMilliseconds = 0;
 //! \param pParent  Objet propiétaire de cet objet.
 Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::enemyImagesPath() + "Eye_of_Chaos.png", pParent) {
     m_enemyVelocity = QPointF(0,0);
+    spriteType = Sprite::SpriteType::ST_ENEMY;
     //configureAnimation();
 }
 
@@ -42,13 +44,25 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
         this->setPos(this->pos() + enemyDistance);
     }
 
-    qDebug() << "elapsedTimeInMilliseconds" << elapsedTimeInMilliseconds;
-    qDebug() << "compteur milliseconds" << compteurMilliseconds;
+    //qDebug() << "elapsedTimeInMilliseconds" << elapsedTimeInMilliseconds;
+    //qDebug() << "compteur milliseconds" << compteurMilliseconds;
     if(compteurMilliseconds == TIME_BEFORE_SHOOT){
         shoot();
         compteurMilliseconds = 0;
     }
     compteurMilliseconds++;
+
+
+    if(!this->collidingSprites().isEmpty()){
+        this->collidingSprites().removeAll(this);
+        if(!this->collidingSprites().isEmpty()){
+            if(this->collidingSprites().first()->getType() == Sprite::SpriteType::ST_BULLET
+                && this->collidingSprites().first()->getEmitter() == Sprite::Emitter::EM_PLAYER){
+                death();
+            }
+        }
+    }
+
 }
 
 //! Charge les différentes images qui composent l'animation de l'ennemi et
@@ -79,7 +93,7 @@ void Enemy::updateVelocity()  {
 //! Créer un objet de type Bullet et l'envoi dans une direction
 void Enemy::shoot(){
     Bullet* pBullet = new Bullet;
-    pBullet->m_emitter = Bullet::BulletEmitter::ENEMY;
+    pBullet->setEmitter(Sprite::Emitter::EM_ENEMY);
     pBullet->setPos(QPointF(this->x()+(this->width()/2),this->bottom()));
     pBullet->setZValue(1);          // Passe devant tous les autres sprites
     this->parentScene()->addSpriteToScene(pBullet);

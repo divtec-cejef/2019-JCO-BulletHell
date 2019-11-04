@@ -8,22 +8,24 @@
 #define PLAYER_H
 
 #include "livingentity.h"
+#include "sprite.h"
 
 class Player : public LivingEntity
 {
 public:
     Player(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
+    virtual void death();
 public slots:
     void onKeyPressed(int key);
     void onKeyReleased(int key);
-
 private:
     void updatePlayerVelocity();
     virtual void configureAnimation();
     virtual void updateVelocity();
     virtual void shoot();
-    virtual void death();
+
+
     void updateAnimationState();
 
     QPointF m_playerVelocity;

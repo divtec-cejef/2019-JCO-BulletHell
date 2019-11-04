@@ -275,6 +275,18 @@ bool Sprite::isInsideScene(const QRectF& rRect) const {
     return isInsideScene;
 }
 
+Sprite::SpriteType Sprite::getType(){
+    return spriteType;
+}
+
+Sprite::Emitter Sprite::getEmitter(){
+    return emitter;
+}
+
+void Sprite::setEmitter(Emitter emitter){
+    this->emitter = emitter;
+}
+
 //! Initialise le sprite.
 void Sprite::init() {
     m_pTickHandler = nullptr;

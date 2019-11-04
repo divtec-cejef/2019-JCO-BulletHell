@@ -8,6 +8,7 @@
 #define ENEMY_H
 
 #include "livingentity.h"
+#include "sprite.h"
 
 //! \brief Classe qui gère l'ennemi.
 //!
@@ -35,8 +36,8 @@ class Enemy : public LivingEntity
 
     public:
         Enemy(QGraphicsItem* pParent = nullptr);
-
         virtual void tick(int elapsedTimeInMilliseconds);
+        virtual void death();
     public slots:
 
 
@@ -45,7 +46,6 @@ class Enemy : public LivingEntity
         virtual void configureAnimation();
         virtual void updateVelocity();
         virtual void shoot();
-        virtual void death();
 
         QPointF m_enemyVelocity;
         bool m_enemyCollidePlayer;

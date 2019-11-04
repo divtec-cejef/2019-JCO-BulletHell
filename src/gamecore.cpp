@@ -104,7 +104,11 @@ void GameCore::keyReleased(int key) {
 //! Gère le déplacement de la Terre qui tourne en cercle.
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le dernier appel.
 void GameCore::tick(int elapsedTimeInMilliseconds) {
-
+    if(pPlayer->collidingSprites().contains(pEnemy)){
+        qDebug() << "mort";
+        pPlayer->death();
+        m_pPlayer = nullptr;
+    }
 }
 
 //! La souris a été déplacée.
@@ -128,7 +132,7 @@ void GameCore::mouseButtonReleased(QPointF mousePosition, Qt::MouseButtons butto
 
 //! Met en place le joueur
 void GameCore::setupPlayer() {
-    Player* pPlayer = new Player;
+    pPlayer = new Player;
     pPlayer->setPos(350, 470);
     pPlayer->setZValue(1);          // Passe devant tous les autres sprites
     m_pScene->addSpriteToScene(pPlayer);
@@ -139,7 +143,7 @@ void GameCore::setupPlayer() {
 
 //! Met en place l'ennemi
 void GameCore::setupEnemy() {
-    Enemy* pEnemy = new Enemy;
+    pEnemy = new Enemy;
     pEnemy->setPos(350, 100);
     pEnemy->setZValue(1);          // Passe devant tous les autres sprites
     m_pScene->addSpriteToScene(pEnemy);
