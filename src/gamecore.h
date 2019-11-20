@@ -10,9 +10,11 @@
 #include <QList>
 #include <QObject>
 #include <QPointF>
+#include <QGraphicsItem>
 
 class QAbstractAnimation;
 class QGraphicsTransform;
+
 
 class GameCanvas;
 class GameScene;
@@ -39,9 +41,24 @@ public:
 
     void tick(int elapsedTimeInMilliseconds);
 
-    // La scene est en public pour que le joueur puisse ajouter ses
-    // balles dans la scene
+    void menu();
+    void control();
+    void gameOver();
+    void exitGame();
+
+    QGraphicsSimpleTextItem* m_pMenuItems[3];
+    QGraphicsSimpleTextItem* m_pGameOverItems[2];
+    int menuChoosenItem = 0;
+    int gameOverChoosenItem = 0;
+    //bool playerDead = false; // Création d'un booléen pour gérer la mort du joueur
+
+
+    // Les scene sont en public pour que le joueur puisse intéragir avec elles
     GameScene* m_pScene;
+    GameScene* m_pOldGameScene;
+    GameScene* m_pSceneGameOver;
+    GameScene* m_pSceneControl;
+    GameScene* m_pSceneMenu;
 
 signals:
     void notifyMouseMoved(QPointF newMousePosition);
@@ -49,6 +66,10 @@ signals:
     void notifyMouseButtonReleased(QPointF mousePosition, Qt::MouseButtons buttons);
     void notifyKeyPressed(int key);
     void notifyKeyReleased(int key);
+
+public slots:
+    void onPlayerDeath(bool playerDead);
+    void onEnemyDeath(bool enemyDead);
 
 private:
 
@@ -62,6 +83,7 @@ private:
     Sprite* m_pEnemy;
     Enemy* pEnemy;
     bool m_keySpacePressed;
+
 
 private slots:
 

@@ -7,7 +7,6 @@
 #include "player.h"
 #include "resources.h"
 #include "bullet.h"
-#include "gamecore.h"
 #include "gamescene.h"
 #include "sprite.h"
 
@@ -47,12 +46,14 @@ void Player::tick(int elapsedTimeInMilliseconds) {
         this->setPos(this->pos() + playerDistance);
     }
 
+    // Vérification du contact du joueur avec une bullet émise par l'ennemi
+    // Si le joueur est touchée par une de ces balles, il meurt
     if(!this->collidingSprites().isEmpty()){
         this->collidingSprites().removeAll(this);
         if(!this->collidingSprites().isEmpty()){
             if(this->collidingSprites().first()->getType() == Sprite::SpriteType::ST_BULLET
                 && this->collidingSprites().first()->getEmitter() == Sprite::Emitter::EM_ENEMY){
-                death();
+                emit playerDeath(true);
             }
         }
     }
@@ -79,9 +80,6 @@ void Player::configureAnimation() {
 
     this->setAnimationSpeed(100);
     updateAnimationState();
-    if(m_keySpacePressed){
-        shoot();
-    }
 
 }
 
@@ -144,7 +142,8 @@ void Player::shoot(){
     }
 }
 
+//! Change la variable playerDead en true dans le GameCore
 void Player::death(){
-    delete this;
+    this->deleteLater();
 }
 

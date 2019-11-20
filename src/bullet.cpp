@@ -55,16 +55,10 @@ void Bullet::configureAnimation() {
     */
 }
 
-//! Met à jour le vecteur de vitesse de l'ennemi en fonction des touches appuyées.
+//! Met à jour le vecteur de vitesse de l'ennemi
 void Bullet::updateVelocity(int x, int y)  {
     int XVelocity = x;
     int YVelocity = y;
-    /*
-    if (m_keyUpPressed)    YVelocity = -BALL_VELOCITY;
-    if (m_keyDownPressed)  YVelocity = BALL_VELOCITY;
-    if (m_keyRightPressed) XVelocity = BALL_VELOCITY;
-    if (m_keyLeftPressed)  XVelocity = -BALL_VELOCITY;
-    */
     m_bulletVelocity = QPoint(XVelocity, YVelocity);
 }
 

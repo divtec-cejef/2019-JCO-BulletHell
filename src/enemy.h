@@ -38,6 +38,8 @@ class Enemy : public LivingEntity
         Enemy(QGraphicsItem* pParent = nullptr);
         virtual void tick(int elapsedTimeInMilliseconds);
         virtual void death();
+    signals:
+        void enemyDeath(bool enemyDead);
     public slots:
 
 

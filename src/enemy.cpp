@@ -52,13 +52,14 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
     }
     compteurMilliseconds++;
 
-
+    // Vérification du contact de l'ennemi avec une bullet émise par le joueur
+    // Si l'ennemi est touchée par une de ces balles, il meurt
     if(!this->collidingSprites().isEmpty()){
         this->collidingSprites().removeAll(this);
         if(!this->collidingSprites().isEmpty()){
             if(this->collidingSprites().first()->getType() == Sprite::SpriteType::ST_BULLET
                 && this->collidingSprites().first()->getEmitter() == Sprite::Emitter::EM_PLAYER){
-                death();
+                emit enemyDeath(true);
             }
         }
     }

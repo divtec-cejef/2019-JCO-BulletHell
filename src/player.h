@@ -9,13 +9,19 @@
 
 #include "livingentity.h"
 #include "sprite.h"
+#include <QObject>
 
 class Player : public LivingEntity
 {
+    // Nécessaire de déclarer cette macro pour que la classe puisse
+    // bénéficier du mécanisme de signaux/slots.
+    Q_OBJECT
 public:
     Player(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
     virtual void death();
+signals:
+    void playerDeath(bool playerDead);
 public slots:
     void onKeyPressed(int key);
     void onKeyReleased(int key);
