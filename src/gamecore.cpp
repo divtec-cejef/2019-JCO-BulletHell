@@ -89,10 +89,10 @@ GameCore::~GameCore() {
 void GameCore::onPlayerDeath(bool playerDead){
     if(playerDead){
         qDebug() << "mort";
-        disconnect(this, &GameCore::notifyKeyPressed, pPlayer, &Player::onKeyPressed);
-        disconnect(this, &GameCore::notifyKeyReleased, pPlayer, &Player::onKeyReleased);
-        disconnect(pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
-        delete pPlayer;
+        disconnect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
+        disconnect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
+        disconnect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
+        m_pPlayer->deleteLater();
         m_pPlayer = nullptr;
         m_pGameCanvas->setCurrentScene(m_pSceneGameOver);
     }
@@ -100,9 +100,8 @@ void GameCore::onPlayerDeath(bool playerDead){
 
 void GameCore::onEnemyDeath(bool enemyDead){
     if(enemyDead){
-        //delete pPlayer;
-        disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-        delete pEnemy;
+        disconnect(m_pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        delete m_pEnemy;
         m_pEnemy = nullptr;
     }
 }
@@ -201,10 +200,11 @@ void GameCore::keyReleased(int key) {
 //! Gère la mort du joueur dès la collision avec un ennemi
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le dernier appel.
 void GameCore::tick(int elapsedTimeInMilliseconds) {
-    if(pPlayer->collidingSprites().contains(pEnemy)){
-        qDebug() << "mort";
-        pPlayer->death();
-        m_pPlayer = nullptr;
+    if (m_pPlayer == nullptr)
+        return;
+
+    if(m_pPlayer->collidingSprites().contains(m_pEnemy)){
+        this->onPlayerDeath(true);
     }
 }
 
@@ -229,26 +229,25 @@ void GameCore::mouseButtonReleased(QPointF mousePosition, Qt::MouseButtons butto
 
 //! Met en place le joueur
 void GameCore::setupPlayer() {
-    pPlayer = new Player;
-    pPlayer->setPos(350, 470);
-    pPlayer->setZValue(1);          // Passe devant tous les autres sprites
-    m_pScene->addSpriteToScene(pPlayer);
-    connect(this, &GameCore::notifyKeyPressed, pPlayer, &Player::onKeyPressed);
-    connect(this, &GameCore::notifyKeyReleased, pPlayer, &Player::onKeyReleased);
-    connect(pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
-    m_pPlayer = pPlayer;
+    m_pPlayer = new Player;
+    m_pPlayer->setPos(350, 470);
+    m_pPlayer->setZValue(1);          // Passe devant tous les autres sprites
+    m_pScene->addSpriteToScene(m_pPlayer);
+    connect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
+    connect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
+    connect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
 }
 
 //! Met en place l'ennemi
 void GameCore::setupEnemy() {
-    pEnemy = new Enemy;
-    pEnemy->setPos(350, 100);
-    pEnemy->setZValue(1);          // Passe devant tous les autres sprites
-    m_pScene->addSpriteToScene(pEnemy);
+    m_pEnemy = new Enemy;
+    m_pEnemy->setPos(350, 100);
+    m_pEnemy->setZValue(1);          // Passe devant tous les autres sprites
+    m_pScene->addSpriteToScene(m_pEnemy);
     //Ajoute le déplacement manuel tirer du walkingman
-    pEnemy->setTickHandler(new ManualWalkingHandler);
-    connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-    m_pEnemy = pEnemy;
+    m_pEnemy->setTickHandler(new ManualWalkingHandler);
+    connect(m_pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+
 }
 
 //! Disposition de différents éléments dans la scène menu
@@ -256,7 +255,8 @@ void GameCore::gameOver(){
     // Crée la scène GameOver
     //m_pSceneGameOver = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // Affichage du titre GameOver
-    QGraphicsSimpleTextItem* pTextGameOver = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2-200), "Game Over", 70);
+    m_pSceneGameOver->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2-200), "Game Over", 70);
+    // Affichage des différentes options du menu
     m_pGameOverItems[0] = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2), "Rejouer", 50, Qt::white);
     m_pGameOverItems[1] = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2 + 50), "Menu", 50, Qt::white);
     gameOverChoosenItem = 0;
@@ -267,7 +267,7 @@ void GameCore::menu(){
     //Crée le menu
     //m_pSceneMenu = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // Affichage du titre Menu
-    QGraphicsSimpleTextItem* pTextMenu = m_pSceneMenu->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2-200), "Menu", 70);
+    m_pSceneMenu->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2-200), "Menu", 70);
     // Affichage des différentes options du menu
     m_pMenuItems[0] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2), "Jouer", 50, Qt::white);
     m_pMenuItems[1] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2 + 50), "Contrôle", 50, Qt::white);
@@ -286,7 +286,7 @@ void GameCore::control(){
     // Crée la scène pour afficher les contrôles
     //m_pSceneControl = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // Affichage du titre Contrôle
-    QGraphicsSimpleTextItem* pTextControl = m_pSceneControl->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2-200), "Contrôle", 70);
+    m_pSceneControl->createText(QPointF(SCENE_WIDTH/2,SCENE_HEIGHT/2-200), "Contrôle", 70);
     // Affichage des touches actives :
     QString texteControl = "w : Se déplacer en haut\n"
                     "s : Se déplacer en bas\n"

@@ -19,7 +19,6 @@ class Player : public LivingEntity
 public:
     Player(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
-    virtual void death();
 signals:
     void playerDeath(bool playerDead);
 public slots:

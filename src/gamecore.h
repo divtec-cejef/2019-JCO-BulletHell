@@ -78,10 +78,8 @@ private:
 
     GameCanvas* m_pGameCanvas;
 
-    Player* pPlayer;
-    Sprite* m_pPlayer;
-    Sprite* m_pEnemy;
-    Enemy* pEnemy;
+    Player* m_pPlayer;
+    Enemy* m_pEnemy;
     bool m_keySpacePressed;
 
 

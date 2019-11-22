@@ -38,7 +38,7 @@ void Bullet::tick(int elapsedTimeInMilliseconds) {
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + bulletDistance);
     }else{
-        delete this;
+        deleteLater();
     }
 
 }

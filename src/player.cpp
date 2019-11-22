@@ -118,7 +118,7 @@ void Player::onKeyReleased(int key) {
     }
 }
 
-//! Met à jour le vecteur de vitesse de la balle en fonction des touches appuyées.
+//! Met à jour le vecteur de vitesse du joueur en fonction des touches appuyées.
 void Player::updateVelocity()  {
     int XVelocity = 0;
     int YVelocity = 0;
@@ -135,15 +135,10 @@ void Player::shoot(){
     if(m_keySpacePressed){
         Bullet* pBullet = new Bullet;
         pBullet->setEmitter(Sprite::Emitter::EM_PLAYER);
-        pBullet->setPos(QPointF(this->x()+40,this->y()+15));
+        pBullet->setPos(QPointF(this->x()+40,this->y()+15)); // Envoi la bullet juste au dessus de la tête du joueur
         pBullet->setZValue(1);          // Passe devant tous les autres sprites
         this->parentScene()->addSpriteToScene(pBullet);
         pBullet->updateVelocity(0,-800);
     }
-}
-
-//! Change la variable playerDead en true dans le GameCore
-void Player::death(){
-    this->deleteLater();
 }
 

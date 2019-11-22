@@ -100,9 +100,3 @@ void Enemy::shoot(){
     this->parentScene()->addSpriteToScene(pBullet);
     pBullet->updateVelocity(0,800);
 }
-
-//! Gère la mort de l'ennemi
-void Enemy::death(){
-
-    delete this;
-}
