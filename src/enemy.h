@@ -38,7 +38,7 @@ class Enemy : public LivingEntity
         Enemy(QGraphicsItem* pParent = nullptr);
         virtual void tick(int elapsedTimeInMilliseconds);
     signals:
-        void enemyDeath(bool enemyDead);
+        void enemyDeath(Enemy* enemy);
     public slots:
 
 
@@ -49,7 +49,6 @@ class Enemy : public LivingEntity
         virtual void shoot();
 
         QPointF m_enemyVelocity;
-        bool m_enemyCollidePlayer;
         int health;
 
 };

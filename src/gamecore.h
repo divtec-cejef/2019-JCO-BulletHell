@@ -41,8 +41,6 @@ public:
 
     void tick(int elapsedTimeInMilliseconds);
 
-    void menu();
-    void control();
     void gameOver();
     void exitGame();
 
@@ -54,7 +52,7 @@ public:
 
 
     // Les scene sont en public pour que le joueur puisse intéragir avec elles
-    GameScene* m_pScene;
+    GameScene* m_pSceneGame;
     GameScene* m_pOldGameScene;
     GameScene* m_pSceneGameOver;
     GameScene* m_pSceneControl;
@@ -69,10 +67,11 @@ signals:
 
 public slots:
     void onPlayerDeath(bool playerDead);
-    void onEnemyDeath(bool enemyDead);
+    void onEnemyDeath(Enemy* enemy);
 
 private:
 
+    void manageWaves();
     void setupPlayer();
     void setupEnemy();
 
@@ -80,6 +79,9 @@ private:
 
     Player* m_pPlayer;
     Enemy* m_pEnemy;
+    QList<Enemy*> firstWave;
+    QList<Enemy*> secondWave;
+    QList<Enemy*> thirdWave;
     bool m_keySpacePressed;
 
 

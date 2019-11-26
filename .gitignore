@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/debug/moc_bullet.cpp
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/debug/moc_enemy.cpp
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/debug/moc_gamecore.cpp
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/debug/moc_item.cpp
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/debug/moc_enemy.cpp
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/debug/moc_gamecore.cpp
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/Makefile.Debug
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/Makefile.Release
+build-GameFramework-Desktop_Qt_5_11_1_MinGW_32bit-Debug/object_script.GameFramework.Release

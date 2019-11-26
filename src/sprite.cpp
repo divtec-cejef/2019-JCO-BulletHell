@@ -275,15 +275,15 @@ bool Sprite::isInsideScene(const QRectF& rRect) const {
     return isInsideScene;
 }
 
-Sprite::SpriteType Sprite::getType(){
+Sprite::SpriteType_e Sprite::getType(){
     return spriteType;
 }
 
-Sprite::Emitter Sprite::getEmitter(){
+Sprite::Emitter_e Sprite::getEmitter(){
     return emitter;
 }
 
-void Sprite::setEmitter(Emitter emitter){
+void Sprite::setEmitter(Emitter_e emitter){
     this->emitter = emitter;
 }
 

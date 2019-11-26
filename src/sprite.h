@@ -98,19 +98,19 @@ class Sprite : public QObject, public QGraphicsPixmapItem
     Q_PROPERTY(int currentAnimationFrame READ currentAnimationFrame WRITE setCurrentAnimationFrame)
 
 public:
-    enum SpriteType {
+    enum SpriteType_e {
         ST_PLAYER,
         ST_ENEMY,
         ST_BULLET
     };
-    enum Emitter {
+    enum Emitter_e {
         EM_PLAYER,
         EM_ENEMY,
         EM_NONE
     };
-    void setEmitter(Sprite::Emitter emitter);
-    Emitter getEmitter();
-    SpriteType getType();
+    void setEmitter(Sprite::Emitter_e emitter);
+    Emitter_e getEmitter();
+    SpriteType_e getType();
     Sprite(QGraphicsItem* pParent = nullptr);
     Sprite(const QPixmap& rPixmap, QGraphicsItem* pParent = nullptr);
     virtual ~Sprite();
@@ -174,8 +174,8 @@ protected:
     bool isInsideScene(const QPointF& rPosition) const;
     bool isInsideScene(const QRectF& rRect) const;
     GameScene* m_pParentScene;
-    SpriteType spriteType;
-    Emitter emitter;
+    SpriteType_e spriteType;
+    Emitter_e emitter;
 
 private:
     static int s_spriteCount;

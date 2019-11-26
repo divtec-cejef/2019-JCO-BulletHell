@@ -17,6 +17,11 @@ const int FRAME_COUNT = 5;
 const int COLUMN_COUNT = 5;
 const float SCALE_RATIO = 1.5F;
 
+/*
+const int TIME_BEFORE_SHOOT = 20; // temps à attendre avant de shoot
+int counterMilliseconds = 0;
+*/
+
 //! Construit et initialise une balle bleue.
 //! \param pParent  Objet propiétaire de cet objet.
 Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(GameFramework::imagesPath() + "player.png", pParent)*/ {
@@ -27,7 +32,7 @@ Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(Gam
     m_keySpacePressed = false;
     m_playerVelocity = QPointF(0,0);
     configureAnimation();
-    spriteType = Sprite::SpriteType::ST_PLAYER;
+    spriteType = Sprite::SpriteType_e::ST_PLAYER;
 }
 
 //! Cadence.
@@ -51,12 +56,23 @@ void Player::tick(int elapsedTimeInMilliseconds) {
     if(!this->collidingSprites().isEmpty()){
         this->collidingSprites().removeAll(this);
         if(!this->collidingSprites().isEmpty()){
-            if(this->collidingSprites().first()->getType() == Sprite::SpriteType::ST_BULLET
-                && this->collidingSprites().first()->getEmitter() == Sprite::Emitter::EM_ENEMY){
+            if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_BULLET
+                && this->collidingSprites().first()->getEmitter() == Sprite::Emitter_e::EM_ENEMY){
                 emit playerDeath(true);
             }
         }
     }
+
+
+    /*
+    if(counterMilliseconds == TIME_BEFORE_SHOOT){
+        if(m_keySpacePressed){
+            shoot();
+        }
+        counterMilliseconds = 0;
+    }
+    counterMilliseconds++;
+    */
 }
 
 //! Découpe la spritesheet pour en extraire les étapes d'animation et
@@ -134,7 +150,7 @@ void Player::updateVelocity()  {
 void Player::shoot(){
     if(m_keySpacePressed){
         Bullet* pBullet = new Bullet;
-        pBullet->setEmitter(Sprite::Emitter::EM_PLAYER);
+        pBullet->setEmitter(Sprite::Emitter_e::EM_PLAYER);
         pBullet->setPos(QPointF(this->x()+40,this->y()+15)); // Envoi la bullet juste au dessus de la tête du joueur
         pBullet->setZValue(1);          // Passe devant tous les autres sprites
         this->parentScene()->addSpriteToScene(pBullet);

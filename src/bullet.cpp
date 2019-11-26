@@ -16,8 +16,8 @@ const int BULLET_VELOCITY = 600; // pixels par seconde
 //! \param pParent  Objet propiétaire de cet objet.
 Bullet::Bullet(QGraphicsItem* pParent) : Item(GameFramework::itemImagesPath() + "bullet.png", pParent)
 {
-    emitter = Sprite::Emitter::EM_NONE;
-    spriteType = Sprite::SpriteType::ST_BULLET;
+    emitter = Sprite::Emitter_e::EM_NONE;
+    spriteType = Sprite::SpriteType_e::ST_BULLET;
     m_bulletVelocity = QPointF(0,0);
 }
 
