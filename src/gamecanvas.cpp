@@ -141,9 +141,6 @@ bool GameCanvas::eventFilter(QObject* pObject, QEvent* pEvent)
     switch (pEvent->type())  {
     case QEvent::KeyPress:                  this->keyPressed(static_cast<QKeyEvent*>(pEvent));                         return true;
     case QEvent::KeyRelease:                this->keyReleased(static_cast<QKeyEvent *>(pEvent));                       return true;
-    case QEvent::GraphicsSceneMouseMove:    this->mouseMoved(static_cast<QGraphicsSceneMouseEvent*>(pEvent));          return true;
-    case QEvent::GraphicsSceneMousePress:   this->mouseButtonPressed(static_cast<QGraphicsSceneMouseEvent*>(pEvent));  return true;
-    case QEvent::GraphicsSceneMouseRelease: this->mouseButtonReleased(static_cast<QGraphicsSceneMouseEvent*>(pEvent)); return true;
     default : return QObject::eventFilter(pObject, pEvent);
     }
 }
@@ -196,27 +193,6 @@ void GameCanvas::keyReleased(QKeyEvent* pKeyEvent) {
         m_pGameCore->keyReleased(pKeyEvent->key());
         pKeyEvent->accept();
     }
-}
-
-//! Gère le déplacement de la souris.
-//! Pour que cet événement soit pris en compte, la propriété MouseTracking de GameView
-//! doit être enclenchée.
-void GameCanvas::mouseMoved(QGraphicsSceneMouseEvent* pMouseEvent) {
-    m_pGameCore->mouseMoved(pMouseEvent->scenePos());
-}
-
-//! Gère l'événement d'appui sur un bouton de la souris.
-//! La conception de cette fonction fait que GameCore n'a pas de moyen de savoir quel
-//! bouton a été pressé.
-void GameCanvas::mouseButtonPressed(QGraphicsSceneMouseEvent* pMouseEvent) {
-    m_pGameCore->mouseButtonPressed(pMouseEvent->scenePos(), pMouseEvent->buttons());
-}
-
-//! Gère l'événement de relâchement d'un bouton de la souris.
-//! La conception de cette fonction fait que GameCore n'a pas de moyen de savoir quel
-//! bouton a été relâché.
-void GameCanvas::mouseButtonReleased(QGraphicsSceneMouseEvent* pMouseEvent) {
-    m_pGameCore->mouseButtonReleased(pMouseEvent->scenePos(), pMouseEvent->buttons());
 }
 
 //! Instancie un objet de type GameCore, en charge de la logique du jeu.

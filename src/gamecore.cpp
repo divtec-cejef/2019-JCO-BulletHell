@@ -17,6 +17,7 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 #include <QSettings>
+#include <QTimer>
 
 #include "gamescene.h"
 #include "gamecanvas.h"
@@ -33,6 +34,8 @@
 
 const int SCENE_WIDTH = 700;
 const int SCENE_HEIGHT = 880;
+int compteurWave = 0;
+int ennemyPerWave = 2;
 
 //! Initialise le contrôleur de jeu.
 //! \param pGameCanvas  GameCanvas pour lequel cet objet travaille.
@@ -87,9 +90,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
 
 
     // Création d'une liste d'ennemis
-    QList<Enemy> firstWave;
-    QList<Enemy> secondWave;
-    QList<Enemy> thirdWave;
+    QList<Enemy> ennemyWave;
 
 
     //Initialisation de la scène Game (zone de jeu)
@@ -101,11 +102,12 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_pSceneGame->addRect(m_pSceneGame->sceneRect(), QPen(Qt::white));
     // Création du joueur
     setupPlayer();
-    // Création de l'ennemi
-    setupEnemy();
     // Affichage d'un texte
     QGraphicsSimpleTextItem* pText = m_pSceneGame->createText(QPointF(0,0), "BulletHell", 70);
     pText->setOpacity(0.5);
+
+    compteurWave = 1;
+    manageWaves();
 
     // Démarre le tick pour que les animations qui en dépendent fonctionnent correctement.
     // Attention : il est important que l'enclenchement du tick soit fait vers la fin de cette fonction,
@@ -126,7 +128,7 @@ GameCore::~GameCore() {
 //! \param  playerDead Booléen pour indiquer si le joueur est mort
 void GameCore::onPlayerDeath(bool playerDead){
     if(playerDead){
-        qDebug() << "mort";
+        //qDebug() << "mort";
         disconnect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
         disconnect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
         disconnect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
@@ -139,24 +141,30 @@ void GameCore::onPlayerDeath(bool playerDead){
 //! Déconnecte le signal en lien avec l'ennemi et détruit ce dernier
 //! \param  enemyDead Booléen pour indiquer si l'ennemi est mort
 void GameCore::onEnemyDeath(Enemy *enemy){
-    if(firstWave.contains(enemy)){
-        Enemy* pEnemy = firstWave[firstWave.indexOf(enemy)];
+    if(ennemyWave.contains(enemy)){
+        Enemy* pEnemy = ennemyWave[ennemyWave.indexOf(enemy)];
         disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
         pEnemy->deleteLater();
         pEnemy = nullptr;
-        firstWave.removeAt(firstWave.indexOf(enemy));
-        qDebug() << "mort";
+        ennemyWave.removeAt(ennemyWave.indexOf(enemy));
+        //qDebug() << "mort";
+        //qDebug() << ennemyWave.length();
+        if(ennemyWave.length() == 0){
+            ennemyWave.clear();
+            compteurWave+= 1;
+            manageWaves();
+        }
     }
 
     /*
     if(enemy){
-        for(int i = 0; i < firstWave.length();i++){
-            Enemy* pEnemy = firstWave[i];
+        for(int i = 0; i < ennemyWave.length();i++){
+            Enemy* pEnemy = ennemyWave[i];
             if(pEnemy->getId() == id){
                 disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
                 pEnemy->deleteLater();
                 pEnemy = nullptr;
-                firstWave.removeAt(i);
+                ennemyWave.removeAt(i);
                 qDebug() << "mort";
                 return;
             }
@@ -267,37 +275,24 @@ void GameCore::tick(int elapsedTimeInMilliseconds) {
     if (m_pPlayer == nullptr)
         return;
 
-    /*
-    if(m_pPlayer->collidingSprites().contains(m_pEnemy)){
-        this->onPlayerDeath(true);
+    // Vérification du contact du joueur avec un ennemi
+    // Si le joueur est touchée par un ennemi, Game Over
+    if(!m_pPlayer->collidingSprites().isEmpty()){
+        //On enlève le joueur de sa liste de collision
+        m_pPlayer->collidingSprites().removeAll(m_pPlayer);
+        if(!m_pPlayer->collidingSprites().isEmpty()){
+            if(m_pPlayer->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_ENEMY){
+                this->onPlayerDeath(true);
+            }
+        }
     }
-    */
 
 }
-
-//! La souris a été déplacée.
-//! Pour que cet événement soit pris en compte, la propriété MouseTracking de GameView
-//! doit être enclenchée avec GameCanvas::startMouseTracking().
-void GameCore::mouseMoved(QPointF newMousePosition) {
-    emit notifyMouseMoved(newMousePosition);
-}
-
-//! Traite l'appui sur un bouton de la souris.
-//! Fait apparaître le clip de la balle de foot qui tombe et rebondi.
-void GameCore::mouseButtonPressed(QPointF mousePosition, Qt::MouseButtons buttons) {
-    emit notifyMouseButtonPressed(mousePosition, buttons);
-}
-
-//! Traite le relâchement d'un bouton de la souris.
-void GameCore::mouseButtonReleased(QPointF mousePosition, Qt::MouseButtons buttons) {
-    emit notifyMouseButtonReleased(mousePosition, buttons);
-}
-
 
 //! Met en place le joueur
 void GameCore::setupPlayer() {
     m_pPlayer = new Player;
-    m_pPlayer->setPos(350, 470);
+    m_pPlayer->setPos(0,0);//(350, 470);
     m_pPlayer->setZValue(1);          // Passe devant tous les autres sprites
     m_pSceneGame->addSpriteToScene(m_pPlayer);
     connect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
@@ -305,57 +300,43 @@ void GameCore::setupPlayer() {
     connect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
 }
 
-//! Met en place l'ennemi
+//! Place sur la scène la vague d'ennemis
 void GameCore::setupEnemy() {
-    /* Création d'un seul ennemi
-    m_pEnemy = new Enemy;
-    m_pEnemy->setPos(350, 100);
-    m_pEnemy->setZValue(1);          // Passe devant tous les autres sprites
-    m_pSceneGame->addSpriteToScene(m_pEnemy);
-    //Ajoute le déplacement manuel tirer du walkingman
-    m_pEnemy->setTickHandler(new ManualWalkingHandler);
-    connect(m_pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-    */
-
-    //Première vague
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < ennemyPerWave; i++){
         Enemy* pEnemy = new Enemy;
-        firstWave.append(pEnemy);
-        pEnemy->setPos(std::rand() % (SCENE_WIDTH-74) + 1,100);
+        ennemyWave.append(pEnemy);
+        pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1,100);
         pEnemy->setZValue(1);
-        //m_pSceneGame->addSpriteToScene(pEnemy);
+        m_pSceneGame->addSpriteToScene(pEnemy);
         pEnemy->setTickHandler(new ManualWalkingHandler);
         connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        qDebug() << "length" << ennemyWave.length();
     }
-
-    //Deuxième vague
-    for(int i = 0; i < 5; i++){
-        Enemy* pEnemy = new Enemy;
-        secondWave.append(pEnemy);
-        pEnemy->setPos(std::rand() % (SCENE_WIDTH-74) + 1,100);
-        pEnemy->setZValue(1);
-        //m_pSceneGame->addSpriteToScene(pEnemy);
-        pEnemy->setTickHandler(new ManualWalkingHandler);
-        connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-    }
-
-    //Troisième vague
-    for(int i = 0; i < 10; i++){
-        Enemy* pEnemy = new Enemy;
-        thirdWave.append(pEnemy);
-        pEnemy->setPos(std::rand() % (SCENE_WIDTH-74) + 1,100);
-        pEnemy->setZValue(1);
-        //m_pSceneGame->addSpriteToScene(pEnemy);
-        pEnemy->setTickHandler(new ManualWalkingHandler);
-        connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-    }
-
 }
 
 //! Gère les vagues d'ennemis
 void GameCore::manageWaves(){
-
-
+    qDebug() << ennemyPerWave;
+    qDebug() << compteurWave;
+    switch(compteurWave){
+        case 0: compteurWave=0; break;
+        case 1:
+            //Première vague
+            qDebug() << "firstWave";
+            setupEnemy();
+            break;
+        case 2:
+            //Deuxième vague
+            qDebug() << "secondWave";
+            ennemyPerWave += 2;
+            setupEnemy();
+            break;
+        case 3:
+            //Troisième vague
+            qDebug() << "thirdWave";
+            ennemyPerWave += 2;
+            setupEnemy();
+    }
 }
 
 //! Disposition de différents éléments dans la scène GameOver
@@ -371,4 +352,5 @@ void GameCore::exitGame(){
     qDebug() << "Quitter";
     //exit (EXIT_SUCCESS);
 }
+
 

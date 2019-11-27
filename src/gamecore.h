@@ -29,29 +29,27 @@ class GameCore : public QObject
 {
     Q_OBJECT
 public:
+    //Constructeur
     explicit GameCore(GameCanvas* pGameCanvas, QObject *parent = nullptr);
+    //Destructeur
     ~GameCore();
 
+    //Fonction permettant le traitement des touches appuyées/relâchées
     void keyPressed(int key);
     void keyReleased(int key);
 
-    void mouseMoved(QPointF newMousePosition);
-    void mouseButtonPressed(QPointF mousePosition, Qt::MouseButtons buttons);
-    void mouseButtonReleased(QPointF mousePosition, Qt::MouseButtons buttons);
-
     void tick(int elapsedTimeInMilliseconds);
-
     void gameOver();
     void exitGame();
 
+    //Tableau permettant de stocker les différentes options du menu
     QGraphicsSimpleTextItem* m_pMenuItems[3];
     QGraphicsSimpleTextItem* m_pGameOverItems[2];
+    //Variable qui stockent l'option choisie
     int menuChoosenItem = 0;
     int gameOverChoosenItem = 0;
-    //bool playerDead = false; // Création d'un booléen pour gérer la mort du joueur
 
-
-    // Les scene sont en public pour que le joueur puisse intéragir avec elles
+    // Les scènes sont en public pour que le joueur puisse intéragir avec elles
     GameScene* m_pSceneGame;
     GameScene* m_pOldGameScene;
     GameScene* m_pSceneGameOver;
@@ -59,9 +57,6 @@ public:
     GameScene* m_pSceneMenu;
 
 signals:
-    void notifyMouseMoved(QPointF newMousePosition);
-    void notifyMouseButtonPressed(QPointF mousePosition, Qt::MouseButtons buttons);
-    void notifyMouseButtonReleased(QPointF mousePosition, Qt::MouseButtons buttons);
     void notifyKeyPressed(int key);
     void notifyKeyReleased(int key);
 
@@ -79,9 +74,7 @@ private:
 
     Player* m_pPlayer;
     Enemy* m_pEnemy;
-    QList<Enemy*> firstWave;
-    QList<Enemy*> secondWave;
-    QList<Enemy*> thirdWave;
+    QList<Enemy*> ennemyWave;
     bool m_keySpacePressed;
 
 

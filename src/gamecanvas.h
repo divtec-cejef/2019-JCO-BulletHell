@@ -80,10 +80,6 @@ private:
     void keyPressed(QKeyEvent* pKeyEvent);
     void keyReleased(QKeyEvent* pKeyEvent);
 
-    void mouseMoved(QGraphicsSceneMouseEvent* pMouseEvent);
-    void mouseButtonPressed(QGraphicsSceneMouseEvent* pMouseEvent);
-    void mouseButtonReleased(QGraphicsSceneMouseEvent* pMouseEvent);
-
     GameView* m_pView;
     GameCore* m_pGameCore;
     QPointer<QGraphicsTextItem> m_pDetailedInfosItem; // Smart Pointer pour qu'il soit mis à zéro au cas où l'item est effacé par GameScene::clear()

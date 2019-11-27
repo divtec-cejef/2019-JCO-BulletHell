@@ -57,6 +57,7 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
     // Vérification du contact de l'ennemi avec une bullet émise par le joueur
     // Si l'ennemi est touchée par une de ces balles, il meurt
     if(!this->collidingSprites().isEmpty()){
+        //On enlève l'ennemi de sa liste de collision
         this->collidingSprites().removeAll(this);
         if(!this->collidingSprites().isEmpty()){
             if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_BULLET
