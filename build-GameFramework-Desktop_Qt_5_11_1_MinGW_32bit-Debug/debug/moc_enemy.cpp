@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Enemy_t {
-    QByteArrayData data[4];
-    char stringdata0[28];
+    QByteArrayData data[5];
+    char stringdata0[31];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,10 +34,11 @@ static const qt_meta_stringdata_Enemy_t qt_meta_stringdata_Enemy = {
 QT_MOC_LITERAL(0, 0, 5), // "Enemy"
 QT_MOC_LITERAL(1, 6, 10), // "enemyDeath"
 QT_MOC_LITERAL(2, 17, 0), // ""
-QT_MOC_LITERAL(3, 18, 9) // "enemyDead"
+QT_MOC_LITERAL(3, 18, 6), // "Enemy*"
+QT_MOC_LITERAL(4, 25, 5) // "enemy"
 
     },
-    "Enemy\0enemyDeath\0\0enemyDead"
+    "Enemy\0enemyDeath\0\0Enemy*\0enemy"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +59,7 @@ static const uint qt_meta_data_Enemy[] = {
        1,    1,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::Bool,    3,
+    QMetaType::Void, 0x80000000 | 3,    4,
 
        0        // eod
 };
@@ -69,13 +70,24 @@ void Enemy::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         Enemy *_t = static_cast<Enemy *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->enemyDeath((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 0: _t->enemyDeath((*reinterpret_cast< Enemy*(*)>(_a[1]))); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< Enemy* >(); break;
+            }
+            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Enemy::*)(bool );
+            using _t = void (Enemy::*)(Enemy * );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Enemy::enemyDeath)) {
                 *result = 0;
                 return;
@@ -114,14 +126,14 @@ int Enemy::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 1)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 1;
     }
     return _id;
 }
 
 // SIGNAL 0
-void Enemy::enemyDeath(bool _t1)
+void Enemy::enemyDeath(Enemy * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

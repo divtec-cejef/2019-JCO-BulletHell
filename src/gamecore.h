@@ -69,6 +69,7 @@ private:
     void manageWaves();
     void setupPlayer();
     void setupEnemy();
+    void clearWave();
 
     GameCanvas* m_pGameCanvas;
 

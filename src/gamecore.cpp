@@ -85,19 +85,15 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Initialise le joueur
     m_pPlayer = nullptr;
 
-    // Initialise l'ennemi
-    std::srand(std::time(0));
-
-
     // Création d'une liste d'ennemis
     QList<Enemy> ennemyWave;
-
+    // Initialise le générateur aléatoire pour la position des ennemis
+    std::srand(std::time(0));
 
     //Initialisation de la scène Game (zone de jeu)
     m_pSceneGame = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     QImage img(GameFramework::imagesPath() + "background.png");
     m_pSceneGame->setBackgroundImage(img);
-    pGameCanvas->setCurrentScene(m_pSceneGame);
     // Trace un rectangle blanc tout autour des limites de la scène.
     m_pSceneGame->addRect(m_pSceneGame->sceneRect(), QPen(Qt::white));
     // Création du joueur
@@ -107,7 +103,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     pText->setOpacity(0.5);
 
     compteurWave = 1;
-    manageWaves();
+    m_pGameCanvas->setCurrentScene(m_pSceneMenu);
 
     // Démarre le tick pour que les animations qui en dépendent fonctionnent correctement.
     // Attention : il est important que l'enclenchement du tick soit fait vers la fin de cette fonction,
@@ -128,6 +124,7 @@ GameCore::~GameCore() {
 //! \param  playerDead Booléen pour indiquer si le joueur est mort
 void GameCore::onPlayerDeath(bool playerDead){
     if(playerDead){
+        clearWave();
         //qDebug() << "mort";
         disconnect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
         disconnect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
@@ -155,22 +152,23 @@ void GameCore::onEnemyDeath(Enemy *enemy){
             manageWaves();
         }
     }
+}
 
-    /*
-    if(enemy){
-        for(int i = 0; i < ennemyWave.length();i++){
-            Enemy* pEnemy = ennemyWave[i];
-            if(pEnemy->getId() == id){
-                disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-                pEnemy->deleteLater();
-                pEnemy = nullptr;
-                ennemyWave.removeAt(i);
-                qDebug() << "mort";
-                return;
-            }
+void GameCore::clearWave(){
+    for(int i = ennemyPerWave-1; i > 0; i--){
+        Enemy* pEnemy = ennemyWave[i];
+        disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        pEnemy->deleteLater();
+        pEnemy = nullptr;
+        ennemyWave.removeAt(i);
+        qDebug() << "mort";
+        qDebug() << ennemyWave.length();
+        if(ennemyWave.length() == 0){
+            ennemyWave.clear();
+            compteurWave+= 1;
+            manageWaves();
         }
     }
-    */
 }
 
 //! Traite la pression d'une touche lorsqu'on est dans un menu
@@ -241,7 +239,14 @@ void GameCore::keyPressed(int key) {
             if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
                 switch (menuChoosenItem) {
                 case 0:
-                    m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+                    if(m_pOldGameScene){
+                        m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+                    }else{
+                        m_pGameCanvas->setCurrentScene(m_pSceneGame);
+                        compteurWave = 1;
+                        manageWaves();
+                    }
+
                     break;
                 case 1:
                     m_pGameCanvas->setCurrentScene(m_pSceneControl);
@@ -252,7 +257,10 @@ void GameCore::keyPressed(int key) {
             }else if (m_pGameCanvas->currentScene() == m_pSceneGameOver){
                 switch(gameOverChoosenItem){
                 case 0:
-                    m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+                    m_pGameCanvas->setCurrentScene(m_pSceneGame);
+                    setupPlayer();
+                    compteurWave = 1;
+                    manageWaves();
                     break;
                 case 1:
                     m_pGameCanvas->setCurrentScene(m_pSceneMenu);

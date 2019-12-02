@@ -15,6 +15,8 @@ INPUT(
 ./debug\livingentity.o
 ./debug\player.o
 ./debug\enemy.o
+./debug\bullet.o
+./debug\item.o
 ./debug\moc_mainfrm.o
 ./debug\moc_gamescene.o
 ./debug\moc_sprite.o
@@ -23,5 +25,8 @@ INPUT(
 ./debug\moc_blueball.o
 ./debug\moc_automaticwalkinghandler.o
 ./debug\moc_livingentity.o
+./debug\moc_player.o
 ./debug\moc_enemy.o
+./debug\moc_bullet.o
+./debug\moc_item.o
 );
