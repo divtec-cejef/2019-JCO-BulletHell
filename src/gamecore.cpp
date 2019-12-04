@@ -46,63 +46,32 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Mémorise l'accès au canvas (qui gère le tick et l'affichage d'une scène)
     m_pGameCanvas = pGameCanvas;
 
-    //Création et dispositon de la scène Control
-    // Crée la scène pour afficher les contrôles
-    m_pSceneControl = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
-    // Affichage du titre Contrôle
-    m_pSceneControl->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2-200), "Contrôle", 70);
-    // Affichage des touches actives :
-    QString texteControl = "w : Se déplacer en haut\n"
-                    "s : Se déplacer en bas\n"
-                    "d : Se déplacer à droite\n"
-                    "a : Se déplacer à gauche\n"
-                    "space : Tirer\n"
-                    "ctrl+shift+i : infos sur la cadence.";
-    m_pSceneControl->createText(QPointF(SCENE_WIDTH-600,SCENE_HEIGHT/2), texteControl, 30);
-
-    // Création et disposition de la scène GameOver
-    // Crée la scène GameOver
-    m_pSceneGameOver = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
-    // Affichage du titre GameOver
-    m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2-200), "Game Over", 70);
-    // Affichage des différentes options du menu
-    m_pGameOverItems[0] = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2), "Rejouer", 50, Qt::white);
-    m_pGameOverItems[1] = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2 + 50), "Menu", 50, Qt::white);
-    gameOverChoosenItem = 0;
-
-    // Création et disposition de la scène Menu
-    // Crée la scène Menu
-    m_pSceneMenu = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
-    // Affichage du titre Menu
-    m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2-200), "Menu", 70);
-    // Affichage des différentes options du menu
-    m_pMenuItems[0] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2), "Jouer", 50, Qt::white);
-    m_pMenuItems[1] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2 + 50), "Contrôle", 50, Qt::white);
-    m_pMenuItems[2] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2 + 100), "Quitter", 50, Qt::white);
-    menuChoosenItem = 0;
-
+    //Initialisation de la scène OldGameScene
+    m_pOldGameScene = nullptr;
 
     // Initialise le joueur
     m_pPlayer = nullptr;
 
     // Création d'une liste d'ennemis
-    QList<Enemy> ennemyWave;
+    QList<Enemy> m_ennemyWave;
     // Initialise le générateur aléatoire pour la position des ennemis
     std::srand(std::time(0));
 
-    //Initialisation de la scène Game (zone de jeu)
-    m_pSceneGame = pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
-    QImage img(GameFramework::imagesPath() + "background.png");
-    m_pSceneGame->setBackgroundImage(img);
-    // Trace un rectangle blanc tout autour des limites de la scène.
-    m_pSceneGame->addRect(m_pSceneGame->sceneRect(), QPen(Qt::white));
-    // Création du joueur
-    setupPlayer();
-    // Affichage d'un texte
-    QGraphicsSimpleTextItem* pText = m_pSceneGame->createText(QPointF(0,0), "BulletHell", 70);
-    pText->setOpacity(0.5);
-
+    //On initialise à quelle vague d'ennemi le joueur commencera
     compteurWave = 1;
+
+    //Initialisation des différents scènes
+    // et des variables qui leurs sont spécifiques
+    m_pSceneControl = nullptr;
+    m_pSceneGame = nullptr;
+    m_pSceneGameOver = nullptr;
+    m_pSceneMenu = nullptr;
+    setupSceneControl();
+    setupSceneGameOver();
+    setupSceneMenu();
+    m_gameOverChoosenItem = 0;
+    m_menuChoosenItem = 0;
+
     m_pGameCanvas->setCurrentScene(m_pSceneMenu);
 
     // Démarre le tick pour que les animations qui en dépendent fonctionnent correctement.
@@ -124,30 +93,33 @@ GameCore::~GameCore() {
 //! \param  playerDead Booléen pour indiquer si le joueur est mort
 void GameCore::onPlayerDeath(bool playerDead){
     if(playerDead){
-        clearWave();
         //qDebug() << "mort";
         disconnect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
         disconnect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
         disconnect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
         m_pPlayer->deleteLater();
         m_pPlayer = nullptr;
+        m_pSceneGame->deleteLater();
+        m_pSceneGame = nullptr;
         m_pGameCanvas->setCurrentScene(m_pSceneGameOver);
+        ennemyPerWave=2;
     }
 }
 
 //! Déconnecte le signal en lien avec l'ennemi et détruit ce dernier
 //! \param  enemyDead Booléen pour indiquer si l'ennemi est mort
 void GameCore::onEnemyDeath(Enemy *enemy){
-    if(ennemyWave.contains(enemy)){
-        Enemy* pEnemy = ennemyWave[ennemyWave.indexOf(enemy)];
+    qDebug() << "onEnemyDeath";
+    if(m_ennemyWave.contains(enemy)){
+        Enemy* pEnemy = m_ennemyWave[m_ennemyWave.indexOf(enemy)];
         disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
         pEnemy->deleteLater();
         pEnemy = nullptr;
-        ennemyWave.removeAt(ennemyWave.indexOf(enemy));
+        m_ennemyWave.removeAt(m_ennemyWave.indexOf(enemy));
         //qDebug() << "mort";
-        //qDebug() << ennemyWave.length();
-        if(ennemyWave.length() == 0){
-            ennemyWave.clear();
+        //qDebug() << m_ennemyWave.length();
+        if(m_ennemyWave.length() == 0){
+            m_ennemyWave.clear();
             compteurWave+= 1;
             manageWaves();
         }
@@ -155,18 +127,13 @@ void GameCore::onEnemyDeath(Enemy *enemy){
 }
 
 void GameCore::clearWave(){
-    for(int i = ennemyPerWave-1; i > 0; i--){
-        Enemy* pEnemy = ennemyWave[i];
-        disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-        pEnemy->deleteLater();
-        pEnemy = nullptr;
-        ennemyWave.removeAt(i);
-        qDebug() << "mort";
-        qDebug() << ennemyWave.length();
-        if(ennemyWave.length() == 0){
-            ennemyWave.clear();
-            compteurWave+= 1;
-            manageWaves();
+    for(int i = m_ennemyWave.length()-1; i > 0; i--){
+        if(i>=0){
+            Enemy* pEnemy = m_ennemyWave[i];
+            disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+            pEnemy->deleteLater();
+            pEnemy = nullptr;
+            m_ennemyWave.removeAt(i);
         }
     }
 }
@@ -178,90 +145,107 @@ void GameCore::keyPressed(int key) {
     emit notifyKeyPressed(key);
     switch (key)  {
         case Qt::Key_W :
+        //Si on est dans le menu
             if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
-                m_pMenuItems[menuChoosenItem]->setBrush(Qt::white);
-                if (menuChoosenItem > 0) {
-                    menuChoosenItem--;
-                    m_pMenuItems[menuChoosenItem]->setBrush(Qt::red);
+                m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
+                //Peint en rouge la sélection
+                if (m_menuChoosenItem > 0) {
+                    m_menuChoosenItem--;
+                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
                 } else {
-                    menuChoosenItem = 2;
-                    m_pMenuItems[menuChoosenItem]->setBrush(Qt::red);
+                    m_menuChoosenItem = 2;
+                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
                 }
+        //Si on est sur le GameOver
             }else if(m_pGameCanvas->currentScene() == m_pSceneGameOver){
-                m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::white);
-                if (gameOverChoosenItem > 0) {
-                    gameOverChoosenItem--;
-                    m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::red);
+                m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::white);
+                //Peint en rouge la sélection
+                if (m_gameOverChoosenItem > 0) {
+                    m_gameOverChoosenItem--;
+                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
                 } else {
-                    gameOverChoosenItem = 1;
-                    m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::red);
-                } /*else if(gameOverChoosenItem = 0){
-                    gameOverChoosenItem = 1;
-                    m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::red);
-                }*/
+                    m_gameOverChoosenItem = 1;
+                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
+                }
             }
             break;
         case Qt::Key_S :
+        //Si on est dans le menu
             if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
-                m_pMenuItems[menuChoosenItem]->setBrush(Qt::white);
-                if (menuChoosenItem < 2) {
-                    menuChoosenItem++;
-                    m_pMenuItems[menuChoosenItem]->setBrush(Qt::red);
+                m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
+                //Peint en rouge la sélection
+                if (m_menuChoosenItem < 2) {
+                    m_menuChoosenItem++;
+                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
                 } else {
-                    menuChoosenItem = 0;
-                    m_pMenuItems[menuChoosenItem]->setBrush(Qt::red);
+                    m_menuChoosenItem = 0;
+                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
                 }
+        //Si on est sur le GameOver
             }else if(m_pGameCanvas->currentScene() == m_pSceneGameOver){
-                m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::white);
-                if (gameOverChoosenItem < 1) {
-                    gameOverChoosenItem++;
-                    m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::red);
+                m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::white);
+                //Peint en rouge la sélection
+                if (m_gameOverChoosenItem < 1) {
+                    m_gameOverChoosenItem++;
+                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
                 } else {
-                    gameOverChoosenItem = 0;
-                    m_pGameOverItems[gameOverChoosenItem]->setBrush(Qt::red);
+                    m_gameOverChoosenItem = 0;
+                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
                 }
             }
             break;
         case Qt::Key_Escape:
+            //Affiche le menu si on est dans la scène "SceneGame"
             if (m_pGameCanvas->currentScene() != m_pSceneMenu && m_pGameCanvas->currentScene() != m_pSceneGameOver) {
-                menuChoosenItem = 0;
+                m_menuChoosenItem = 0;
                 if(m_pGameCanvas->currentScene() != m_pSceneControl){
                     m_pOldGameScene = m_pGameCanvas->currentScene();
                 }
                 m_pGameCanvas->setCurrentScene(m_pSceneMenu);
             }
+            //Affiche la scène "SceneGame"
             else{
-                menuChoosenItem = 0;
+                m_menuChoosenItem = 0;
                 m_pGameCanvas->setCurrentScene(m_pOldGameScene);
             }
             break;
         case Qt::Key_Space:
             if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
-                switch (menuChoosenItem) {
+                switch (m_menuChoosenItem) {
+                //0.Jouer -
                 case 0:
+                    //Affiche la zone de jeu où on s'était arrêté
                     if(m_pOldGameScene){
                         m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+                    //Affiche la zone de jeu à la première vague
                     }else{
+                        setupSceneGameScene();
                         m_pGameCanvas->setCurrentScene(m_pSceneGame);
                         compteurWave = 1;
-                        manageWaves();
+                        //manageWaves();
                     }
-
                     break;
+                //1. Contrôles - Affiche la scène avec les contrôles du jeu
                 case 1:
                     m_pGameCanvas->setCurrentScene(m_pSceneControl);
                     break;
+                //2. Quitter - Quitte le jeu
                 case 2:
                     exitGame();
                 }
+            //Si on est sur le GameOver
             }else if (m_pGameCanvas->currentScene() == m_pSceneGameOver){
-                switch(gameOverChoosenItem){
+                switch(m_gameOverChoosenItem){
+                //0. Jouer - Relance une partie à la première vague
                 case 0:
+                    clearWave();
+                    setupSceneGameScene();
                     m_pGameCanvas->setCurrentScene(m_pSceneGame);
-                    setupPlayer();
                     compteurWave = 1;
-                    manageWaves();
+                    ennemyPerWave = 2;
+                    //manageWaves();
                     break;
+                //1. Quitter - Retour au menu
                 case 1:
                     m_pGameCanvas->setCurrentScene(m_pSceneMenu);
                 }
@@ -284,7 +268,7 @@ void GameCore::tick(int elapsedTimeInMilliseconds) {
         return;
 
     // Vérification du contact du joueur avec un ennemi
-    // Si le joueur est touchée par un ennemi, Game Over
+    // Si le joueur est touché par un ennemi, Game Over
     if(!m_pPlayer->collidingSprites().isEmpty()){
         //On enlève le joueur de sa liste de collision
         m_pPlayer->collidingSprites().removeAll(m_pPlayer);
@@ -311,23 +295,23 @@ void GameCore::setupPlayer() {
 //! Place sur la scène la vague d'ennemis
 void GameCore::setupEnemy() {
     for(int i = 0; i < ennemyPerWave; i++){
+        qDebug() << "Ajout ennemi" << i;
         Enemy* pEnemy = new Enemy;
-        ennemyWave.append(pEnemy);
+        m_ennemyWave.append(pEnemy);
         pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1,100);
         pEnemy->setZValue(1);
         m_pSceneGame->addSpriteToScene(pEnemy);
         pEnemy->setTickHandler(new ManualWalkingHandler);
         connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
-        qDebug() << "length" << ennemyWave.length();
     }
+    qDebug() << "length" << m_ennemyWave.length();
 }
 
 //! Gère les vagues d'ennemis
 void GameCore::manageWaves(){
-    qDebug() << ennemyPerWave;
-    qDebug() << compteurWave;
+    qDebug() << "ennemyPerWave" << ennemyPerWave;
+    qDebug() << "compteurWave" << compteurWave;
     switch(compteurWave){
-        case 0: compteurWave=0; break;
         case 1:
             //Première vague
             qDebug() << "firstWave";
@@ -344,6 +328,9 @@ void GameCore::manageWaves(){
             qDebug() << "thirdWave";
             ennemyPerWave += 2;
             setupEnemy();
+            break;
+        case 4:
+            qDebug() << "You win";
     }
 }
 
@@ -361,4 +348,73 @@ void GameCore::exitGame(){
     //exit (EXIT_SUCCESS);
 }
 
+//! Crée la scène GameOver et y ajoute différent éléments;
+void GameCore::setupSceneGameOver(){
+    // Création et disposition de la scène GameOver
+    // Crée la scène GameOver
+    m_pSceneGameOver = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+    // Affichage du titre GameOver
+    m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-515,SCENE_HEIGHT/2-200), "Game Over", 70);
+    // Affichage des différentes options du menu
+    m_pGameOverItems[0] = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-425,SCENE_HEIGHT/2), "Rejouer", 50, Qt::red);
+    m_pGameOverItems[1] = m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-425,SCENE_HEIGHT/2 + 50), "Menu", 50, Qt::white);
+    m_gameOverChoosenItem = 0;
+}
 
+//! Crée la scène Menu et y ajoute différent éléments
+void GameCore::setupSceneMenu(){
+    // Création et disposition de la scène Menu
+    // Crée la scène Menu
+    m_pSceneMenu = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+    // Affichage du titre Menu
+    m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2-200), "Menu", 70);
+    // Affichage des différentes options du menu
+    m_pMenuItems[0] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2), "Jouer", 50, Qt::red);
+    m_pMenuItems[1] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2 + 50), "Contrôles", 50, Qt::white);
+    m_pMenuItems[2] = m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2 + 100), "Quitter", 50, Qt::white);
+    m_menuChoosenItem = 0;
+
+#ifdef QT_DEBUG
+    // Bricolage pour forcer le chargement de tous les plugins dès le lancement
+    // de l'application. Si on ne fait pas ça, impossible de débogguer l'app, car
+    // c'est au moment de la création des ennemis que les formats d'images sont chargés,
+    // ce qui est trop tard.
+    Enemy* pEnemy = new Enemy;
+    pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1,100);
+    pEnemy->setZValue(1);
+    m_pSceneMenu->addSpriteToScene(pEnemy);
+#endif
+}
+
+//! Crée la scène Control et y ajoute différent éléments
+void GameCore::setupSceneControl(){
+    //Création et dispositon de la scène Control
+    // Crée la scène pour afficher les contrôles
+    m_pSceneControl = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+    // Affichage du titre Contrôle
+    m_pSceneControl->createText(QPointF(SCENE_WIDTH-500,SCENE_HEIGHT/2-200), "Contrôles", 70);
+    // Affichage des touches actives :
+    QString texteControl = "w : Se déplacer en haut\n"
+                    "s : Se déplacer en bas\n"
+                    "d : Se déplacer à droite\n"
+                    "a : Se déplacer à gauche\n"
+                    "space : Tirer\n"
+                    "ctrl+shift+i : infos sur la cadence.";
+    m_pSceneControl->createText(QPointF(SCENE_WIDTH-525,SCENE_HEIGHT/2), texteControl, 30);
+}
+
+//! Crée la scène GameScene et y ajoute différent éléments
+void GameCore::setupSceneGameScene(){
+    //Initialisation de la GameScene (zone de jeu)
+    m_pSceneGame = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+    QImage img(GameFramework::imagesPath() + "background.png");
+    m_pSceneGame->setBackgroundImage(img);
+    // Trace un rectangle blanc tout autour des limites de la scène.
+    m_pSceneGame->addRect(m_pSceneGame->sceneRect(), QPen(Qt::white));
+    // Création du joueur
+    setupPlayer();
+    manageWaves();
+    // Affichage d'un texte
+    QGraphicsSimpleTextItem* pText = m_pSceneGame->createText(QPointF(0,0), "BulletHell", 70);
+    pText->setOpacity(0.5);
+}

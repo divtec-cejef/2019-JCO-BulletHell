@@ -50,6 +50,8 @@ class Enemy : public LivingEntity
 
         QPointF m_enemyVelocity;
         int health;
+        int timeBeforeShoot; // temps à attendre avant de shoot
+        int counterMillisecondsEnemy;
 
 };
 

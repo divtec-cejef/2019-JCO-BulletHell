@@ -9,14 +9,14 @@
 #include "resources.h"
 
 #include <QDebug>
-#include <bullet.h>
+#include <ctime>
+#include "bullet.h"
 #include "gamecore.h"
 #include "gamescene.h"
 #include "sprite.h"
 
 const int ENEMY_VELOCITY = 400; // pixels par seconde
-const int TIME_BEFORE_SHOOT = 100; // temps à attendre avant de shoot
-int counterMillisecondsEnemy = 0;
+
 
 //! Construit et initialise un ennemi.
 //! \param pParent  Objet propiétaire de cet objet.
@@ -25,6 +25,11 @@ Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::enemyImagesPa
     spriteType = Sprite::SpriteType_e::ST_ENEMY;
 
     health = 0;
+    // Initialise le générateur aléatoire pour la cadence de tir des ennemis
+    //std::srand(std::time(0));
+    //Initialisation des variables pour le tir automatique
+    timeBeforeShoot = 100;//std::rand() % 100 + 50; // temps à attendre avant de shoot (entre 1 secondes et 1/2 secondes)
+    counterMillisecondsEnemy = 0;
     //configureAnimation();
 }
 
@@ -48,11 +53,11 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
 
     //qDebug() << "elapsedTimeInMilliseconds" << elapsedTimeInMilliseconds;
     //qDebug() << "compteur milliseconds" << counterMilliseconds;
-    if(counterMillisecondsEnemy == TIME_BEFORE_SHOOT){
+    if(this->counterMillisecondsEnemy == this->timeBeforeShoot){
         shoot();
-        counterMillisecondsEnemy = 0;
+        this->counterMillisecondsEnemy = 0;
     }
-    counterMillisecondsEnemy++;
+    this->counterMillisecondsEnemy++;
 
     // Vérification du contact de l'ennemi avec une bullet émise par le joueur
     // Si l'ennemi est touchée par une de ces balles, il meurt

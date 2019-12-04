@@ -46,8 +46,8 @@ public:
     QGraphicsSimpleTextItem* m_pMenuItems[3];
     QGraphicsSimpleTextItem* m_pGameOverItems[2];
     //Variable qui stockent l'option choisie
-    int menuChoosenItem = 0;
-    int gameOverChoosenItem = 0;
+    int m_menuChoosenItem = 0;
+    int m_gameOverChoosenItem = 0;
 
     // Les scènes sont en public pour que le joueur puisse intéragir avec elles
     GameScene* m_pSceneGame;
@@ -71,11 +71,16 @@ private:
     void setupEnemy();
     void clearWave();
 
+    void setupSceneGameOver();
+    void setupSceneGameScene();
+    void setupSceneMenu();
+    void setupSceneControl();
+
     GameCanvas* m_pGameCanvas;
 
     Player* m_pPlayer;
     Enemy* m_pEnemy;
-    QList<Enemy*> ennemyWave;
+    QList<Enemy*> m_ennemyWave;
     bool m_keySpacePressed;
 
 
