@@ -104,7 +104,11 @@ void GameCore::onPlayerDeath(bool playerDead){
         m_pSceneGame = nullptr;
         */
         m_pGameCanvas->setCurrentScene(m_pSceneGameOver);
-        ennemyPerWave=2;
+        //On réinitialise le nombre d'ennemi et la vague
+        // pour éviter que le joueur se retrouve à une vague
+        // plus élevée que la une lorsqu'il relance une partie
+        ennemyPerWave = 2;
+        compteurWave = 1;
     }
 }
 
