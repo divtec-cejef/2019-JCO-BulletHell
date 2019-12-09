@@ -99,8 +99,10 @@ void GameCore::onPlayerDeath(bool playerDead){
         disconnect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
         m_pPlayer->deleteLater();
         m_pPlayer = nullptr;
+        /* Mis en commentaire pour déboguer le problème du 9.12.2019
         m_pSceneGame->deleteLater();
         m_pSceneGame = nullptr;
+        */
         m_pGameCanvas->setCurrentScene(m_pSceneGameOver);
         ennemyPerWave=2;
     }
@@ -112,28 +114,35 @@ void GameCore::onEnemyDeath(Enemy *enemy){
     qDebug() << "onEnemyDeath";
     if(m_ennemyWave.contains(enemy)){
         Enemy* pEnemy = m_ennemyWave[m_ennemyWave.indexOf(enemy)];
+        Q_ASSERT(pEnemy != nullptr);
         disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        m_ennemyWave.removeAt(m_ennemyWave.indexOf(pEnemy));
         pEnemy->deleteLater();
         pEnemy = nullptr;
-        m_ennemyWave.removeAt(m_ennemyWave.indexOf(enemy));
+
         //qDebug() << "mort";
         //qDebug() << m_ennemyWave.length();
-        if(m_ennemyWave.length() == 0){
-            m_ennemyWave.clear();
+        if(m_ennemyWave.length() == 0 && m_pPlayer != nullptr){
             compteurWave+= 1;
             manageWaves();
         }
     }
 }
 
+//! Efface la vague d'ennemi afin d'éviter que les
+//! anciens ennemis soient encore présent dans la partie.
 void GameCore::clearWave(){
-    for(int i = m_ennemyWave.length()-1; i > 0; i--){
+    for(int i = m_ennemyWave.length()-1; i >= 0; i--){
         if(i>=0){
-            Enemy* pEnemy = m_ennemyWave[i];
-            disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+            Enemy* pEnemyClearWave = m_ennemyWave.at(i);
+            onEnemyDeath(pEnemyClearWave);
+            /*
+            Q_ASSERT(pEnemy != nullptr);
+            disconnect(pEnemy, SIGNAL(&Enemy::enemyDeath), this, SLOT(&GameCore::onEnemyDeath));
             pEnemy->deleteLater();
             pEnemy = nullptr;
             m_ennemyWave.removeAt(i);
+            */
         }
     }
 }
@@ -238,7 +247,9 @@ void GameCore::keyPressed(int key) {
                 switch(m_gameOverChoosenItem){
                 //0. Jouer - Relance une partie à la première vague
                 case 0:
+                    qDebug()<< "before clearwave() " <<m_ennemyWave.length();
                     clearWave();
+                    qDebug()<< "after clearwave() " <<m_ennemyWave.length();
                     setupSceneGameScene();
                     m_pGameCanvas->setCurrentScene(m_pSceneGame);
                     compteurWave = 1;
@@ -284,12 +295,12 @@ void GameCore::tick(int elapsedTimeInMilliseconds) {
 //! Met en place le joueur
 void GameCore::setupPlayer() {
     m_pPlayer = new Player;
-    m_pPlayer->setPos(0,0);//(350, 470);
-    m_pPlayer->setZValue(1);          // Passe devant tous les autres sprites
-    m_pSceneGame->addSpriteToScene(m_pPlayer);
     connect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
     connect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
     connect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
+    m_pPlayer->setPos(0,0);//(350, 470);
+    m_pPlayer->setZValue(1);          // Passe devant tous les autres sprites
+    m_pSceneGame->addSpriteToScene(m_pPlayer);
 }
 
 //! Place sur la scène la vague d'ennemis
@@ -297,12 +308,13 @@ void GameCore::setupEnemy() {
     for(int i = 0; i < ennemyPerWave; i++){
         qDebug() << "Ajout ennemi" << i;
         Enemy* pEnemy = new Enemy;
+        connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
         m_ennemyWave.append(pEnemy);
         pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1,100);
         pEnemy->setZValue(1);
         m_pSceneGame->addSpriteToScene(pEnemy);
         pEnemy->setTickHandler(new ManualWalkingHandler);
-        connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+
     }
     qDebug() << "length" << m_ennemyWave.length();
 }
