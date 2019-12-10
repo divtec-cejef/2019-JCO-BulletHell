@@ -223,7 +223,7 @@ void GameCore::setupEnemy() {
         Enemy* pEnemy = new Enemy;
         connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
         m_ennemyWave.append(pEnemy);
-        pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1,100);
+        pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1, std::rand() % (SCENE_HEIGHT-(SCENE_HEIGHT/2)) + 1);
         pEnemy->setZValue(1);
         m_pSceneGame->addSpriteToScene(pEnemy);
         pEnemy->setTickHandler(new ManualWalkingHandler);
