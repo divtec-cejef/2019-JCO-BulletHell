@@ -67,6 +67,7 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
         if(!this->collidingSprites().isEmpty()){
             if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_BULLET
                 && this->collidingSprites().first()->getEmitter() == Sprite::Emitter_e::EM_PLAYER){
+                //Envoit le signal de sa mort
                 emit enemyDeath(this);
             }
         }

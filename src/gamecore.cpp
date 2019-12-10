@@ -151,122 +151,31 @@ void GameCore::clearWave(){
     }
 }
 
+/**
+  FONCTION TOUCHE CLAVIER
+*/
+
+
+
+
 //! Traite la pression d'une touche lorsqu'on est dans un menu
 //! \param key Numéro de la touche (voir les constantes Qt)
 //!
 void GameCore::keyPressed(int key) {
     emit notifyKeyPressed(key);
     switch (key)  {
-        case Qt::Key_W :
-        //Si on est dans le menu
-            if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
-                m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
-                //Peint en rouge la sélection
-                if (m_menuChoosenItem > 0) {
-                    m_menuChoosenItem--;
-                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
-                } else {
-                    m_menuChoosenItem = 2;
-                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
-                }
-        //Si on est sur le GameOver
-            }else if(m_pGameCanvas->currentScene() == m_pSceneGameOver){
-                m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::white);
-                //Peint en rouge la sélection
-                if (m_gameOverChoosenItem > 0) {
-                    m_gameOverChoosenItem--;
-                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
-                } else {
-                    m_gameOverChoosenItem = 1;
-                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
-                }
-            }
-            break;
-        case Qt::Key_S :
-        //Si on est dans le menu
-            if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
-                m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
-                //Peint en rouge la sélection
-                if (m_menuChoosenItem < 2) {
-                    m_menuChoosenItem++;
-                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
-                } else {
-                    m_menuChoosenItem = 0;
-                    m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
-                }
-        //Si on est sur le GameOver
-            }else if(m_pGameCanvas->currentScene() == m_pSceneGameOver){
-                m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::white);
-                //Peint en rouge la sélection
-                if (m_gameOverChoosenItem < 1) {
-                    m_gameOverChoosenItem++;
-                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
-                } else {
-                    m_gameOverChoosenItem = 0;
-                    m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
-                }
-            }
-            break;
-        case Qt::Key_Escape:
-            //Affiche le menu si on est dans la scène "SceneGame"
-            if (m_pGameCanvas->currentScene() != m_pSceneMenu && m_pGameCanvas->currentScene() != m_pSceneGameOver) {
-                m_menuChoosenItem = 0;
-                if(m_pGameCanvas->currentScene() != m_pSceneControl){
-                    m_pOldGameScene = m_pGameCanvas->currentScene();
-                }
-                m_pGameCanvas->setCurrentScene(m_pSceneMenu);
-            }
-            //Affiche la scène "SceneGame"
-            else{
-                m_menuChoosenItem = 0;
-                m_pGameCanvas->setCurrentScene(m_pOldGameScene);
-            }
-            break;
-        case Qt::Key_Space:
-            if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
-                switch (m_menuChoosenItem) {
-                //0.Jouer -
-                case 0:
-                    //Affiche la zone de jeu où on s'était arrêté
-                    if(m_pOldGameScene){
-                        m_pGameCanvas->setCurrentScene(m_pOldGameScene);
-                    //Affiche la zone de jeu à la première vague
-                    }else{
-                        setupSceneGameScene();
-                        m_pGameCanvas->setCurrentScene(m_pSceneGame);
-                        compteurWave = 1;
-                        //manageWaves();
-                    }
-                    break;
-                //1. Contrôles - Affiche la scène avec les contrôles du jeu
-                case 1:
-                    m_pGameCanvas->setCurrentScene(m_pSceneControl);
-                    break;
-                //2. Quitter - Quitte le jeu
-                case 2:
-                    exitGame();
-                }
-            //Si on est sur le GameOver
-            }else if (m_pGameCanvas->currentScene() == m_pSceneGameOver){
-                switch(m_gameOverChoosenItem){
-                //0. Jouer - Relance une partie à la première vague
-                case 0:
-                    qDebug()<< "before clearwave() " <<m_ennemyWave.length();
-                    clearWave();
-                    qDebug()<< "after clearwave() " <<m_ennemyWave.length();
-                    setupSceneGameScene();
-                    m_pGameCanvas->setCurrentScene(m_pSceneGame);
-                    compteurWave = 1;
-                    ennemyPerWave = 2;
-                    //manageWaves();
-                    break;
-                //1. Quitter - Retour au menu
-                case 1:
-                    m_pGameCanvas->setCurrentScene(m_pSceneMenu);
-                }
-            }
-
-        }
+    case Qt::Key_W :
+        whenKeyUpPressedMenus();
+        break;
+    case Qt::Key_S :
+        whenKeyDownPressedMenus();
+        break;
+    case Qt::Key_Escape:
+        whenKeyEscapePressedMenus();
+        break;
+    case Qt::Key_Space:
+        whenKeySpacePressedMenus();
+    }
 }
 
 //! Traite le relâchement d'une touche.
@@ -328,40 +237,32 @@ void GameCore::manageWaves(){
     qDebug() << "ennemyPerWave" << ennemyPerWave;
     qDebug() << "compteurWave" << compteurWave;
     switch(compteurWave){
-        case 1:
-            //Première vague
-            qDebug() << "firstWave";
-            setupEnemy();
-            break;
-        case 2:
-            //Deuxième vague
-            qDebug() << "secondWave";
-            ennemyPerWave += 2;
-            setupEnemy();
-            break;
-        case 3:
-            //Troisième vague
-            qDebug() << "thirdWave";
-            ennemyPerWave += 2;
-            setupEnemy();
-            break;
-        case 4:
-            qDebug() << "You win";
+    case 1:
+        //Première vague
+        qDebug() << "firstWave";
+        setupEnemy();
+        break;
+    case 2:
+        //Deuxième vague
+        qDebug() << "secondWave";
+        ennemyPerWave += 2;
+        setupEnemy();
+        break;
+    case 3:
+        //Troisième vague
+        qDebug() << "thirdWave";
+        ennemyPerWave += 2;
+        setupEnemy();
+        break;
+    case 4:
+        qDebug() << "You win";
     }
-}
-
-//! Disposition de différents éléments dans la scène GameOver
-void GameCore::gameOver(){
-    //supprime l'ancienne scène afin qu'elle ne tourne pas en fond
-    delete m_pSceneGame;
-    m_pSceneGame = nullptr;
-
 }
 
 //! Quitte le jeu
 void GameCore::exitGame(){
     qDebug() << "Quitter";
-    //exit (EXIT_SUCCESS);
+    exit (EXIT_SUCCESS);
 }
 
 //! Crée la scène GameOver et y ajoute différent éléments;
@@ -411,11 +312,11 @@ void GameCore::setupSceneControl(){
     m_pSceneControl->createText(QPointF(SCENE_WIDTH-500,SCENE_HEIGHT/2-200), "Contrôles", 70);
     // Affichage des touches actives :
     QString texteControl = "w : Se déplacer en haut\n"
-                    "s : Se déplacer en bas\n"
-                    "d : Se déplacer à droite\n"
-                    "a : Se déplacer à gauche\n"
-                    "space : Tirer\n"
-                    "ctrl+shift+i : infos sur la cadence.";
+                           "s : Se déplacer en bas\n"
+                           "d : Se déplacer à droite\n"
+                           "a : Se déplacer à gauche\n"
+                           "space : Tirer\n"
+                           "ctrl+shift+i : infos sur la cadence.";
     m_pSceneControl->createText(QPointF(SCENE_WIDTH-525,SCENE_HEIGHT/2), texteControl, 30);
 }
 
@@ -434,3 +335,118 @@ void GameCore::setupSceneGameScene(){
     QGraphicsSimpleTextItem* pText = m_pSceneGame->createText(QPointF(0,0), "BulletHell", 70);
     pText->setOpacity(0.5);
 }
+
+//! Fonction gérant l'appui de la touche W
+void GameCore::whenKeyUpPressedMenus(){
+    //Si on est dans le menu
+    if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
+        m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
+        //Peint en rouge la sélection
+        if (m_menuChoosenItem > 0) {
+            m_menuChoosenItem--;
+            m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
+        } else {
+            m_menuChoosenItem = 2;
+            m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
+        }
+        //Si on est sur le GameOver
+    }else if(m_pGameCanvas->currentScene() == m_pSceneGameOver){
+        m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::white);
+        //Peint en rouge la sélection
+        if (m_gameOverChoosenItem > 0) {
+            m_gameOverChoosenItem--;
+            m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
+        } else {
+            m_gameOverChoosenItem = 1;
+            m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
+        }
+    }
+}
+
+//! Fonction gérant l'appui de la touche S
+void GameCore::whenKeyDownPressedMenus(){
+    //Si on est dans le menu
+    if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
+        m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
+        //Peint en rouge la sélection
+        if (m_menuChoosenItem < 2) {
+            m_menuChoosenItem++;
+            m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
+        } else {
+            m_menuChoosenItem = 0;
+            m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
+        }
+        //Si on est sur le GameOver
+    }else if(m_pGameCanvas->currentScene() == m_pSceneGameOver){
+        m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::white);
+        //Peint en rouge la sélection
+        if (m_gameOverChoosenItem < 1) {
+            m_gameOverChoosenItem++;
+            m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
+        } else {
+            m_gameOverChoosenItem = 0;
+            m_pGameOverItems[m_gameOverChoosenItem]->setBrush(Qt::red);
+        }
+    }
+}
+
+//! Fonction gérant l'appui de la touche Esc
+void GameCore::whenKeyEscapePressedMenus(){
+    //Affiche le menu si on est dans la scène "SceneGame"
+    if (m_pGameCanvas->currentScene() != m_pSceneMenu && m_pGameCanvas->currentScene() != m_pSceneGameOver) {
+        m_menuChoosenItem = 0;
+        if(m_pGameCanvas->currentScene() != m_pSceneControl){
+            m_pOldGameScene = m_pGameCanvas->currentScene();
+        }
+        m_pGameCanvas->setCurrentScene(m_pSceneMenu);
+    }
+    //Affiche la scène "SceneGame"
+    else{
+        m_menuChoosenItem = 0;
+        m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+    }
+}
+
+//! Fonction gérant l'appui de la touche Space
+void GameCore::whenKeySpacePressedMenus(){
+    if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
+        switch (m_menuChoosenItem) {
+        //0.Jouer -
+        case 0:
+            //Affiche la zone de jeu où on s'était arrêté
+            if(m_pOldGameScene){
+                m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+                //Affiche la zone de jeu à la première vague
+            }else{
+                setupSceneGameScene();
+                m_pGameCanvas->setCurrentScene(m_pSceneGame);
+                compteurWave = 1;
+            }
+            break;
+            //1. Contrôles - Affiche la scène avec les contrôles du jeu
+        case 1:
+            m_pGameCanvas->setCurrentScene(m_pSceneControl);
+            break;
+            //2. Quitter - Quitte le jeu
+        case 2:
+            exitGame();
+        }
+        //Si on est sur le GameOver
+    }else if (m_pGameCanvas->currentScene() == m_pSceneGameOver){
+        switch(m_gameOverChoosenItem){
+        //0. Jouer - Relance une partie à la première vague
+        case 0:
+            clearWave();
+            setupSceneGameScene();
+            m_pGameCanvas->setCurrentScene(m_pSceneGame);
+            compteurWave = 1;
+            ennemyPerWave = 2;
+            break;
+            //1. Quitter - Retour au menu
+        case 1:
+            m_pGameCanvas->setCurrentScene(m_pSceneMenu);
+        }
+    }
+}
+
+

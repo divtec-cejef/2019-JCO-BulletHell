@@ -39,7 +39,6 @@ public:
     void keyReleased(int key);
 
     void tick(int elapsedTimeInMilliseconds);
-    void gameOver();
     void exitGame();
 
     //Tableau permettant de stocker les différentes options du menu
@@ -57,20 +56,32 @@ public:
     GameScene* m_pSceneMenu;
 
 signals:
+    //Signaux
     void notifyKeyPressed(int key);
     void notifyKeyReleased(int key);
 
 public slots:
+    //Slot pour gérer la mort d'un ennemi/joueur
     void onPlayerDeath(bool playerDead);
     void onEnemyDeath(Enemy* enemy);
 
 private:
 
-    void manageWaves();
+
+    //Fonctions pour l'appui des touches dans les menus
+    void whenKeyUpPressedMenus();
+    void whenKeyDownPressedMenus();
+    void whenKeySpacePressedMenus();
+    void whenKeyEscapePressedMenus();
+
     void setupPlayer();
+
+    //Fonctions pour gérer les vagues d'ennemis ou un ennemi
+    void manageWaves();
     void setupEnemy();
     void clearWave();
 
+    //Fonctions pour initialiser les scènes
     void setupSceneGameOver();
     void setupSceneGameScene();
     void setupSceneMenu();
@@ -78,6 +89,7 @@ private:
 
     GameCanvas* m_pGameCanvas;
 
+    //Variable membre
     Player* m_pPlayer;
     Enemy* m_pEnemy;
     QList<Enemy*> m_ennemyWave;
