@@ -37,6 +37,7 @@ class Enemy : public LivingEntity
     public:
         Enemy(QGraphicsItem* pParent = nullptr);
         virtual void tick(int elapsedTimeInMilliseconds);
+        int setTimeBeforeShoot(int timeBeforeShoot);
     signals:
         void enemyDeath(Enemy* enemy);
     public slots:

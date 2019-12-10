@@ -28,7 +28,8 @@ Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::enemyImagesPa
     // Initialise le générateur aléatoire pour la cadence de tir des ennemis
     //std::srand(std::time(0));
     //Initialisation des variables pour le tir automatique
-    timeBeforeShoot = 100;//std::rand() % 100 + 50; // temps à attendre avant de shoot (entre 1 secondes et 1/2 secondes)
+    timeBeforeShoot = 0;
+    qDebug() << "timeBeforeShoot" << timeBeforeShoot;
     counterMillisecondsEnemy = 0;
     //configureAnimation();
 }
@@ -108,4 +109,8 @@ void Enemy::shoot(){
     pBullet->setZValue(1);          // Passe devant tous les autres sprites
     this->parentScene()->addSpriteToScene(pBullet);
     pBullet->updateVelocity(0,800);
+}
+
+int Enemy::setTimeBeforeShoot(int timeBeforeShoot){
+    this->timeBeforeShoot = timeBeforeShoot;
 }
