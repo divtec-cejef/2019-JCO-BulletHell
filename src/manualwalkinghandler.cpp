@@ -13,7 +13,7 @@
 #include "enemy.h"
 
 
-const int DEFAULT_WALKING_SPEED = 100; // pixels par seconde
+const int DEFAULT_WALKING_SPEED = 200; // pixels par seconde
 
 //! Constructeur.
 //! \param pParentSprite Sprite dont le déplacement doit être géré.
@@ -76,7 +76,7 @@ void ManualWalkingHandler::changeWalkingDirection() {
 
 //! Change la direction de marche.
 //! \param newWalkingDirection  Nouvelle direction de marche.
-void ManualWalkingHandler::setWalkingDirection(WalkingDirection newWalkingDirection) {
+void ManualWalkingHandler::setWalkingDirection(WalkingDirection_e newWalkingDirection) {
     if (m_walkingDirection != newWalkingDirection) {
         m_walkingDirection = newWalkingDirection;
     }

@@ -225,9 +225,12 @@ void GameCore::setupEnemy() {
         m_ennemyWave.append(pEnemy);
         pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1, std::rand() % (SCENE_HEIGHT-(SCENE_HEIGHT/2)) + 1);
         pEnemy->setZValue(1);
-        pEnemy->setTimeBeforeShoot(std::rand() % 100 + 50);
+        pEnemy->setTimeBeforeShoot(std::rand() % 100 + 51);
         m_pSceneGame->addSpriteToScene(pEnemy);
-        pEnemy->setTickHandler(new ManualWalkingHandler);
+        ManualWalkingHandler* ennemyWalkingHandler = new ManualWalkingHandler;
+        //static_cast<ManualWalkingHandler::WalkingDirection_e>(rand()%2);
+        pEnemy->setTickHandler(ennemyWalkingHandler);
+        ennemyWalkingHandler->changeWalkingDirection();
 
     }
     qDebug() << "length" << m_ennemyWave.length();
@@ -301,6 +304,8 @@ void GameCore::setupSceneMenu(){
     pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1,100);
     pEnemy->setZValue(1);
     m_pSceneMenu->addSpriteToScene(pEnemy);
+    delete pEnemy;
+    pEnemy = nullptr;
 #endif
 }
 

@@ -194,7 +194,8 @@ bool GameScene::isInsideScene(const QRectF &rRect) const
 //! Cadence.
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le tick précédent.
 void GameScene::tick(int elapsedTimeInMilliseconds) {
-    for(Sprite* pSprite : m_spriteList) {
+    auto tempList = m_spriteList;
+    for(Sprite* pSprite : tempList) {
         pSprite->tick(elapsedTimeInMilliseconds);
     }
 }

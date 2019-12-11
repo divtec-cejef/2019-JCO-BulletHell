@@ -15,7 +15,7 @@
 #include "gamescene.h"
 #include "sprite.h"
 
-const int ENEMY_VELOCITY = 400; // pixels par seconde
+const int ENEMY_VELOCITY = 500; // pixels par seconde
 
 
 //! Construit et initialise un ennemi.
@@ -50,6 +50,9 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
     // y est positionnée. Sinon, elle reste sur place.
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + enemyDistance);
+    }else{
+        qDebug() << "Ennemi bloqué";
+        this->setPos(this->pos() - enemyDistance);
     }
 
     //qDebug() << "elapsedTimeInMilliseconds" << elapsedTimeInMilliseconds;
@@ -109,8 +112,9 @@ void Enemy::shoot(){
     pBullet->setZValue(1);          // Passe devant tous les autres sprites
     this->parentScene()->addSpriteToScene(pBullet);
     pBullet->updateVelocity(0,800);
+    //pBullet = nullptr;
 }
 
-int Enemy::setTimeBeforeShoot(int timeBeforeShoot){
+void Enemy::setTimeBeforeShoot(int timeBeforeShoot){
     this->timeBeforeShoot = timeBeforeShoot;
 }

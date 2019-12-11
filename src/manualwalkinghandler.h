@@ -23,7 +23,7 @@
 class ManualWalkingHandler : public SpriteTickHandler
 {
 public:
-    enum WalkingDirection {
+    enum WalkingDirection_e {
         WALKING_RIGHT,
         WALKING_LEFT
     };
@@ -37,12 +37,12 @@ public:
     int walkingSpeed() const;
 
     void changeWalkingDirection();
-    void setWalkingDirection(WalkingDirection newWalkingDirection);
+    void setWalkingDirection(WalkingDirection_e newWalkingDirection);
 
 private:
     void configureTransformationMatrix();
 
-    WalkingDirection m_walkingDirection;
+    WalkingDirection_e m_walkingDirection;
     QList<QGraphicsTransform*> m_transformsForFlip;
     int m_walkingSpeed;
 };
