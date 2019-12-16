@@ -14,19 +14,17 @@
 //!
 //! Cette classe démontre les fonctionnalités suivantes :
 //!
-//! - Spécialiser la classe Sprite pour y ajouter une gestion des touches du clavier.
+//! - Spécialiser la classe Enemy pour y ajouter une gestion des touches du clavier.
 //! - Réagir aux événements clavier pour mémoriser l'état des touches, afin de
 //!   déplacer correctement l'ennemi.
-//!   Pour que les fonctions onKeyPressed() et onKeyReleased() soient appelées lorsqu'une
-//!   touche est appuyée, il faut que l'objet qui crée une instance de ennemi se
-//!   charge de les connecter aux signaux GameCore::notifyKeyPressed() et
-//!   GameCore::notifyKeyReleased().
-//! - Lors du tick(), déterminer la nouvelle position de la boule selon les touches
-//!   du clavier qui sont appuyées.
+//! - Lors du tick(), déterminer la nouvelle position de l'ennemi
 //! - Récupérer la bounding box (boîte d'encombrement) du sprite dans le système de
 //!   coordonnées global avec globalBoundingBox() et déplacement à la future position
 //!   de l'ennemi (avec translated()) pour vérifier qu'elle soit toujours
 //!   incluse dans les limites de la surface de la scène.
+//! - Tir un objet de classe bullet
+//! - Ûn setter qui définit la cadence de tir de l'ennemi
+//! - Une fonction pour gérer l'animation de l'ennemi
 //!
 class Enemy : public LivingEntity
 {

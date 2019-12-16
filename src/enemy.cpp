@@ -51,7 +51,6 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
     if (isInsideScene(nextRect)) {
         this->setPos(this->pos() + enemyDistance);
     }else{
-        qDebug() << "Ennemi bloqué";
         this->setPos(this->pos() - enemyDistance);
     }
 
@@ -95,12 +94,6 @@ void Enemy::configureAnimation() {
 void Enemy::updateVelocity()  {
     int XVelocity = 0;
     int YVelocity = 0;
-    /*
-    if (m_keyUpPressed)    YVelocity = -BALL_VELOCITY;
-    if (m_keyDownPressed)  YVelocity = BALL_VELOCITY;
-    if (m_keyRightPressed) XVelocity = BALL_VELOCITY;
-    if (m_keyLeftPressed)  XVelocity = -BALL_VELOCITY;
-    */
     m_enemyVelocity = QPoint(XVelocity, YVelocity);
 }
 

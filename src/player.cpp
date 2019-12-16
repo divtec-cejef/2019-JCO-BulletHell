@@ -62,17 +62,6 @@ void Player::tick(int elapsedTimeInMilliseconds) {
             }
         }
     }
-
-
-    /*
-    if(counterMilliseconds == TIME_BEFORE_SHOOT){
-        if(m_keySpacePressed){
-            shoot();
-        }
-        counterMilliseconds = 0;
-    }
-    counterMilliseconds++;
-    */
 }
 
 //! Découpe la spritesheet pour en extraire les étapes d'animation et

@@ -34,8 +34,7 @@
 
 const int SCENE_WIDTH = 700;
 const int SCENE_HEIGHT = 880;
-int compteurWave = 0;
-int ennemyPerWave = 2;
+
 
 //! Initialise le contrôleur de jeu.
 //! \param pGameCanvas  GameCanvas pour lequel cet objet travaille.
@@ -57,8 +56,10 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     // Initialise le générateur aléatoire pour la position des ennemis
     std::srand(std::time(0));
 
-    //On initialise à quelle vague d'ennemi le joueur commencera
-    compteurWave = 1;
+    //On initialise les variables en lien avec les vagues d'ennemis
+    m_compteurWave = 1;
+    m_ennemyPerWave = 0;
+    m_maxWave = 6;
 
     //Initialisation des différents scènes
     // et des variables qui leurs sont spécifiques
@@ -72,6 +73,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_gameOverChoosenItem = 0;
     m_menuChoosenItem = 0;
 
+    //On définit la scène qui sera affichée
     m_pGameCanvas->setCurrentScene(m_pSceneMenu);
 
     // Démarre le tick pour que les animations qui en dépendent fonctionnent correctement.
@@ -84,7 +86,13 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
 //! Destructeur de GameCore : efface les scènes
 GameCore::~GameCore() {
     delete m_pSceneGame;
+    delete m_pSceneControl;
+    delete m_pSceneGameOver;
+    delete m_pSceneMenu;
     m_pSceneGame = nullptr;
+    m_pSceneControl = nullptr;
+    m_pSceneGameOver = nullptr;
+    m_pSceneMenu = nullptr;
 }
 
 
@@ -93,74 +101,64 @@ GameCore::~GameCore() {
 //! \param  playerDead Booléen pour indiquer si le joueur est mort
 void GameCore::onPlayerDeath(bool playerDead){
     if(playerDead){
-        //qDebug() << "mort";
+        //On déconnecte le signal et le slot
         disconnect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
         disconnect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
         disconnect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
+        //On le "supprime plus tard" quand on ne fait
+        //plus appel à celui-ci
         m_pPlayer->deleteLater();
+        //Le pointeur pointe sur nullptr
         m_pPlayer = nullptr;
-        /* Mis en commentaire pour déboguer le problème du 9.12.2019
-        m_pSceneGame->deleteLater();
-        m_pSceneGame = nullptr;
-        */
+        //On affiche la scène GameOver
         m_pGameCanvas->setCurrentScene(m_pSceneGameOver);
         //On réinitialise le nombre d'ennemi et la vague
         // pour éviter que le joueur se retrouve à une vague
-        // plus élevée que la une lorsqu'il relance une partie
-        ennemyPerWave = 2;
-        compteurWave = 1;
+        // plus élevée que la première lorsqu'il relance une partie
+        m_ennemyPerWave = 0;
+        m_compteurWave = 1;
     }
 }
 
 //! Déconnecte le signal en lien avec l'ennemi et détruit ce dernier
 //! \param  enemyDead Booléen pour indiquer si l'ennemi est mort
 void GameCore::onEnemyDeath(Enemy *enemy){
-    qDebug() << "onEnemyDeath";
     if(m_ennemyWave.contains(enemy)){
+        //On récupère l'index de l'ennemi passé en paramètre
+        // pour l'utiliser dans une variable pointeur
         Enemy* pEnemy = m_ennemyWave[m_ennemyWave.indexOf(enemy)];
-        Q_ASSERT(pEnemy != nullptr);
+        //On déconnecte le signal et le slot
         disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        //On enlève l'ennemi de la liste
         m_ennemyWave.removeAt(m_ennemyWave.indexOf(pEnemy));
+        //On le "supprime plus tard" quand on ne fait
+        // plus appel à celui-ci
         pEnemy->deleteLater();
+        //Le pointeur pointe sur nullptr
         pEnemy = nullptr;
 
-        //qDebug() << "mort";
-        //qDebug() << m_ennemyWave.length();
+        //Si la vague d'ennemi est vide et que le joueur
+        // est en vie on passe à la prochaine vague
         if(m_ennemyWave.length() == 0 && m_pPlayer != nullptr){
-            compteurWave+= 1;
+            m_compteurWave+= 1;
             manageWaves();
         }
     }
 }
 
 //! Efface la vague d'ennemi afin d'éviter que les
-//! anciens ennemis soient encore présent dans la partie.
+//! anciens ennemis soient encore présent dans la nouvelle vague.
 void GameCore::clearWave(){
     for(int i = m_ennemyWave.length()-1; i >= 0; i--){
         if(i>=0){
             Enemy* pEnemyClearWave = m_ennemyWave.at(i);
             onEnemyDeath(pEnemyClearWave);
-            /*
-            Q_ASSERT(pEnemy != nullptr);
-            disconnect(pEnemy, SIGNAL(&Enemy::enemyDeath), this, SLOT(&GameCore::onEnemyDeath));
-            pEnemy->deleteLater();
-            pEnemy = nullptr;
-            m_ennemyWave.removeAt(i);
-            */
         }
     }
 }
 
-/**
-  FONCTION TOUCHE CLAVIER
-*/
-
-
-
-
 //! Traite la pression d'une touche lorsqu'on est dans un menu
 //! \param key Numéro de la touche (voir les constantes Qt)
-//!
 void GameCore::keyPressed(int key) {
     emit notifyKeyPressed(key);
     switch (key)  {
@@ -207,58 +205,54 @@ void GameCore::tick(int elapsedTimeInMilliseconds) {
 
 //! Met en place le joueur
 void GameCore::setupPlayer() {
+    //Affecte l'objet Player à la variable membre pointeur
     m_pPlayer = new Player;
+    //Connecte les signaux du GameCore avec les slots du joueur
     connect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
     connect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
     connect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
+    //Définit la position initiale du joueur sur les scènes
     m_pPlayer->setPos(0,0);//(350, 470);
-    m_pPlayer->setZValue(1);          // Passe devant tous les autres sprites
+    //Définit la couche où est le joueur
+    m_pPlayer->setZValue(1);
+    //On ajoute le joueur sur la scène de jeu
     m_pSceneGame->addSpriteToScene(m_pPlayer);
 }
 
 //! Place sur la scène la vague d'ennemis
 void GameCore::setupEnemy() {
-    for(int i = 0; i < ennemyPerWave; i++){
-        qDebug() << "Ajout ennemi" << i;
+    for(int i = 0; i < m_ennemyPerWave; i++){
         Enemy* pEnemy = new Enemy;
         connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        //On ajoute l'ennemi à la liste d'ennemi.
         m_ennemyWave.append(pEnemy);
+        //On le positionne aléatoirement sur un axe X et Y
         pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1, std::rand() % (SCENE_HEIGHT-(SCENE_HEIGHT/2)) + 1);
+        //On définit la même couche Z pour que le joueur
+        // puisse intéragir avec l'ennemi et vice-versa
         pEnemy->setZValue(1);
+        //On initialise la cadence de tir de l'ennemi aléatoirement dans une plage de 50 à 100. (1/2s à 1s).
         pEnemy->setTimeBeforeShoot(std::rand() % 100 + 51);
         m_pSceneGame->addSpriteToScene(pEnemy);
-        ManualWalkingHandler* ennemyWalkingHandler = new ManualWalkingHandler;
-        //static_cast<ManualWalkingHandler::WalkingDirection_e>(rand()%2);
-        pEnemy->setTickHandler(ennemyWalkingHandler);
-        ennemyWalkingHandler->changeWalkingDirection();
-
+        //On crée l'objet qui gérera le tick de l'ennemi
+        ManualWalkingHandler* pEnnemyWalkingHandler = new ManualWalkingHandler;
+        //On définit l'objet qui gère le tick de l'ennemi
+        pEnemy->setTickHandler(pEnnemyWalkingHandler);
+        //On définit aléatoirement la direction que prendra l'ennemi
+        pEnnemyWalkingHandler->changeWalkingDirection();
     }
-    qDebug() << "length" << m_ennemyWave.length();
 }
 
 //! Gère les vagues d'ennemis
 void GameCore::manageWaves(){
-    qDebug() << "ennemyPerWave" << ennemyPerWave;
-    qDebug() << "compteurWave" << compteurWave;
-    switch(compteurWave){
-    case 1:
-        //Première vague
-        qDebug() << "firstWave";
+    qDebug() << "m_ennemyPerWave" << m_ennemyPerWave;
+    qDebug() << "m_compteurWave" << m_compteurWave;
+
+    if(m_compteurWave <= m_maxWave){
+        qDebug() << "vague n° : " << m_compteurWave;
+        m_ennemyPerWave+=2;
         setupEnemy();
-        break;
-    case 2:
-        //Deuxième vague
-        qDebug() << "secondWave";
-        ennemyPerWave += 2;
-        setupEnemy();
-        break;
-    case 3:
-        //Troisième vague
-        qDebug() << "thirdWave";
-        ennemyPerWave += 2;
-        setupEnemy();
-        break;
-    case 4:
+    }else if(m_compteurWave > m_maxWave){
         qDebug() << "You win";
     }
 }
@@ -417,8 +411,7 @@ void GameCore::whenKeyEscapePressedMenus(){
 void GameCore::whenKeySpacePressedMenus(){
     if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
         switch (m_menuChoosenItem) {
-        //0.Jouer -
-        case 0:
+        case 0: //0.Jouer -
             //Affiche la zone de jeu où on s'était arrêté
             if(m_pOldGameScene){
                 m_pGameCanvas->setCurrentScene(m_pOldGameScene);
@@ -426,30 +419,26 @@ void GameCore::whenKeySpacePressedMenus(){
             }else{
                 setupSceneGameScene();
                 m_pGameCanvas->setCurrentScene(m_pSceneGame);
-                compteurWave = 1;
+                m_compteurWave = 1;
             }
             break;
-            //1. Contrôles - Affiche la scène avec les contrôles du jeu
-        case 1:
+        case 1: //1. Contrôles - Affiche la scène avec les contrôles du jeu
             m_pGameCanvas->setCurrentScene(m_pSceneControl);
             break;
-            //2. Quitter - Quitte le jeu
-        case 2:
+        case 2: //2. Quitter - Quitte le jeu
             exitGame();
         }
         //Si on est sur le GameOver
     }else if (m_pGameCanvas->currentScene() == m_pSceneGameOver){
         switch(m_gameOverChoosenItem){
-        //0. Jouer - Relance une partie à la première vague
-        case 0:
+        case 0: //0. Jouer - Relance une partie à la première vague
             clearWave();
             setupSceneGameScene();
             m_pGameCanvas->setCurrentScene(m_pSceneGame);
-            compteurWave = 1;
-            ennemyPerWave = 2;
+            m_compteurWave = 1;
+            m_ennemyPerWave = 0;
             break;
-            //1. Quitter - Retour au menu
-        case 1:
+        case 1: //1. Quitter - Retour au menu
             m_pGameCanvas->setCurrentScene(m_pSceneMenu);
         }
     }

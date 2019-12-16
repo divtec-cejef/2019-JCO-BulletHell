@@ -94,6 +94,9 @@ private:
     Enemy* m_pEnemy;
     QList<Enemy*> m_ennemyWave;
     bool m_keySpacePressed;
+    int m_compteurWave;
+    int m_ennemyPerWave;
+    int m_maxWave;
 
 
 private slots:
