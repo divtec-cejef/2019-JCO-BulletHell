@@ -59,7 +59,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     //On initialise les variables en lien avec les vagues d'ennemis
     m_compteurWave = 1;
     m_ennemyPerWave = 0;
-    m_maxWave = 6;
+    m_maxWave = 2;
 
     //Initialisation des différents scènes
     // et des variables qui leurs sont spécifiques
@@ -67,11 +67,14 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_pSceneGame = nullptr;
     m_pSceneGameOver = nullptr;
     m_pSceneMenu = nullptr;
+    m_pSceneYouWin = nullptr;
     setupSceneControl();
     setupSceneGameOver();
     setupSceneMenu();
+    setupSceneYouWin();
     m_gameOverChoosenItem = 0;
     m_menuChoosenItem = 0;
+    m_youWinChoosenItem = 0;
 
     //On définit la scène qui sera affichée
     m_pGameCanvas->setCurrentScene(m_pSceneMenu);
@@ -254,6 +257,7 @@ void GameCore::manageWaves(){
         setupEnemy();
     }else if(m_compteurWave > m_maxWave){
         qDebug() << "You win";
+        m_pGameCanvas->setCurrentScene(m_pSceneYouWin);
     }
 }
 
@@ -265,8 +269,7 @@ void GameCore::exitGame(){
 
 //! Crée la scène GameOver et y ajoute différent éléments;
 void GameCore::setupSceneGameOver(){
-    // Création et disposition de la scène GameOver
-    // Crée la scène GameOver
+    //Affectation de la scène GameOver
     m_pSceneGameOver = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // Affichage du titre GameOver
     m_pSceneGameOver->createText(QPointF(SCENE_WIDTH-515,SCENE_HEIGHT/2-200), "Game Over", 70);
@@ -278,8 +281,7 @@ void GameCore::setupSceneGameOver(){
 
 //! Crée la scène Menu et y ajoute différent éléments
 void GameCore::setupSceneMenu(){
-    // Création et disposition de la scène Menu
-    // Crée la scène Menu
+    //Affectation de la scène Menu
     m_pSceneMenu = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // Affichage du titre Menu
     m_pSceneMenu->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2-200), "Menu", 70);
@@ -305,8 +307,7 @@ void GameCore::setupSceneMenu(){
 
 //! Crée la scène Control et y ajoute différent éléments
 void GameCore::setupSceneControl(){
-    //Création et dispositon de la scène Control
-    // Crée la scène pour afficher les contrôles
+    //Affectation de la scène Control
     m_pSceneControl = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     // Affichage du titre Contrôle
     m_pSceneControl->createText(QPointF(SCENE_WIDTH-500,SCENE_HEIGHT/2-200), "Contrôles", 70);
@@ -322,7 +323,7 @@ void GameCore::setupSceneControl(){
 
 //! Crée la scène GameScene et y ajoute différent éléments
 void GameCore::setupSceneGameScene(){
-    //Initialisation de la GameScene (zone de jeu)
+    //Affectation de la GameScene (zone de jeu)
     m_pSceneGame = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
     QImage img(GameFramework::imagesPath() + "background.png");
     m_pSceneGame->setBackgroundImage(img);
@@ -334,6 +335,16 @@ void GameCore::setupSceneGameScene(){
     // Affichage d'un texte
     QGraphicsSimpleTextItem* pText = m_pSceneGame->createText(QPointF(0,0), "BulletHell", 70);
     pText->setOpacity(0.5);
+}
+
+//! Crée la scène YouWin et y ajoute différents éléments
+void GameCore::setupSceneYouWin(){
+    //Affectation de la scène YouWiN
+    m_pSceneYouWin = m_pGameCanvas->createScene(0, 0, SCENE_WIDTH, SCENE_HEIGHT);
+    // Affichage du titre Contrôle
+    m_pSceneYouWin->createText(QPointF(SCENE_WIDTH-500,SCENE_HEIGHT/2-200), "You win !", 70);
+    // Affichage des différentes options du menu
+    m_pYouWinItems[0] = m_pSceneYouWin->createText(QPointF(SCENE_WIDTH-400,SCENE_HEIGHT/2), "Menu", 50, Qt::red);
 }
 
 //! Fonction gérant l'appui de la touche W
@@ -441,6 +452,10 @@ void GameCore::whenKeySpacePressedMenus(){
         case 1: //1. Quitter - Retour au menu
             m_pGameCanvas->setCurrentScene(m_pSceneMenu);
         }
+    }else if(m_pGameCanvas->currentScene() == m_pSceneYouWin){
+            m_pGameCanvas->setCurrentScene(m_pSceneMenu);
+            m_compteurWave = 1;
+            m_ennemyPerWave = 0;
     }
 }
 

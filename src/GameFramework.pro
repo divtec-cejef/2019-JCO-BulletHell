@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     gameview.cpp \
     utilities.cpp \
     gamecanvas.cpp \
-    blueball.cpp \
     spritetickhandler.cpp \
     manualwalkinghandler.cpp \
     automaticwalkinghandler.cpp \
@@ -42,7 +41,6 @@ HEADERS  += mainfrm.h \
     gameview.h \
     utilities.h \
     gamecanvas.h \
-    blueball.h \
     spritetickhandler.h \
     manualwalkinghandler.h \
     automaticwalkinghandler.h \

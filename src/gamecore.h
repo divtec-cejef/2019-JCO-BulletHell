@@ -41,12 +41,14 @@ public:
     void tick(int elapsedTimeInMilliseconds);
     void exitGame();
 
-    //Tableau permettant de stocker les différentes options du menu
+    //Tableau permettant de stocker les différentes options des menu
     QGraphicsSimpleTextItem* m_pMenuItems[3];
     QGraphicsSimpleTextItem* m_pGameOverItems[2];
+    QGraphicsSimpleTextItem* m_pYouWinItems[1];
     //Variable qui stockent l'option choisie
-    int m_menuChoosenItem = 0;
-    int m_gameOverChoosenItem = 0;
+    int m_menuChoosenItem;
+    int m_gameOverChoosenItem;
+    int m_youWinChoosenItem;
 
     // Les scènes sont en public pour que le joueur puisse intéragir avec elles
     GameScene* m_pSceneGame;
@@ -54,6 +56,7 @@ public:
     GameScene* m_pSceneGameOver;
     GameScene* m_pSceneControl;
     GameScene* m_pSceneMenu;
+    GameScene* m_pSceneYouWin;
 
 signals:
     //Signaux
@@ -86,6 +89,7 @@ private:
     void setupSceneGameScene();
     void setupSceneMenu();
     void setupSceneControl();
+    void setupSceneYouWin();
 
     GameCanvas* m_pGameCanvas;
 
