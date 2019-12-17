@@ -95,18 +95,19 @@ que la compilation se fasse en mode *Release* et que le pseudo-constante `DEPLOY
  * \return une chaîne de caractères contenant le chemin absolu du répertoire des images.
  */
     QString imagesPath() {
-        return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
+        return resourcesPath() + QString("images") + QDir::separator();
     }
     QString playerImagesPath() {
         return imagesPath() + QString("Entity") + QDir::separator() + QString("Player") + QDir::separator();
-        //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator() + QString("Entity") + QDir::separator() + QString("Player");
     }
     QString enemyImagesPath() {
         return imagesPath() + QString("Entity") + QDir::separator() + QString("Enemy") + QDir::separator();
-        //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
     }
     QString itemImagesPath() {
         return imagesPath() + QString("Entity") + QDir::separator() + QString("Items") + QDir::separator();
-        //return resourcesPath() /*+ QDir::separator()*/ + QString("images") + QDir::separator();
     }
+    QString soundsPath(){
+        return resourcesPath() + QString("sons") + QDir::separator();
+    }
+
 }

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>BulletHell</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../res/images/BulletHell_icon.png</normaloff>../res/images/BulletHell_icon.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="GameView" name="grvGame"/>

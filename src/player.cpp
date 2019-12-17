@@ -33,9 +33,8 @@ Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(Gam
     m_keyRightPressed = false;
     m_keySpacePressed = false;
     m_playerVelocity = QPointF(0,0);
-    //m_gameCore = GameCore::getGameCore();
     configureAnimation();
-    //m_spriteType = Sprite::SpriteType_e::ST_PLAYER;
+    m_spriteType = Sprite::SpriteType_e::ST_PLAYER;
 }
 
 //! Cadence.
@@ -143,8 +142,7 @@ void Player::shoot(){
     if(m_keySpacePressed){
         Bullet* pBullet = new Bullet;
         pBullet->setEmitter(Sprite::Emitter_e::EM_PLAYER);
-        //connect(pBullet, &Bullet::notifyBulletDestroyed, m_gameCore, &GameCore::onBulletDestroyed);
-        pBullet->setPos(QPointF(this->x()+40,this->y()+15)); // Envoi la bullet juste au dessus de la tête du joueur
+        pBullet->setPos(QPointF(this->x()+40,this->y()+15)); // Place la bullet juste au dessus de la tête du joueur
         pBullet->setZValue(1);          // Passe devant tous les autres sprites
         this->parentScene()->addSpriteToScene(pBullet);
         pBullet->updateVelocity(0,-800);

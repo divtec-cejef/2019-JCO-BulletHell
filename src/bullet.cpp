@@ -18,7 +18,7 @@ const int BULLET_VELOCITY = 600; // pixels par seconde
 Bullet::Bullet(QGraphicsItem* pParent) : Item(GameFramework::itemImagesPath() + "bullet.png", pParent)
 {
     emitter = Sprite::Emitter_e::EM_NONE;
-    spriteType = Sprite::SpriteType_e::ST_BULLET;
+    m_spriteType = Sprite::SpriteType_e::ST_BULLET;
     m_bulletVelocity = QPointF(0,0);
 }
 
@@ -41,23 +41,6 @@ void Bullet::tick(int elapsedTimeInMilliseconds) {
     }else{
         deleteLater();
     }
-
-    /*
-    // Vérification du contact de la bullet avec un ennemi
-    // Si la balle touche un ennemi, celle-ci est détruite
-    if(!this->collidingSprites().isEmpty()){
-        //On enlève l'ennemi de sa liste de collision
-        this->collidingSprites().removeAll(this);
-        if(!this->collidingSprites().isEmpty()){
-            if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_ENEMY){
-                //Envoit le signal de sa mort
-                //emit notifyBulletDestroyed(this);
-                qDebug() << "collision ennemi";
-                delete this;
-            }
-        }
-    }
-    */
 }
 
 //! Charge les différentes images qui composent l'animation de l'ennemi et

@@ -11,6 +11,8 @@
 #include <QObject>
 #include <QPointF>
 #include <QGraphicsItem>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 class QAbstractAnimation;
 class QGraphicsTransform;
@@ -41,7 +43,6 @@ public:
 
     void tick(int elapsedTimeInMilliseconds);
     void exitGame();
-    GameCore* getGameCore();
 
     //Tableau permettant de stocker les différentes options des menu
     QGraphicsSimpleTextItem* m_pMenuItems[3];
@@ -69,7 +70,6 @@ public slots:
     //Slot pour gérer la mort d'un ennemi/joueur
     void onPlayerDeath(bool playerDead);
     void onEnemyDeath(Enemy* enemy);
-    void onBulletDestroyed(Bullet* bullet);
 
 private:
 
@@ -100,6 +100,7 @@ private:
     Player* m_pPlayer;
     Enemy* m_pEnemy;
     QList<Enemy*> m_ennemyWave;
+    QMediaPlayer* m_musicPlayer;
     bool m_keySpacePressed;
     int m_compteurWave;
     int m_ennemyPerWave;

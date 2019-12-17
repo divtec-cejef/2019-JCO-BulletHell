@@ -60,7 +60,6 @@ private:
     bool m_keyLeftPressed;
     bool m_keyRightPressed;
     bool m_keySpacePressed;
-    //GameCore* m_gameCore;
 };
 
 #endif // PLAYER_H

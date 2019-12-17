@@ -174,7 +174,7 @@ protected:
     bool isInsideScene(const QPointF& rPosition) const;
     bool isInsideScene(const QRectF& rRect) const;
     GameScene* m_pParentScene;
-    SpriteType_e spriteType;
+    SpriteType_e m_spriteType;
     Emitter_e emitter;
 
 private:

@@ -17,7 +17,7 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 #include <QSettings>
-#include <QTimer>
+#include <QUrl>
 
 #include "gamescene.h"
 #include "gamecanvas.h"
@@ -30,6 +30,7 @@
 #include "enemy.h"
 #include "item.h"
 #include "bullet.h"
+#include "sprite.h"
 
 
 const int SCENE_WIDTH = 700;
@@ -75,6 +76,12 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_menuChoosenItem = 0;
     m_youWinChoosenItem = 0;
 
+    //Instanciation de l'objet pour la musique
+    //Ajout d'une musique à celui-ci
+    m_musicPlayer = new QMediaPlayer;
+    m_musicPlayer->setMedia(QUrl::fromLocalFile("../res/sons/Emperor - Inno A Satana _8-bit_.wav"));
+    m_musicPlayer->setVolume(50);
+
     //On définit la scène qui sera affichée
     m_pGameCanvas->setCurrentScene(m_pSceneMenu);
 
@@ -119,16 +126,7 @@ void GameCore::onPlayerDeath(bool playerDead){
         // plus élevée que la première lorsqu'il relance une partie
         m_ennemyPerWave = 0;
         m_compteurWave = 1;
-    }
-}
-
-//! Déconnecte le signal en lien avec la bullet et détruit cette dernière
-//! \param bullet
-void GameCore::onBulletDestroyed(Bullet *bullet){
-    if(bullet != nullptr){
-        disconnect(bullet, &Bullet::notifyBulletDestroyed, this, &GameCore::onBulletDestroyed);
-        m_pPlayer->deleteLater();
-        m_pPlayer = nullptr;
+        m_musicPlayer->stop();
     }
 }
 
@@ -207,12 +205,12 @@ void GameCore::tick(int elapsedTimeInMilliseconds) {
         //On enlève le joueur de sa liste de collision
         m_pPlayer->collidingSprites().removeAll(m_pPlayer);
         if(!m_pPlayer->collidingSprites().isEmpty()){
+            QList<Sprite*> maListeDeSprite = m_pPlayer->collidingSprites();
             if(m_pPlayer->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_ENEMY){
                 this->onPlayerDeath(true);
             }
         }
     }
-
 }
 
 //! Met en place le joueur
@@ -418,12 +416,14 @@ void GameCore::whenKeyEscapePressedMenus(){
         if(m_pGameCanvas->currentScene() != m_pSceneControl){
             m_pOldGameScene = m_pGameCanvas->currentScene();
         }
+        m_musicPlayer->pause();
         m_pGameCanvas->setCurrentScene(m_pSceneMenu);
     }
     //Affiche la scène "SceneGame"
     else{
         m_menuChoosenItem = 0;
         m_pGameCanvas->setCurrentScene(m_pOldGameScene);
+       m_musicPlayer->play();
     }
 }
 
@@ -432,14 +432,15 @@ void GameCore::whenKeySpacePressedMenus(){
     if (m_pGameCanvas->currentScene() == m_pSceneMenu) {
         switch (m_menuChoosenItem) {
         case 0: //0.Jouer -
-            //Affiche la zone de jeu où on s'était arrêté
-            if(m_pOldGameScene){
+            if(m_pOldGameScene){ //Affiche la zone de jeu où on s'était arrêté
                 m_pGameCanvas->setCurrentScene(m_pOldGameScene);
-                //Affiche la zone de jeu à la première vague
-            }else{
+                m_musicPlayer->play();
+            }else{ //Affiche la zone de jeu à la première vague
                 setupSceneGameScene();
                 m_pGameCanvas->setCurrentScene(m_pSceneGame);
+                m_musicPlayer->play();
                 m_compteurWave = 1;
+                m_musicPlayer->play();
             }
             break;
         case 1: //1. Contrôles - Affiche la scène avec les contrôles du jeu
@@ -451,12 +452,13 @@ void GameCore::whenKeySpacePressedMenus(){
         //Si on est sur le GameOver
     }else if (m_pGameCanvas->currentScene() == m_pSceneGameOver){
         switch(m_gameOverChoosenItem){
-        case 0: //0. Jouer - Relance une partie à la première vague
+        case 0: //0. Rejouer - Relance une partie à la première vague
             clearWave();
             setupSceneGameScene();
             m_pGameCanvas->setCurrentScene(m_pSceneGame);
             m_compteurWave = 1;
             m_ennemyPerWave = 0;
+            m_musicPlayer->play();
             break;
         case 1: //1. Quitter - Retour au menu
             m_pGameCanvas->setCurrentScene(m_pSceneMenu);
@@ -467,8 +469,3 @@ void GameCore::whenKeySpacePressedMenus(){
             m_ennemyPerWave = 0;
     }
 }
-
-GameCore* GameCore::getGameCore(){
-    return this;
-}
-

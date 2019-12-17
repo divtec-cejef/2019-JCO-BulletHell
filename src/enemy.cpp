@@ -23,7 +23,7 @@ const int ENEMY_VELOCITY = 500; // pixels par seconde
 //! \param pParent  Objet propiétaire de cet objet.
 Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::enemyImagesPath() + "Eye_of_Chaos.png", pParent) {
     m_enemyVelocity = QPointF(0,0);
-    //m_spriteType = Sprite::SpriteType_e::ST_ENEMY;
+    m_spriteType = Sprite::SpriteType_e::ST_ENEMY;
 
     // Initialise le générateur aléatoire pour la cadence de tir des ennemis
     //std::srand(std::time(0));
@@ -103,10 +103,9 @@ void Enemy::shoot(){
     Bullet* pBullet = new Bullet;
     pBullet->setEmitter(Sprite::Emitter_e::EM_ENEMY);
     pBullet->setPos(QPointF(this->x()+(this->width()/2),this->bottom()));
-    pBullet->setZValue(1);          // Passe devant tous les autres sprites
+    pBullet->setZValue(1);
     this->parentScene()->addSpriteToScene(pBullet);
     pBullet->updateVelocity(0,800);
-    //pBullet = nullptr;
 }
 
 void Enemy::setTimeBeforeShoot(int m_timeBeforeShoot){

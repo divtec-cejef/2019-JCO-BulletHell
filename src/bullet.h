@@ -38,10 +38,6 @@ public:
     virtual void tick(int elapsedTimeInMilliseconds);
     virtual void updateVelocity(int x, int y);
 
-signals:
-    void notifyBulletDestroyed(Bullet* bullet);
-
-
 protected:
     virtual void configureAnimation();
     virtual void updateAnimationState();
