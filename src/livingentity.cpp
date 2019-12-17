@@ -2,7 +2,7 @@
   \file
   \brief    Déclaration de la classe LivingEntity.
   \author   Thibaud Nussbaumer
-  \date    octobre 2019
+  \date     décembre 2019
 */
 #include "livingentity.h"
 #include "resources.h"

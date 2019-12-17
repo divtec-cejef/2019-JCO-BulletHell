@@ -21,6 +21,7 @@ class GameScene;
 class Sprite;
 class Enemy;
 class Player;
+class Bullet;
 //! \brief Classe qui gère la logique du jeu.
 //!
 //! Dans son état actuel, cette classe crée une scène vide, délimite
@@ -40,6 +41,7 @@ public:
 
     void tick(int elapsedTimeInMilliseconds);
     void exitGame();
+    GameCore* getGameCore();
 
     //Tableau permettant de stocker les différentes options des menu
     QGraphicsSimpleTextItem* m_pMenuItems[3];
@@ -67,6 +69,7 @@ public slots:
     //Slot pour gérer la mort d'un ennemi/joueur
     void onPlayerDeath(bool playerDead);
     void onEnemyDeath(Enemy* enemy);
+    void onBulletDestroyed(Bullet* bullet);
 
 private:
 

@@ -2,13 +2,14 @@
   \file
   \brief    Déclaration de la classe Player.
   \author   Thibaud Nussbaumer
-  \date     octobre 2019
+  \date     décembre 2019
 */
 #include "player.h"
 #include "resources.h"
 #include "bullet.h"
 #include "gamescene.h"
 #include "sprite.h"
+#include "gamecore.h"
 
 const int PLAYER_VELOCITY = 400; // pixels par seconde
 const int FRAME_WIDTH = 63;
@@ -23,6 +24,7 @@ int counterMilliseconds = 0;
 */
 
 //! Construit et initialise une balle bleue.
+//! Hérite de LivingEntity
 //! \param pParent  Objet propiétaire de cet objet.
 Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(GameFramework::imagesPath() + "player.png", pParent)*/ {
     m_keyUpPressed    = false;
@@ -31,8 +33,9 @@ Player::Player(QGraphicsItem* pParent) : LivingEntity(pParent)/*LivingEntity(Gam
     m_keyRightPressed = false;
     m_keySpacePressed = false;
     m_playerVelocity = QPointF(0,0);
+    //m_gameCore = GameCore::getGameCore();
     configureAnimation();
-    spriteType = Sprite::SpriteType_e::ST_PLAYER;
+    //m_spriteType = Sprite::SpriteType_e::ST_PLAYER;
 }
 
 //! Cadence.
@@ -58,7 +61,7 @@ void Player::tick(int elapsedTimeInMilliseconds) {
         if(!this->collidingSprites().isEmpty()){
             if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_BULLET
                 && this->collidingSprites().first()->getEmitter() == Sprite::Emitter_e::EM_ENEMY){
-                emit playerDeath(true);
+                emit notifyPlayerDeath(true);
             }
         }
     }
@@ -140,6 +143,7 @@ void Player::shoot(){
     if(m_keySpacePressed){
         Bullet* pBullet = new Bullet;
         pBullet->setEmitter(Sprite::Emitter_e::EM_PLAYER);
+        //connect(pBullet, &Bullet::notifyBulletDestroyed, m_gameCore, &GameCore::onBulletDestroyed);
         pBullet->setPos(QPointF(this->x()+40,this->y()+15)); // Envoi la bullet juste au dessus de la tête du joueur
         pBullet->setZValue(1);          // Passe devant tous les autres sprites
         this->parentScene()->addSpriteToScene(pBullet);

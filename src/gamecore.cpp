@@ -41,7 +41,6 @@ const int SCENE_HEIGHT = 880;
 //! \param pParent      Pointeur sur le parent (afin d'obtenir une destruction automatique de cet objet).
 GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent) {
 
-
     // Mémorise l'accès au canvas (qui gère le tick et l'affichage d'une scène)
     m_pGameCanvas = pGameCanvas;
 
@@ -59,7 +58,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     //On initialise les variables en lien avec les vagues d'ennemis
     m_compteurWave = 1;
     m_ennemyPerWave = 0;
-    m_maxWave = 2;
+    m_maxWave = 5;
 
     //Initialisation des différents scènes
     // et des variables qui leurs sont spécifiques
@@ -107,7 +106,7 @@ void GameCore::onPlayerDeath(bool playerDead){
         //On déconnecte le signal et le slot
         disconnect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
         disconnect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
-        disconnect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
+        disconnect(m_pPlayer, &Player::notifyPlayerDeath, this, &GameCore::onPlayerDeath);
         //On le "supprime plus tard" quand on ne fait
         //plus appel à celui-ci
         m_pPlayer->deleteLater();
@@ -123,6 +122,16 @@ void GameCore::onPlayerDeath(bool playerDead){
     }
 }
 
+//! Déconnecte le signal en lien avec la bullet et détruit cette dernière
+//! \param bullet
+void GameCore::onBulletDestroyed(Bullet *bullet){
+    if(bullet != nullptr){
+        disconnect(bullet, &Bullet::notifyBulletDestroyed, this, &GameCore::onBulletDestroyed);
+        m_pPlayer->deleteLater();
+        m_pPlayer = nullptr;
+    }
+}
+
 //! Déconnecte le signal en lien avec l'ennemi et détruit ce dernier
 //! \param  enemyDead Booléen pour indiquer si l'ennemi est mort
 void GameCore::onEnemyDeath(Enemy *enemy){
@@ -131,7 +140,7 @@ void GameCore::onEnemyDeath(Enemy *enemy){
         // pour l'utiliser dans une variable pointeur
         Enemy* pEnemy = m_ennemyWave[m_ennemyWave.indexOf(enemy)];
         //On déconnecte le signal et le slot
-        disconnect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        disconnect(pEnemy, &Enemy::notifyEnemyDeath, this, &GameCore::onEnemyDeath);
         //On enlève l'ennemi de la liste
         m_ennemyWave.removeAt(m_ennemyWave.indexOf(pEnemy));
         //On le "supprime plus tard" quand on ne fait
@@ -213,7 +222,7 @@ void GameCore::setupPlayer() {
     //Connecte les signaux du GameCore avec les slots du joueur
     connect(this, &GameCore::notifyKeyPressed, m_pPlayer, &Player::onKeyPressed);
     connect(this, &GameCore::notifyKeyReleased, m_pPlayer, &Player::onKeyReleased);
-    connect(m_pPlayer, &Player::playerDeath, this, &GameCore::onPlayerDeath);
+    connect(m_pPlayer, &Player::notifyPlayerDeath, this, &GameCore::onPlayerDeath);
     //Définit la position initiale du joueur sur les scènes
     m_pPlayer->setPos(0,0);//(350, 470);
     //Définit la couche où est le joueur
@@ -226,7 +235,7 @@ void GameCore::setupPlayer() {
 void GameCore::setupEnemy() {
     for(int i = 0; i < m_ennemyPerWave; i++){
         Enemy* pEnemy = new Enemy;
-        connect(pEnemy, &Enemy::enemyDeath, this, &GameCore::onEnemyDeath);
+        connect(pEnemy, &Enemy::notifyEnemyDeath, this, &GameCore::onEnemyDeath);
         //On ajoute l'ennemi à la liste d'ennemi.
         m_ennemyWave.append(pEnemy);
         //On le positionne aléatoirement sur un axe X et Y
@@ -459,4 +468,7 @@ void GameCore::whenKeySpacePressedMenus(){
     }
 }
 
+GameCore* GameCore::getGameCore(){
+    return this;
+}
 

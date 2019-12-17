@@ -2,7 +2,7 @@
   \file
   \brief    Déclaration de la classe bullet.
   \author   Thibaud Nussbaumer
-  \date    octobre 2019
+  \date     décembre 2019
 */
 #ifndef BULLET_H
 #define BULLET_H
@@ -33,16 +33,20 @@ class Bullet : public Item
     // bénéficier du mécanisme de signaux/slots.
     Q_OBJECT
 
-    public:
-        Bullet(QGraphicsItem* pParent = nullptr);
-        virtual void tick(int elapsedTimeInMilliseconds);
-        virtual void updateVelocity(int x, int y);
+public:
+    Bullet(QGraphicsItem* pParent = nullptr);
+    virtual void tick(int elapsedTimeInMilliseconds);
+    virtual void updateVelocity(int x, int y);
 
-    protected:
-        virtual void configureAnimation();
-        virtual void updateAnimationState();
+signals:
+    void notifyBulletDestroyed(Bullet* bullet);
 
-        QPointF m_bulletVelocity;
+
+protected:
+    virtual void configureAnimation();
+    virtual void updateAnimationState();
+
+    QPointF m_bulletVelocity;
 
 };
 

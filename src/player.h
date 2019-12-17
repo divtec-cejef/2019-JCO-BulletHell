@@ -2,7 +2,7 @@
   \file
   \brief    Déclaration de la classe Player.
   \author   Thibaud Nussbaumer
-  \date     octobre 2019
+  \date     décembre 2019
 */
 #ifndef PLAYER_H
 #define PLAYER_H
@@ -10,6 +10,7 @@
 #include "livingentity.h"
 #include "sprite.h"
 #include <QObject>
+#include "gamecore.h"
 //! \brief Classe qui gère le joueur.
 //!
 //! Cette classe démontre les fonctionnalités suivantes :
@@ -40,7 +41,7 @@ public:
     Player(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
 signals:
-    void playerDeath(bool playerDead);
+    void notifyPlayerDeath(bool playerDead);
 public slots:
     void onKeyPressed(int key);
     void onKeyReleased(int key);
@@ -59,6 +60,7 @@ private:
     bool m_keyLeftPressed;
     bool m_keyRightPressed;
     bool m_keySpacePressed;
+    //GameCore* m_gameCore;
 };
 
 #endif // PLAYER_H

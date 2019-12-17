@@ -2,7 +2,7 @@
   \file
   \brief    Déclaration de la classe item.
   \author   Thibaud Nussbaumer
-  \date    octobre 2019
+  \date     décembre 2019
 */
 #ifndef ITEM_H
 #define ITEM_H

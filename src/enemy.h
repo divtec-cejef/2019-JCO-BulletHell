@@ -2,13 +2,14 @@
   \file
   \brief    Déclaration de la classe enemy.
   \author   Thibaud Nussbaumer
-  \date     octobre 2019
+  \date     décembre 2019
 */
 #ifndef ENEMY_H
 #define ENEMY_H
 
 #include "livingentity.h"
 #include "sprite.h"
+#include "gamecore.h"
 
 //! \brief Classe qui gère l'ennemi.
 //!
@@ -37,9 +38,7 @@ class Enemy : public LivingEntity
         virtual void tick(int elapsedTimeInMilliseconds);
         void setTimeBeforeShoot(int timeBeforeShoot);
     signals:
-        void enemyDeath(Enemy* enemy);
-    public slots:
-
+        void notifyEnemyDeath(Enemy* enemy);
 
     private:
         void updateEnemyVelocity();
@@ -48,9 +47,8 @@ class Enemy : public LivingEntity
         virtual void shoot();
 
         QPointF m_enemyVelocity;
-        int health;
-        int timeBeforeShoot; // temps à attendre avant de shoot
-        int counterMillisecondsEnemy;
+        int m_timeBeforeShoot; // temps à attendre avant de shoot
+        int m_counterMillisecondsEnemy;
 
 };
 

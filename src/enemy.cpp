@@ -2,7 +2,7 @@
   \file
   \brief    Déclaration de la classe enemy.
   \author   Thibaud Nussbaumer
-  \date     octobre 2019
+  \date     décembre 2019
 */
 #include "enemy.h"
 
@@ -19,18 +19,18 @@ const int ENEMY_VELOCITY = 500; // pixels par seconde
 
 
 //! Construit et initialise un ennemi.
+//! Hérite de LivingEntity
 //! \param pParent  Objet propiétaire de cet objet.
 Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(GameFramework::enemyImagesPath() + "Eye_of_Chaos.png", pParent) {
     m_enemyVelocity = QPointF(0,0);
-    spriteType = Sprite::SpriteType_e::ST_ENEMY;
+    //m_spriteType = Sprite::SpriteType_e::ST_ENEMY;
 
-    health = 0;
     // Initialise le générateur aléatoire pour la cadence de tir des ennemis
     //std::srand(std::time(0));
     //Initialisation des variables pour le tir automatique
-    timeBeforeShoot = 0;
-    qDebug() << "timeBeforeShoot" << timeBeforeShoot;
-    counterMillisecondsEnemy = 0;
+    m_timeBeforeShoot = 0;
+    qDebug() << "m_timeBeforeShoot" << m_timeBeforeShoot;
+    m_counterMillisecondsEnemy = 0;
     //configureAnimation();
 }
 
@@ -56,11 +56,11 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
 
     //qDebug() << "elapsedTimeInMilliseconds" << elapsedTimeInMilliseconds;
     //qDebug() << "compteur milliseconds" << counterMilliseconds;
-    if(this->counterMillisecondsEnemy == this->timeBeforeShoot){
+    if(this->m_counterMillisecondsEnemy == this->m_timeBeforeShoot){
         shoot();
-        this->counterMillisecondsEnemy = 0;
+        this->m_counterMillisecondsEnemy = 0;
     }
-    this->counterMillisecondsEnemy++;
+    this->m_counterMillisecondsEnemy++;
 
     // Vérification du contact de l'ennemi avec une bullet émise par le joueur
     // Si l'ennemi est touchée par une de ces balles, il meurt
@@ -70,8 +70,9 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
         if(!this->collidingSprites().isEmpty()){
             if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_BULLET
                 && this->collidingSprites().first()->getEmitter() == Sprite::Emitter_e::EM_PLAYER){
+                this->collidingSprites().first()->deleteLater();
                 //Envoit le signal de sa mort
-                emit enemyDeath(this);
+                emit notifyEnemyDeath(this);
             }
         }
     }
@@ -108,6 +109,6 @@ void Enemy::shoot(){
     //pBullet = nullptr;
 }
 
-void Enemy::setTimeBeforeShoot(int timeBeforeShoot){
-    this->timeBeforeShoot = timeBeforeShoot;
+void Enemy::setTimeBeforeShoot(int m_timeBeforeShoot){
+    this->m_timeBeforeShoot = m_timeBeforeShoot;
 }

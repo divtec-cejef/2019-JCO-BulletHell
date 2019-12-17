@@ -2,7 +2,7 @@
   \file
   \brief    Déclaration de la classe bullet.
   \author   Thibaud Nussbaumer
-  \date     octobre 2019
+  \date     décembre 2019
 */
 #include "bullet.h"
 
@@ -13,6 +13,7 @@
 const int BULLET_VELOCITY = 600; // pixels par seconde
 
 //! Construit et initialise une balle.
+//! Hérite d'Item
 //! \param pParent  Objet propiétaire de cet objet.
 Bullet::Bullet(QGraphicsItem* pParent) : Item(GameFramework::itemImagesPath() + "bullet.png", pParent)
 {
@@ -41,6 +42,22 @@ void Bullet::tick(int elapsedTimeInMilliseconds) {
         deleteLater();
     }
 
+    /*
+    // Vérification du contact de la bullet avec un ennemi
+    // Si la balle touche un ennemi, celle-ci est détruite
+    if(!this->collidingSprites().isEmpty()){
+        //On enlève l'ennemi de sa liste de collision
+        this->collidingSprites().removeAll(this);
+        if(!this->collidingSprites().isEmpty()){
+            if(this->collidingSprites().first()->getType() == Sprite::SpriteType_e::ST_ENEMY){
+                //Envoit le signal de sa mort
+                //emit notifyBulletDestroyed(this);
+                qDebug() << "collision ennemi";
+                delete this;
+            }
+        }
+    }
+    */
 }
 
 //! Charge les différentes images qui composent l'animation de l'ennemi et

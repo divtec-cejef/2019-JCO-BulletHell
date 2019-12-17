@@ -2,13 +2,14 @@
   \file
   \brief    Déclaration de la classe LivingEntity.
   \author   Thibaud Nussbaumer
-  \date     octobre 2019
+  \date     décembre 2019
 */
 #include "item.h"
 #include "resources.h"
 #include <QDebug>
 
 //! Construit et initialise un item.
+//! Hérite de Sprite
 //! \param pParent  Objet propiétaire de cet objet.
 Item::Item(const QPixmap& rPixmap, QGraphicsItem* pParent) : Sprite(rPixmap, pParent){
 
