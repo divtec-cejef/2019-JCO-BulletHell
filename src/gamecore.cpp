@@ -31,7 +31,8 @@
 #include "item.h"
 #include "bullet.h"
 #include "sprite.h"
-
+#include "eyeofchaos.h"
+#include "dummy.h"
 
 const int SCENE_WIDTH = 700;
 const int SCENE_HEIGHT = 880;
@@ -52,7 +53,7 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
     m_pPlayer = nullptr;
 
     // Création d'une liste d'ennemis
-    QList<Enemy> m_ennemyWave;
+    QList<Enemy> m_pEnnemyWave;
     // Initialise le générateur aléatoire pour la position des ennemis
     std::srand(std::time(0));
 
@@ -78,9 +79,9 @@ GameCore::GameCore(GameCanvas* pGameCanvas, QObject* pParent) : QObject(pParent)
 
     //Instanciation de l'objet pour la musique
     //Ajout d'une musique à celui-ci
-    m_musicPlayer = new QMediaPlayer;
-    m_musicPlayer->setMedia(QUrl::fromLocalFile("../res/sons/Emperor - Inno A Satana _8-bit_.wav"));
-    m_musicPlayer->setVolume(50);
+    m_pMusicPlayer = new QMediaPlayer;
+    m_pMusicPlayer->setMedia(QUrl::fromLocalFile("../res/sons/Emperor - Inno A Satana _8-bit_.wav"));
+    m_pMusicPlayer->setVolume(50);
 
     //On définit la scène qui sera affichée
     m_pGameCanvas->setCurrentScene(m_pSceneMenu);
@@ -126,21 +127,21 @@ void GameCore::onPlayerDeath(bool playerDead){
         // plus élevée que la première lorsqu'il relance une partie
         m_ennemyPerWave = 0;
         m_compteurWave = 1;
-        m_musicPlayer->stop();
+        m_pMusicPlayer->stop();
     }
 }
 
 //! Déconnecte le signal en lien avec l'ennemi et détruit ce dernier
 //! \param  enemyDead Booléen pour indiquer si l'ennemi est mort
 void GameCore::onEnemyDeath(Enemy *enemy){
-    if(m_ennemyWave.contains(enemy)){
+    if(m_pEnnemyWave.contains(enemy)){
         //On récupère l'index de l'ennemi passé en paramètre
         // pour l'utiliser dans une variable pointeur
-        Enemy* pEnemy = m_ennemyWave[m_ennemyWave.indexOf(enemy)];
+        Enemy* pEnemy = m_pEnnemyWave[m_pEnnemyWave.indexOf(enemy)];
         //On déconnecte le signal et le slot
         disconnect(pEnemy, &Enemy::notifyEnemyDeath, this, &GameCore::onEnemyDeath);
         //On enlève l'ennemi de la liste
-        m_ennemyWave.removeAt(m_ennemyWave.indexOf(pEnemy));
+        m_pEnnemyWave.removeAt(m_pEnnemyWave.indexOf(pEnemy));
         //On le "supprime plus tard" quand on ne fait
         // plus appel à celui-ci
         pEnemy->deleteLater();
@@ -149,7 +150,7 @@ void GameCore::onEnemyDeath(Enemy *enemy){
 
         //Si la vague d'ennemi est vide et que le joueur
         // est en vie on passe à la prochaine vague
-        if(m_ennemyWave.length() == 0 && m_pPlayer != nullptr){
+        if(m_pEnnemyWave.length() == 0 && m_pPlayer != nullptr){
             m_compteurWave+= 1;
             manageWaves();
         }
@@ -159,9 +160,9 @@ void GameCore::onEnemyDeath(Enemy *enemy){
 //! Efface la vague d'ennemi afin d'éviter que les
 //! anciens ennemis soient encore présent dans la nouvelle vague.
 void GameCore::clearWave(){
-    for(int i = m_ennemyWave.length()-1; i >= 0; i--){
+    for(int i = m_pEnnemyWave.length()-1; i >= 0; i--){
         if(i>=0){
-            Enemy* pEnemyClearWave = m_ennemyWave.at(i);
+            Enemy* pEnemyClearWave = m_pEnnemyWave.at(i);
             onEnemyDeath(pEnemyClearWave);
         }
     }
@@ -232,14 +233,22 @@ void GameCore::setupPlayer() {
 //! Place sur la scène la vague d'ennemis
 void GameCore::setupEnemy() {
     for(int i = 0; i < m_ennemyPerWave; i++){
-        Enemy* pEnemy = new Enemy;
+
+        Enemy* pEnemy;
+        if(m_compteurWave%2 == 1 && i%2 == 1){
+            pEnemy = new Dummy;
+        }else{
+            pEnemy = new EyeOfChaos;
+        }
+
+        //Dummy* pEnemy = new Dummy;
         connect(pEnemy, &Enemy::notifyEnemyDeath, this, &GameCore::onEnemyDeath);
         //On ajoute l'ennemi à la liste d'ennemi.
-        m_ennemyWave.append(pEnemy);
+        m_pEnnemyWave.append(pEnemy);
         //On le positionne aléatoirement sur un axe X et Y
         pEnemy->setPos(std::rand() % (SCENE_WIDTH-pEnemy->width()) + 1, std::rand() % (SCENE_HEIGHT-(SCENE_HEIGHT/2)) + 1);
-        //On définit la même couche Z pour que le joueur
-        // puisse intéragir avec l'ennemi et vice-versa
+        //On définit la même couche Z que le joueur
+        // pour qu'il puisse intéragir avec
         pEnemy->setZValue(1);
         //On initialise la cadence de tir de l'ennemi aléatoirement dans une plage de 50 à 100. (1/2s à 1s).
         pEnemy->setTimeBeforeShoot(std::rand() % 100 + 51);
@@ -248,8 +257,10 @@ void GameCore::setupEnemy() {
         ManualWalkingHandler* pEnnemyWalkingHandler = new ManualWalkingHandler;
         //On définit l'objet qui gère le tick de l'ennemi
         pEnemy->setTickHandler(pEnnemyWalkingHandler);
-        //On définit aléatoirement la direction que prendra l'ennemi
-        pEnnemyWalkingHandler->changeWalkingDirection();
+        //On définit la direction que prendra l'ennemi
+        if(i%2 == 1){
+            pEnnemyWalkingHandler->changeWalkingDirection();
+        }
     }
 }
 
@@ -412,18 +423,20 @@ void GameCore::whenKeyDownPressedMenus(){
 void GameCore::whenKeyEscapePressedMenus(){
     //Affiche le menu si on est dans la scène "SceneGame"
     if (m_pGameCanvas->currentScene() != m_pSceneMenu && m_pGameCanvas->currentScene() != m_pSceneGameOver) {
+        m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::white);
         m_menuChoosenItem = 0;
         if(m_pGameCanvas->currentScene() != m_pSceneControl){
             m_pOldGameScene = m_pGameCanvas->currentScene();
         }
-        m_musicPlayer->pause();
+        m_pMusicPlayer->pause();
+        m_pMenuItems[m_menuChoosenItem]->setBrush(Qt::red);
         m_pGameCanvas->setCurrentScene(m_pSceneMenu);
     }
     //Affiche la scène "SceneGame"
     else{
         m_menuChoosenItem = 0;
         m_pGameCanvas->setCurrentScene(m_pOldGameScene);
-       m_musicPlayer->play();
+       m_pMusicPlayer->play();
     }
 }
 
@@ -434,13 +447,13 @@ void GameCore::whenKeySpacePressedMenus(){
         case 0: //0.Jouer -
             if(m_pOldGameScene){ //Affiche la zone de jeu où on s'était arrêté
                 m_pGameCanvas->setCurrentScene(m_pOldGameScene);
-                m_musicPlayer->play();
+                m_pMusicPlayer->play();
             }else{ //Affiche la zone de jeu à la première vague
                 setupSceneGameScene();
                 m_pGameCanvas->setCurrentScene(m_pSceneGame);
-                m_musicPlayer->play();
+                m_pMusicPlayer->play();
                 m_compteurWave = 1;
-                m_musicPlayer->play();
+                m_pMusicPlayer->play();
             }
             break;
         case 1: //1. Contrôles - Affiche la scène avec les contrôles du jeu
@@ -458,7 +471,7 @@ void GameCore::whenKeySpacePressedMenus(){
             m_pGameCanvas->setCurrentScene(m_pSceneGame);
             m_compteurWave = 1;
             m_ennemyPerWave = 0;
-            m_musicPlayer->play();
+            m_pMusicPlayer->play();
             break;
         case 1: //1. Quitter - Retour au menu
             m_pGameCanvas->setCurrentScene(m_pSceneMenu);

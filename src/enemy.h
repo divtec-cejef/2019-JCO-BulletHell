@@ -33,22 +33,25 @@ class Enemy : public LivingEntity
     // bénéficier du mécanisme de signaux/slots.
     Q_OBJECT
 
-    public:
-        Enemy(QGraphicsItem* pParent = nullptr);
-        virtual void tick(int elapsedTimeInMilliseconds);
-        void setTimeBeforeShoot(int timeBeforeShoot);
-    signals:
-        void notifyEnemyDeath(Enemy* enemy);
+public:
+    Enemy(const QPixmap& rPixmap, QGraphicsItem* pParent = nullptr);
+    Enemy(QGraphicsItem* pParent = nullptr);
+    virtual void tick(int elapsedTimeInMilliseconds);
+    void setTimeBeforeShoot(int timeBeforeShoot);
+signals:
+    void notifyEnemyDeath(Enemy* enemy);
 
-    private:
-        void updateEnemyVelocity();
-        virtual void configureAnimation();
-        virtual void updateVelocity();
-        virtual void shoot();
+private:
+    void updateEnemyVelocity();
 
-        QPointF m_enemyVelocity;
-        int m_timeBeforeShoot; // temps à attendre avant de shoot
-        int m_counterMillisecondsEnemy;
+protected:
+    QPointF m_enemyVelocity;
+    int m_timeBeforeShoot; // temps à attendre avant de shoot
+    int m_counterMillisecondsEnemy;
+    void configureAnimation();
+    void updateVelocity();
+    void shoot();
+    void updateAnimationState();
 
 };
 

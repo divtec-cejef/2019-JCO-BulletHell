@@ -8,9 +8,9 @@
 #define SPRITE_H
 
 // décommenter pour rendre la boundingbox de tous les sprites visible.
-//#define DEBUG_BBOX
+#define DEBUG_BBOX
 // décommenter pour rendre la shape de tous les sprites visible.
-//#define DEBUG_SHAPE
+#define DEBUG_SHAPE
 // décommenter pour afficher dans la sortie de debug le nombre de sprites existants
 //#define DEBUG_SPRITE_COUNT
 

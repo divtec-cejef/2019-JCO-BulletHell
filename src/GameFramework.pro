@@ -14,6 +14,7 @@ TEMPLATE = app
 #DEFINES += DEBUG_SPRITE_COUNT
 #DEFINES += DEBUG_BBOX
 #DEFINES += DEBUG_SHAPE
+#DEFINES += DEPLOY
 
 SOURCES += main.cpp\
         mainfrm.cpp \
@@ -31,7 +32,9 @@ SOURCES += main.cpp\
     player.cpp \
     enemy.cpp \
     bullet.cpp \
-    item.cpp
+    item.cpp \
+    eyeofchaos.cpp \
+    dummy.cpp
 
 HEADERS  += mainfrm.h \
     gamescene.h \
@@ -48,6 +51,8 @@ HEADERS  += mainfrm.h \
     player.h \
     enemy.h \
     bullet.h \
-    item.h
+    item.h \
+    eyeofchaos.h \
+    dummy.h
 
 FORMS    += mainfrm.ui

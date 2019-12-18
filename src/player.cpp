@@ -12,12 +12,12 @@
 #include "gamecore.h"
 
 const int PLAYER_VELOCITY = 400; // pixels par seconde
+
 const int FRAME_WIDTH = 63;
 const int FRAME_HEIGHT = 56;
 const int FRAME_COUNT = 5;
 const int COLUMN_COUNT = 5;
 const float SCALE_RATIO = 1.5F;
-
 /*
 const int TIME_BEFORE_SHOOT = 20; // temps à attendre avant de shoot
 int counterMilliseconds = 0;

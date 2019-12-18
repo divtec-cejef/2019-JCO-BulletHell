@@ -99,8 +99,8 @@ private:
     //Variable membre
     Player* m_pPlayer;
     Enemy* m_pEnemy;
-    QList<Enemy*> m_ennemyWave;
-    QMediaPlayer* m_musicPlayer;
+    QList<Enemy*> m_pEnnemyWave;
+    QMediaPlayer* m_pMusicPlayer;
     bool m_keySpacePressed;
     int m_compteurWave;
     int m_ennemyPerWave;

@@ -5,7 +5,7 @@
   \date     décembre 2019
 */
 
-#include "enemy.h"
+#include "dummy.h"
 #include "resources.h"
 #include <QDebug>
 #include <ctime>
@@ -13,32 +13,30 @@
 #include "gamecore.h"
 #include "gamescene.h"
 #include "sprite.h"
+#include "player.h"
 
-//! Construit et initialise un Enemy.
-//! \param pParent  Objet propiétaire de cet objet.
-Enemy::Enemy(const QPixmap& rPixmap, QGraphicsItem* pParent) : LivingEntity(rPixmap, pParent) {
+const int FRAME_WIDTH = 79;
+const int FRAME_HEIGHT = 121;
+const int FRAME_COUNT = 16;
+const int COLUMN_COUNT = 4;
+const float SCALE_RATIO = 0.5F;
+
+//! Construit et initialise un Dummy.
+//! \param pParent
+Dummy::Dummy(QGraphicsItem* pParent) : Enemy(pParent){
     m_enemyVelocity = QPointF(0,0);
     m_spriteType = Sprite::SpriteType_e::ST_ENEMY;
-
-    // Initialise le générateur aléatoire pour la cadence de tir des ennemis
-    //std::srand(std::time(0));
     //Initialisation des variables pour le tir automatique
     m_timeBeforeShoot = 0;
     qDebug() << "m_timeBeforeShoot" << m_timeBeforeShoot;
     m_counterMillisecondsEnemy = 0;
-    //configureAnimation();
+    configureAnimation();
 }
 
-//! Construit et initialise un ennemi.
-//! Hérite de LivingEntity
-//! \param pParent  Objet propiétaire de cet objet.
-Enemy::Enemy(QGraphicsItem* pParent) : LivingEntity(pParent) {
-
-}
 
 //! Cadence.
 //! \param elapsedTimeInMilliseconds  Temps écoulé depuis le dernier appel.
-void Enemy::tick(int elapsedTimeInMilliseconds) {
+void Dummy::tick(int elapsedTimeInMilliseconds) {
 
     Sprite::tick(elapsedTimeInMilliseconds);
 
@@ -83,29 +81,46 @@ void Enemy::tick(int elapsedTimeInMilliseconds) {
 
 //! Charge les différentes images qui composent l'animation de l'ennemi et
 //! les ajoute à ce sprite.
-void Enemy::configureAnimation() {
-    /*
-    for (int FrameNumber = 1; FrameNumber <= 2; ++FrameNumber)  {
-        this->addAnimationFrame(QString(GameFramework::enemyImagesPath() + "Eye_Enemy%1.png").arg(FrameNumber));
+void Dummy::configureAnimation() {
+    // Chargement de la spritesheet
+    QImage spriteSheet(GameFramework::enemyImagesPath() + "Dummy_resized.png");
+
+    // Découpage de la spritesheet
+    for (int frameIndex = 0; frameIndex < FRAME_COUNT; frameIndex++) {
+        QImage sprite = spriteSheet.copy((frameIndex % COLUMN_COUNT) * FRAME_WIDTH,
+                                         (frameIndex / COLUMN_COUNT) * FRAME_HEIGHT,
+                                         FRAME_WIDTH, FRAME_HEIGHT);
+
+        this->addAnimationFrame(QPixmap::fromImage(sprite.scaled(FRAME_WIDTH * SCALE_RATIO,
+                                                                 FRAME_HEIGHT * SCALE_RATIO,
+                                                                 Qt::IgnoreAspectRatio,
+                                                                 Qt::SmoothTransformation)));
     }
-    this->setAnimationSpeed(100);  // Passe à la prochaine image de la marche toutes les 100 ms
-    this->startAnimation();
-    */
+
+    this->setAnimationSpeed(100);
+    updateAnimationState();
 }
 
-void Enemy::updateAnimationState(){
+//! Active ou désactive l'animation selon si la roue est visible ou non.
+void Dummy::updateAnimationState() {
+
+    if (this->isVisible()) {
+        this->startAnimation();
+    } else {
+        this->stopAnimation();
+    }
 
 }
 
 //! Met à jour le vecteur de vitesse de l'ennemi en fonction des touches appuyées.
-void Enemy::updateVelocity()  {
+void Dummy::updateVelocity()  {
     int XVelocity = 0;
     int YVelocity = 0;
     m_enemyVelocity = QPoint(XVelocity, YVelocity);
 }
 
 //! Créer un objet de type Bullet et l'envoi dans une direction
-void Enemy::shoot(){
+void Dummy::shoot(){
     Bullet* pBullet = new Bullet;
     pBullet->setEmitter(Sprite::Emitter_e::EM_ENEMY);
     pBullet->setPos(QPointF(this->x()+(this->width()/2),this->bottom()));
@@ -114,6 +129,6 @@ void Enemy::shoot(){
     pBullet->updateVelocity(0,800);
 }
 
-void Enemy::setTimeBeforeShoot(int m_timeBeforeShoot){
-    this->m_timeBeforeShoot = m_timeBeforeShoot;
+void Dummy::setTimeBeforeShoot(int timeBeforeShoot){
+    this->m_timeBeforeShoot = timeBeforeShoot;
 }

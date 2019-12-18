@@ -40,6 +40,7 @@ class Player : public LivingEntity
 public:
     Player(QGraphicsItem* pParent = nullptr);
     virtual void tick(int elapsedTimeInMilliseconds);
+
 signals:
     void notifyPlayerDeath(bool playerDead);
 public slots:
@@ -50,7 +51,6 @@ private:
     virtual void configureAnimation();
     virtual void updateVelocity();
     virtual void shoot();
-
 
     void updateAnimationState();
 
